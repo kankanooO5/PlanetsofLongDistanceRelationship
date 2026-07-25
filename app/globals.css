@@ -3796,3 +3796,201 @@ textarea {
     padding: 11px 12px;
   }
 }
+
+/* Create relationship — single screen layout */
+.create-form-page {
+  padding-top: calc(12px + env(safe-area-inset-top));
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+}
+
+.create-relationship-card {
+  width: min(100%, 420px);
+  padding: 18px 18px 14px;
+}
+
+.create-universe {
+  width: 150px;
+  height: 64px;
+  margin-bottom: 5px;
+  transform: scale(0.72);
+  transform-origin: center;
+}
+
+.create-header .create-eyebrow {
+  margin-bottom: 6px;
+}
+
+.create-header h1 {
+  font-size: 25px;
+}
+
+.create-header .create-copy {
+  margin-top: 6px;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.create-form-compact {
+  display: grid;
+  gap: 9px;
+  margin-top: 14px;
+}
+
+.create-compact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  min-width: 0;
+}
+
+.create-compact-field {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.create-compact-field label {
+  display: flex;
+  min-height: 18px;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 5px;
+  color: rgba(45, 40, 59, 0.62);
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.create-compact-field input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 43px;
+  padding: 0 11px;
+  border: 1px solid rgba(57, 48, 84, 0.11);
+  border-radius: 13px;
+  outline: none;
+  color: #302b40;
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+}
+
+.create-compact-code input {
+  min-height: 44px;
+}
+
+.create-compact-self,
+.create-compact-partner {
+  padding: 9px;
+  border-radius: 15px;
+}
+
+.create-compact-self {
+  border: 1px solid rgba(235, 105, 87, 0.09);
+  background: rgba(255, 248, 244, 0.7);
+}
+
+.create-compact-partner {
+  border: 1px solid rgba(98, 87, 215, 0.09);
+  background: rgba(248, 247, 255, 0.7);
+}
+
+.create-compact-self input,
+.create-compact-partner input {
+  min-height: 40px;
+  padding: 0 9px;
+}
+
+.create-compact-dates input[type="date"] {
+  min-width: 0;
+  height: 43px;
+  padding: 0 6px 0 8px;
+  font-size: 12px;
+  letter-spacing: -0.035em;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.create-compact-dates input[type="date"]::-webkit-date-and-time-value {
+  min-width: 0;
+  text-align: left;
+}
+
+.create-compact-dates input[type="date"]::-webkit-calendar-picker-indicator {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 2px;
+}
+
+.create-form-compact .create-form-error {
+  margin: 0;
+  padding: 8px 10px;
+  font-size: 10px;
+}
+
+.create-form-compact .create-submit-button {
+  min-height: 47px;
+  margin-top: 1px;
+}
+
+.create-relationship-card .create-back-link {
+  min-height: 30px;
+  margin-top: 2px;
+  font-size: 10px;
+}
+
+@media (max-height: 700px) {
+  .create-universe {
+    height: 52px;
+    margin-bottom: 0;
+    transform: scale(0.6);
+  }
+
+  .create-relationship-card {
+    padding-top: 13px;
+    padding-bottom: 9px;
+  }
+
+  .create-header .create-copy {
+    display: none;
+  }
+
+  .create-form-compact {
+    margin-top: 10px;
+    gap: 7px;
+  }
+
+  .create-compact-grid {
+    gap: 7px;
+  }
+
+  .create-compact-self,
+  .create-compact-partner {
+    padding: 7px;
+  }
+
+  .create-compact-field input {
+    min-height: 39px;
+  }
+
+  .create-form-compact .create-submit-button {
+    min-height: 43px;
+  }
+}
+
+@media (max-width: 350px) {
+  .create-relationship-card {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .create-compact-grid {
+    gap: 6px;
+  }
+
+  .create-compact-dates input[type="date"] {
+    padding-right: 3px;
+    padding-left: 5px;
+    font-size: 11px;
+  }
+}

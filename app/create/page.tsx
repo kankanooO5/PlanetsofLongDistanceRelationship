@@ -297,25 +297,16 @@ export default function CreateRelationshipPage() {
           <h1>创建一段关系</h1>
 
           <p className="create-copy">
-            写下你们的名字与重要日期。
+            从这里建立属于你们的小宇宙。
           </p>
         </header>
 
         <form
-          className="create-form create-form-refined"
+          className="create-form create-form-compact"
           onSubmit={createRelationship}
         >
-          <section className="create-form-section">
-            <div className="create-section-heading">
-              <span className="create-section-number">01</span>
-
-              <strong>确认创建权限</strong>
-            </div>
-
-            <label htmlFor="create-code">
-              测试版暗号
-            </label>
-
+          <div className="create-compact-field create-compact-code">
+            <label htmlFor="create-code">测试版暗号</label>
             <input
               id="create-code"
               type="password"
@@ -324,111 +315,83 @@ export default function CreateRelationshipPage() {
                 setCode(event.target.value);
                 setError("");
               }}
-              placeholder="输入测试环境暗号"
+              placeholder="输入暗号"
               autoComplete="current-password"
               autoCapitalize="none"
               autoCorrect="off"
               spellCheck={false}
               required
             />
-          </section>
+          </div>
 
-          <section className="create-form-section">
-            <div className="create-section-heading">
-              <span className="create-section-number">02</span>
-
-              <strong>为两颗星球命名</strong>
+          <div className="create-compact-grid">
+            <div className="create-compact-field create-compact-self">
+              <label htmlFor="creator-name">
+                <span className="create-field-planet create-field-planet-a" />
+                你的名字
+              </label>
+              <input
+                id="creator-name"
+                value={creatorName}
+                onChange={(event) => {
+                  setCreatorName(event.target.value);
+                  setError("");
+                }}
+                placeholder="第一颗星球"
+                maxLength={30}
+                autoComplete="name"
+                required
+              />
             </div>
 
-            <div className="create-name-grid">
-              <div className="create-field-card create-field-self">
-                <div className="create-field-label">
-                  <span className="create-field-planet create-field-planet-a" />
-                  <label htmlFor="creator-name">
-                    你的名字
-                  </label>
-                </div>
-
-                <input
-                  id="creator-name"
-                  value={creatorName}
-                  onChange={(event) => {
-                    setCreatorName(event.target.value);
-                    setError("");
-                  }}
-                  placeholder="第一颗星球"
-                  maxLength={30}
-                  autoComplete="name"
-                  required
-                />
-              </div>
-
-              <div className="create-field-card create-field-partner">
-                <div className="create-field-label">
-                  <span className="create-field-planet create-field-planet-b" />
-                  <label htmlFor="partner-name">
-                    对方的名字
-                  </label>
-                </div>
-
-                <input
-                  id="partner-name"
-                  value={partnerName}
-                  onChange={(event) => {
-                    setPartnerName(event.target.value);
-                    setError("");
-                  }}
-                  placeholder="第二颗星球"
-                  maxLength={30}
-                  required
-                />
-              </div>
+            <div className="create-compact-field create-compact-partner">
+              <label htmlFor="partner-name">
+                <span className="create-field-planet create-field-planet-b" />
+                对方名字
+              </label>
+              <input
+                id="partner-name"
+                value={partnerName}
+                onChange={(event) => {
+                  setPartnerName(event.target.value);
+                  setError("");
+                }}
+                placeholder="第二颗星球"
+                maxLength={30}
+                required
+              />
             </div>
-          </section>
+          </div>
 
-          <section className="create-form-section">
-            <div className="create-section-heading">
-              <span className="create-section-number">03</span>
-
-              <strong>设置共同时间</strong>
+          <div className="create-compact-grid create-compact-dates">
+            <div className="create-compact-field">
+              <label htmlFor="start-date">开始日</label>
+              <input
+                id="start-date"
+                type="date"
+                value={startDate}
+                onChange={(event) => {
+                  setStartDate(event.target.value);
+                  setError("");
+                }}
+                required
+              />
             </div>
 
-            <div className="create-date-grid">
-              <div>
-                <label htmlFor="start-date">
-                  恋爱开始日
-                </label>
-
-                <input
-                  id="start-date"
-                  type="date"
-                  value={startDate}
-                  onChange={(event) => {
-                    setStartDate(event.target.value);
-                    setError("");
-                  }}
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="next-meeting">
-                  下次见面日
-                </label>
-
-                <input
-                  id="next-meeting"
-                  type="date"
-                  value={nextMeeting}
-                  onChange={(event) => {
-                    setNextMeeting(event.target.value);
-                    setError("");
-                  }}
-                  required
-                />
-              </div>
+            <div className="create-compact-field">
+              <label htmlFor="next-meeting">见面日</label>
+              <input
+                id="next-meeting"
+                type="date"
+                value={nextMeeting}
+                onChange={(event) => {
+                  setNextMeeting(event.target.value);
+                  setError("");
+                }}
+                required
+              />
             </div>
-          </section>
+          </div>
 
           {error && (
             <p className="form-error create-form-error">
@@ -441,21 +404,11 @@ export default function CreateRelationshipPage() {
             className="primary-button create-submit-button"
             disabled={status === "submitting"}
           >
-            <span>
-              {status === "submitting"
-                ? "正在创建小宇宙"
-                : "创建我们的小宇宙"}
-            </span>
-
-            {status !== "submitting" && (
-              <span aria-hidden="true">→</span>
-            )}
+            {status === "submitting"
+              ? "正在创建小宇宙"
+              : "创建我们的小宇宙"}
           </button>
         </form>
-
-        <p className="create-note">
-          创建后会生成一次性邀请链接。
-        </p>
 
         <a className="create-back-link" href="/">
           返回入口
