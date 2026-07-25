@@ -2039,6 +2039,33 @@ textarea {
   -webkit-backdrop-filter: blur(20px);
 }
 
+.create-brand-mark {
+  display: flex;
+  height: 54px;
+  align-items: center;
+  justify-content: center;
+  gap: 21px;
+  margin-bottom: 22px;
+}
+
+.create-brand-mark span {
+  display: block;
+  border-radius: 50%;
+  box-shadow: 0 10px 24px rgba(59, 46, 96, 0.16);
+}
+
+.create-brand-mark span:first-child {
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(145deg, #ffb18e, #f26f5f);
+}
+
+.create-brand-mark span:last-child {
+  width: 37px;
+  height: 37px;
+  background: linear-gradient(145deg, #aaa3ff, #6257d7);
+}
+
 .create-eyebrow {
   margin: 0 0 11px;
   color: rgba(75, 62, 113, 0.5);
@@ -2115,6 +2142,43 @@ textarea {
 
 .create-success-card {
   text-align: center;
+}
+
+.create-success-planets {
+  display: flex;
+  height: 60px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 23px;
+}
+
+.create-success-planet {
+  display: block;
+  border-radius: 50%;
+  box-shadow: 0 10px 23px rgba(54, 42, 89, 0.16);
+}
+
+.create-success-planet-a {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(145deg, #ffb18e, #f26f5f);
+}
+
+.create-success-planet-b {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(145deg, #aaa3ff, #6257d7);
+}
+
+.create-success-path {
+  width: 52px;
+  height: 1px;
+  margin: 0 9px;
+  background: linear-gradient(
+    90deg,
+    rgba(242, 111, 95, 0.45),
+    rgba(98, 87, 215, 0.45)
+  );
 }
 
 .invite-result {
