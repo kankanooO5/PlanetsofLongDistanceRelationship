@@ -16,7 +16,8 @@ export function useCoupleSession() {
   const [hasChosenRole, setHasChosenRole] = useState(false);
   const [entered, setEntered] = useState(false);
   const [data, setData] = useState<CoupleData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [restoringSession, setRestoringSession] = useState(true);
   const [error, setError] = useState("");
 
   const loadData = useCallback(
@@ -45,7 +46,7 @@ export function useCoupleSession() {
       }
 
       if (!savedSession.code || !savedSession.role) {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) setRestoringSession(false);
         return;
       }
 
@@ -66,7 +67,7 @@ export function useCoupleSession() {
         setData(null);
         setError("登录状态已失效，请重新输入暗号");
       } finally {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) setRestoringSession(false);
       }
     }
 
@@ -122,6 +123,7 @@ export function useCoupleSession() {
     entered,
     data,
     loading,
+    restoringSession,
     error,
     enter,
   };

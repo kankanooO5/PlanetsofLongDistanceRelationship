@@ -17,11 +17,25 @@ export function AppRoot() {
     entered,
     data,
     loading,
+    restoringSession,
     error,
     enter,
   } = useCoupleSession();
 
   useServiceWorkerRegistration();
+
+  if (restoringSession) {
+    return (
+      <main className="launch-screen" aria-label="正在进入两颗星球">
+        <div className="launch-orbit" aria-hidden="true">
+          <span className="launch-planet launch-planet-a" />
+          <span className="launch-planet launch-planet-b" />
+        </div>
+
+        <p>TWO PLANETS · ONE HOME</p>
+      </main>
+    );
+  }
 
   if (!entered || !data) {
     return (
