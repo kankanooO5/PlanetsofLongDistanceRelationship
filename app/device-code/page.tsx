@@ -2,39 +2,36 @@
 
 import { useEffect, useState } from "react";
 
+import { UniversePageShell } from "../../features/onboarding/components/UniversePageShell";
 import { readMemberSession } from "../../lib/storage/member-session";
 
-type PageStatus =
-  | "loading"
-  | "ready"
-  | "error";
+type PageStatus = "loading" | "ready" | "error";
+type PairingTarget = "self" | "partner";
 
 export default function DeviceCodePage() {
   const [status, setStatus] =
     useState<PageStatus>("loading");
+  const [target, setTarget] =
+    useState<PairingTarget>("self");
   const [code, setCode] = useState("");
   const [expiresAt, setExpiresAt] = useState("");
   const [error, setError] = useState("");
 
-  async function createCode() {
+  async function createCode(
+    currentTarget: PairingTarget,
+  ) {
     setStatus("loading");
     setError("");
 
     const session = readMemberSession();
 
     if (!session) {
-      setError("当前 Safari 尚未登录成员身份");
+      setError("当前设备尚未登录成员身份");
       setStatus("error");
       return;
     }
 
     try {
-      const target =
-        new URLSearchParams(window.location.search)
-          .get("target") === "partner"
-          ? "partner"
-          : "self";
-
       const response = await fetch(
         "/api/member/pairing/create",
         {
@@ -43,7 +40,9 @@ export default function DeviceCodePage() {
             "Content-Type": "application/json",
             "x-member-token": session.token,
           },
-          body: JSON.stringify({ target }),
+          body: JSON.stringify({
+            target: currentTarget,
+          }),
           cache: "no-store",
         },
       );
@@ -70,96 +69,153 @@ export default function DeviceCodePage() {
   }
 
   useEffect(() => {
-    createCode();
+    const currentTarget =
+      new URLSearchParams(window.location.search)
+        .get("target") === "partner"
+        ? "partner"
+        : "self";
+
+    setTarget(currentTarget);
+    createCode(currentTarget);
   }, []);
 
-  return (
-    <main className="pairing-page">
-      <section className="pairing-card">
-        <p className="pairing-eyebrow">
-          DEVICE PAIRING
-        </p>
+  const isPartner = target === "partner";
 
-        {status === "loading" && (
+  return (
+    <UniversePageShell
+      visual={
+        isPartner
+          ? "two-planets"
+          : "planet-device"
+      }
+      eyebrow="TWO PLANETS · ONE HOME"
+      title={
+        isPartner
+          ? "恢复另一颗星球"
+          : "绑定我的另一台设备"
+      }
+      description={
+        isPartner ? (
           <>
-            <h1>正在生成绑定码</h1>
-            <p>
-              正在为新的主屏幕应用准备独立身份。
-            </p>
+            为关系中的另一位固定成员生成恢复码，
+            让对方在自己的设备上重新回到这颗小宇宙。
+          </>
+        ) : (
+          <>
+            为你的另一台设备生成绑定码，
+            让它继续使用当前星球身份。
+          </>
+        )
+      }
+      footer={
+        <a
+          href="/"
+          className="universe-flow-home-link"
+        >
+          返回我的星球
+        </a>
+      }
+    >
+      {status === "loading" && (
+        <div className="universe-flow-loading">
+          <p>正在生成一次性设备绑定码</p>
+
+          <div
+            className="activation-loading"
+            aria-hidden="true"
+          >
+            <span />
+            <span />
+            <span />
+          </div>
+        </div>
+      )}
+
+      {status === "ready" && (
+        <div className="universe-flow-code-content">
+          <div className="universe-flow-code-card">
+            <p>一次性设备绑定码</p>
 
             <div
-              className="activation-loading"
-              aria-hidden="true"
+              className="universe-flow-code"
+              aria-label={`设备绑定码 ${code}`}
             >
+              <strong>{code.slice(0, 4)}</strong>
               <span />
-              <span />
-              <span />
-            </div>
-          </>
-        )}
-
-        {status === "ready" && (
-          <>
-            <h1>设备绑定码</h1>
-
-            <p>
-              打开主屏幕上的“两颗星球”，选择“绑定这台设备”，再输入下面的代码。
-            </p>
-
-            <div className="pairing-code">
-              {code.slice(0, 4)}
-              <span />
-              {code.slice(4)}
+              <strong>{code.slice(4)}</strong>
             </div>
 
-            <p className="pairing-expiry">
+            <small>
               10 分钟内有效，仅可使用一次
               <br />
               到期时间：
-              {new Date(expiresAt).toLocaleTimeString(
-                "zh-CN",
-                {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                },
-              )}
-            </p>
+              {new Date(
+                expiresAt,
+              ).toLocaleTimeString("zh-CN", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </small>
+          </div>
 
-            <button
-              type="button"
-              className="pairing-secondary-button"
-              onClick={createCode}
-            >
-              重新生成
-            </button>
-          </>
-        )}
+          <div className="universe-flow-steps">
+            <div>
+              <span>1</span>
+              <p>在需要绑定的设备上打开“两颗星球”</p>
+            </div>
 
-        {status === "error" && (
-          <>
-            <h1>无法生成绑定码</h1>
+            <div>
+              <span>2</span>
+              <p>选择“绑定这台设备”</p>
+            </div>
 
-            <p className="pairing-error">
-              {error}
-            </p>
+            <div>
+              <span>3</span>
+              <p>输入上方的 8 位代码</p>
+            </div>
+          </div>
 
-            <button
-              type="button"
-              className="pairing-secondary-button"
-              onClick={createCode}
-            >
-              重试
-            </button>
+          {isPartner && (
+            <div className="universe-flow-notice">
+              <span aria-hidden="true">✦</span>
 
-            <a
-              href="/"
-              className="pairing-home-link"
-            >
-              返回两颗星球
-            </a>
-          </>
-        )}
-      </section>
-    </main>
+              <p>
+                该代码会恢复另一位成员身份，
+                请只在对方自己的设备上使用。
+              </p>
+            </div>
+          )}
+
+          <button
+            type="button"
+            className="universe-flow-secondary-button"
+            onClick={() => createCode(target)}
+          >
+            重新生成
+          </button>
+        </div>
+      )}
+
+      {status === "error" && (
+        <div className="universe-flow-loading">
+          <h2>无法生成绑定码</h2>
+
+          <p
+            className="universe-flow-error"
+            role="alert"
+          >
+            {error}
+          </p>
+
+          <button
+            type="button"
+            className="universe-flow-secondary-button"
+            onClick={() => createCode(target)}
+          >
+            重试
+          </button>
+        </div>
+      )}
+    </UniversePageShell>
   );
 }

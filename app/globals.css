@@ -4396,3 +4396,443 @@ textarea {
     gap: 8px;
   }
 }
+
+/* Device code generation */
+.device-code-card {
+  text-align: center;
+}
+
+.device-code-universe {
+  margin-inline: auto;
+}
+
+.device-code-status {
+  display: grid;
+  justify-items: center;
+  margin-top: 22px;
+}
+
+.device-code-status > p:first-child {
+  margin: 0;
+  color: rgba(48, 42, 66, 0.55);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.device-code-status h2 {
+  margin: 18px 0 4px;
+  color: #302b42;
+  font-size: 18px;
+}
+
+.device-code-ready {
+  display: grid;
+  justify-items: center;
+  margin-top: 22px;
+}
+
+.device-code-label {
+  margin-bottom: 11px;
+  color: rgba(64, 54, 92, 0.48);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.device-code-ready .pairing-code {
+  width: min(100%, 286px);
+  box-sizing: border-box;
+}
+
+.device-code-ready .pairing-secondary-button {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.device-code-guide {
+  display: grid;
+  width: 100%;
+  gap: 9px;
+  margin-top: 21px;
+  text-align: left;
+}
+
+.device-code-warning {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(229, 112, 86, 0.12);
+  border-radius: 14px;
+  color: rgba(105, 59, 53, 0.7);
+  background: rgba(255, 237, 231, 0.7);
+  font-size: 11px;
+  line-height: 1.65;
+  text-align: left;
+}
+
+.device-code-target-planet {
+  position: absolute;
+  right: 24px;
+  bottom: 17px;
+  display: block;
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 31% 27%,
+      rgba(255, 255, 255, 0.72) 0 8%,
+      transparent 9%
+    ),
+    linear-gradient(145deg, #aaa2ff, #6659d3);
+  box-shadow:
+    0 11px 22px rgba(71, 59, 150, 0.2),
+    inset -5px -6px 10px rgba(49, 38, 122, 0.12);
+}
+
+.device-code-page-partner .pairing-planet {
+  background:
+    radial-gradient(
+      circle at 30% 26%,
+      rgba(255, 255, 255, 0.7) 0 8%,
+      transparent 9%
+    ),
+    linear-gradient(145deg, #ffb18e, #ff7562);
+}
+
+.device-code-page-partner
+  .device-code-target-planet-partner {
+  background:
+    radial-gradient(
+      circle at 31% 27%,
+      rgba(255, 255, 255, 0.72) 0 8%,
+      transparent 9%
+    ),
+    linear-gradient(145deg, #a9a1ff, #6659d3);
+}
+
+/* Profile device logout */
+.profile-logout-button {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 18px;
+  padding: 0 18px;
+  border: 1px solid rgba(176, 70, 70, 0.1);
+  border-radius: 18px;
+  color: rgba(158, 65, 65, 0.86);
+  background: rgba(255, 247, 247, 0.82);
+  box-shadow: none;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.profile-logout-button:not(:disabled):active {
+  transform: scale(0.985);
+  background: rgba(255, 239, 239, 0.94);
+}
+
+.profile-logout-note {
+  margin: 9px 10px 0;
+  color: rgba(50, 44, 66, 0.38);
+  font-size: 10px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* Shared universe flow pages */
+.universe-flow-card {
+  text-align: center;
+}
+
+.universe-flow-content {
+  margin-top: 25px;
+}
+
+.universe-flow-footer {
+  text-align: center;
+}
+
+.universe-flow-device {
+  position: absolute;
+  top: 50%;
+  right: 27px;
+  box-sizing: border-box;
+  display: block;
+  width: 36px;
+  height: 53px;
+  border: 3px solid rgba(255, 255, 255, 0.96);
+  border-radius: 10px;
+  background: linear-gradient(145deg, #aaa3ff, #6257d7);
+  box-shadow:
+    0 12px 27px rgba(80, 56, 95, 0.17),
+    0 0 0 1px rgba(98, 87, 215, 0.12);
+  transform: translateY(-15%) rotate(4deg);
+}
+
+.universe-flow-device span {
+  position: absolute;
+  right: 7px;
+  bottom: 4px;
+  left: 7px;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.universe-flow-form,
+.universe-flow-code-content {
+  display: grid;
+  gap: 13px;
+}
+
+.universe-flow-input-card,
+.universe-flow-code-card {
+  box-sizing: border-box;
+  padding: 15px;
+  border: 1px solid rgba(98, 87, 215, 0.1);
+  border-radius: 19px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(248, 247, 255, 0.96),
+      rgba(253, 252, 255, 0.86)
+    );
+  box-shadow: 0 10px 26px rgba(98, 87, 215, 0.055);
+}
+
+.universe-flow-input-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 9px;
+}
+
+.universe-flow-input-heading label {
+  color: rgba(45, 40, 59, 0.67);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.universe-flow-input-heading span {
+  color: rgba(98, 87, 215, 0.55);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.universe-flow-input-card input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 58px;
+  padding: 0 14px;
+  border: 1px solid rgba(71, 59, 108, 0.11);
+  border-radius: 15px;
+  outline: none;
+  color: #41386b;
+  background: rgba(255, 255, 255, 0.92);
+  font: inherit;
+  font-size: 22px;
+  font-weight: 750;
+  letter-spacing: 0.16em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.universe-flow-input-card input:focus {
+  border-color: rgba(98, 87, 215, 0.36);
+  box-shadow: 0 0 0 4px rgba(98, 87, 215, 0.08);
+}
+
+.universe-flow-help {
+  margin: 9px 0 0;
+  color: rgba(52, 47, 65, 0.4);
+  font-size: 9px;
+  line-height: 1.55;
+  text-align: left;
+}
+
+.universe-flow-steps {
+  display: grid;
+  gap: 8px;
+  padding: 13px 14px;
+  border: 1px solid rgba(65, 55, 91, 0.065);
+  border-radius: 17px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.universe-flow-steps > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.universe-flow-steps span {
+  display: grid;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  color: #6257d7;
+  background: rgba(98, 87, 215, 0.09);
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.universe-flow-steps p {
+  margin: 0;
+  color: rgba(49, 44, 63, 0.5);
+  font-size: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.universe-flow-code-card > p {
+  margin: 0 0 12px;
+  color: rgba(64, 54, 92, 0.48);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+}
+
+.universe-flow-code {
+  display: flex;
+  min-height: 64px;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  border: 1px solid rgba(71, 59, 108, 0.1);
+  border-radius: 16px;
+  color: #41386b;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.universe-flow-code strong {
+  font-size: 23px;
+  letter-spacing: 0.12em;
+}
+
+.universe-flow-code > span {
+  width: 8px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(65, 56, 107, 0.2);
+}
+
+.universe-flow-code-card small {
+  display: block;
+  margin-top: 11px;
+  color: rgba(52, 47, 65, 0.4);
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.universe-flow-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px 14px;
+  border: 1px solid rgba(235, 105, 87, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 248, 244, 0.72);
+}
+
+.universe-flow-notice span {
+  color: rgba(235, 105, 87, 0.62);
+  font-size: 11px;
+}
+
+.universe-flow-notice p {
+  margin: 0;
+  color: rgba(79, 52, 51, 0.48);
+  font-size: 10px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.universe-flow-primary-button,
+.universe-flow-secondary-button {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.universe-flow-primary-button {
+  border: 0;
+  color: white;
+  background: linear-gradient(135deg, #766ce0, #574bc4);
+  box-shadow: 0 14px 30px rgba(98, 87, 215, 0.22);
+}
+
+.universe-flow-secondary-button {
+  border: 1px solid rgba(98, 87, 215, 0.11);
+  color: #6257d7;
+  background: rgba(248, 247, 255, 0.94);
+  box-shadow: none;
+}
+
+.universe-flow-primary-button:disabled {
+  opacity: 0.45;
+  box-shadow: none;
+}
+
+.universe-flow-loading {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+}
+
+.universe-flow-loading > p {
+  margin: 0;
+  color: rgba(47, 42, 61, 0.52);
+  font-size: 12px;
+}
+
+.universe-flow-loading h2 {
+  margin: 0;
+  color: #302b42;
+  font-size: 18px;
+}
+
+.universe-flow-error {
+  margin: 0;
+  padding: 11px 12px;
+  border: 1px solid rgba(167, 68, 68, 0.09);
+  border-radius: 14px;
+  color: #a74444;
+  background: rgba(255, 238, 238, 0.82);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.universe-flow-home-link {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 13px;
+  padding: 0 12px;
+  color: rgba(78, 68, 115, 0.55);
+  font-size: 11px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .universe-flow-device {
+    animation: universe-flow-device-float
+      2500ms ease-in-out infinite alternate;
+  }
+}
+
+@keyframes universe-flow-device-float {
+  from {
+    transform: translateY(-19%) rotate(4deg);
+  }
+
+  to {
+    transform: translateY(-8%) rotate(2deg);
+  }
+}

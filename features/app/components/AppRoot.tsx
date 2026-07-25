@@ -23,6 +23,7 @@ export function AppRoot() {
     data,
     restoringSession,
     error,
+    logout,
   } = useCoupleSession();
 
   const [activeTab, setActiveTab] = useState<AppTab>("home");
@@ -73,6 +74,7 @@ export function AppRoot() {
           <ProfileTab
             settings={data.settings}
             role={role}
+            onLogout={logout}
           />
         )}
       </div>
