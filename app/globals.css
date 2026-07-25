@@ -3316,3 +3316,362 @@ textarea {
     letter-spacing: 0.14em;
   }
 }
+
+/* Create relationship form — inner page visual language */
+.create-form-page {
+  background:
+    radial-gradient(
+      circle at 16% 13%,
+      rgba(255, 163, 126, 0.2),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 84% 79%,
+      rgba(98, 87, 215, 0.18),
+      transparent 38%
+    ),
+    linear-gradient(
+      158deg,
+      #fffaf6 0%,
+      #ffffff 49%,
+      #f8f7ff 100%
+    );
+}
+
+.create-background {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.create-relationship-card {
+  width: min(100%, 440px);
+  padding-top: 27px;
+  padding-bottom: 21px;
+}
+
+.create-universe {
+  position: relative;
+  width: 178px;
+  height: 102px;
+  margin: 0 auto 18px;
+}
+
+.create-visual-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  border: 1px solid rgba(66, 54, 101, 0.15);
+  border-radius: 50%;
+}
+
+.create-visual-orbit-outer {
+  width: 168px;
+  height: 71px;
+  transform: translate(-50%, -50%) rotate(-13deg);
+}
+
+.create-visual-orbit-inner {
+  width: 126px;
+  height: 49px;
+  opacity: 0.52;
+  transform: translate(-50%, -50%) rotate(21deg);
+}
+
+.create-visual-planet {
+  position: absolute;
+  top: 50%;
+  display: block;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow:
+    0 13px 29px rgba(50, 38, 82, 0.15),
+    inset -6px -7px 12px rgba(31, 22, 64, 0.09);
+}
+
+.create-visual-planet > span {
+  position: absolute;
+  top: 20%;
+  left: 21%;
+  width: 29%;
+  height: 17%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.42);
+  transform: rotate(-27deg);
+}
+
+.create-visual-planet-a {
+  left: 25px;
+  width: 49px;
+  height: 49px;
+  background: linear-gradient(
+    145deg,
+    #ffb794 0%,
+    #ff816b 57%,
+    #eb6258 100%
+  );
+  transform: translateY(-56%);
+}
+
+.create-visual-planet-b {
+  right: 24px;
+  width: 41px;
+  height: 41px;
+  background: linear-gradient(
+    145deg,
+    #b4adff 0%,
+    #776ce0 57%,
+    #574bc4 100%
+  );
+  transform: translateY(-8%);
+}
+
+.create-visual-star {
+  position: absolute;
+  color: rgba(71, 58, 106, 0.4);
+  line-height: 1;
+}
+
+.create-visual-star-one {
+  top: 7px;
+  right: 35px;
+  font-size: 13px;
+}
+
+.create-visual-star-two {
+  bottom: 3px;
+  left: 49px;
+  font-size: 10px;
+}
+
+.create-header {
+  text-align: center;
+}
+
+.create-form-refined {
+  gap: 12px;
+  margin-top: 23px;
+}
+
+.create-form-section {
+  padding: 15px;
+  border: 1px solid rgba(65, 55, 91, 0.075);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.create-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 13px;
+}
+
+.create-section-number {
+  display: grid;
+  flex: 0 0 auto;
+  width: 29px;
+  height: 29px;
+  place-items: center;
+  border-radius: 10px;
+  color: #6257d7;
+  background: rgba(98, 87, 215, 0.09);
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.create-section-heading strong {
+  display: block;
+  color: rgba(45, 40, 59, 0.76);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.create-section-heading p {
+  margin: 3px 0 0;
+  color: rgba(52, 47, 65, 0.4);
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+.create-field-card {
+  padding: 11px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+}
+
+.create-field-self {
+  border-color: rgba(235, 105, 87, 0.1);
+  background: rgba(255, 248, 244, 0.78);
+}
+
+.create-field-partner {
+  border-color: rgba(98, 87, 215, 0.1);
+  background: rgba(248, 247, 255, 0.78);
+}
+
+.create-field-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 7px;
+}
+
+.create-field-label label {
+  margin: 0;
+}
+
+.create-field-planet {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.create-field-planet-a {
+  background: #f17b67;
+  box-shadow: 0 0 0 4px rgba(241, 123, 103, 0.1);
+}
+
+.create-field-planet-b {
+  background: #6f64d7;
+  box-shadow: 0 0 0 4px rgba(111, 100, 215, 0.1);
+}
+
+.create-field-card input {
+  min-height: 46px;
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.create-form-refined input {
+  outline: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.create-form-refined input:focus {
+  border-color: rgba(98, 87, 215, 0.32);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(98, 87, 215, 0.07);
+}
+
+.create-form-error {
+  margin: 0;
+  padding: 11px 12px;
+  border: 1px solid rgba(167, 68, 68, 0.09);
+  border-radius: 14px;
+  background: rgba(255, 238, 238, 0.82);
+}
+
+.create-submit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 2px;
+  background: linear-gradient(
+    135deg,
+    #f18a70 0%,
+    #6559d4 100%
+  );
+  box-shadow: 0 14px 30px rgba(91, 72, 157, 0.2);
+}
+
+.create-back-link {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 7px;
+  color: rgba(78, 68, 115, 0.55);
+  font-size: 11px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .create-universe {
+    animation: create-universe-in 520ms ease-out both;
+  }
+
+  .create-visual-planet-a {
+    animation: create-planet-a-float 2200ms ease-in-out infinite alternate;
+  }
+
+  .create-visual-planet-b {
+    animation: create-planet-b-float 2500ms ease-in-out infinite alternate;
+  }
+
+  .create-visual-orbit-outer {
+    animation: create-orbit-drift 7600ms linear infinite;
+  }
+}
+
+@keyframes create-universe-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes create-planet-a-float {
+  from {
+    transform: translateY(-60%);
+  }
+
+  to {
+    transform: translateY(-49%);
+  }
+}
+
+@keyframes create-planet-b-float {
+  from {
+    transform: translateY(-14%);
+  }
+
+  to {
+    transform: translateY(-3%);
+  }
+}
+
+@keyframes create-orbit-drift {
+  from {
+    transform: translate(-50%, -50%) rotate(-13deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(347deg);
+  }
+}
+
+@media (max-height: 760px) {
+  .create-form-page {
+    place-items: start center;
+  }
+
+  .create-relationship-card {
+    padding-top: 21px;
+  }
+
+  .create-universe {
+    height: 78px;
+    margin-bottom: 10px;
+    transform: scale(0.82);
+  }
+}
+
+@media (max-width: 380px) {
+  .create-form-refined .create-name-grid,
+  .create-form-refined .create-date-grid {
+    grid-template-columns: 1fr;
+  }
+}

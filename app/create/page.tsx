@@ -130,15 +130,14 @@ export default function CreateRelationshipPage() {
   async function shareInviteLink() {
     if (!result) return;
 
-    const shareData = {
-      title: "邀请你进入两颗星球",
-      text: `${result.creator.displayName} 正在邀请你成为另一颗星球。`,
-      url: result.invite.url,
-    };
-
     try {
       if (navigator.share) {
-        await navigator.share(shareData);
+        await navigator.share({
+          title: "邀请你进入两颗星球",
+          text: `${result.creator.displayName} 正在邀请你成为另一颗星球。`,
+          url: result.invite.url,
+        });
+
         return;
       }
 
@@ -256,123 +255,220 @@ export default function CreateRelationshipPage() {
   }
 
   return (
-    <main className="create-page">
-      <div className="create-orbit create-orbit-one" />
-      <div className="create-orbit create-orbit-two" />
+    <main className="create-page create-form-page">
+      <div
+        className="create-background"
+        aria-hidden="true"
+      >
+        <span className="create-orbit create-orbit-one" />
+        <span className="create-orbit create-orbit-two" />
+      </div>
 
-      <section className="create-card">
-        <div className="create-brand-mark" aria-hidden="true">
-          <span />
-          <span />
+      <section className="create-card create-relationship-card">
+        <div
+          className="create-universe"
+          aria-hidden="true"
+        >
+          <span className="create-visual-orbit create-visual-orbit-outer" />
+          <span className="create-visual-orbit create-visual-orbit-inner" />
+
+          <span className="create-visual-planet create-visual-planet-a">
+            <span />
+          </span>
+
+          <span className="create-visual-planet create-visual-planet-b">
+            <span />
+          </span>
+
+          <span className="create-visual-star create-visual-star-one">
+            ✦
+          </span>
+
+          <span className="create-visual-star create-visual-star-two">
+            ✧
+          </span>
         </div>
 
-        <p className="create-eyebrow">
-          CREATE TWO PLANETS
-        </p>
+        <header className="create-header">
+          <p className="create-eyebrow">
+            CREATE TWO PLANETS
+          </p>
 
-        <h1>创建我们的星球</h1>
+          <h1>创建一段关系</h1>
 
-        <p className="create-copy">
-          你将成为第一颗星球，并获得一条只属于另一颗星球的一次性邀请链接。
-        </p>
+          <p className="create-copy">
+            写下属于两颗星球的名字和时间，从这里建立你们共同的小宇宙。
+          </p>
+        </header>
 
         <form
-          className="create-form"
+          className="create-form create-form-refined"
           onSubmit={createRelationship}
         >
-          <label htmlFor="create-code">测试版暗号</label>
-          <input
-            id="create-code"
-            type="password"
-            value={code}
-            onChange={(event) => setCode(event.target.value)}
-            placeholder="输入测试环境暗号"
-            autoComplete="current-password"
-            autoCapitalize="none"
-            autoCorrect="off"
-            spellCheck={false}
-            required
-          />
+          <section className="create-form-section">
+            <div className="create-section-heading">
+              <span className="create-section-number">01</span>
 
-          <div className="create-name-grid">
-            <div>
-              <label htmlFor="creator-name">你的名字</label>
-              <input
-                id="creator-name"
-                value={creatorName}
-                onChange={(event) =>
-                  setCreatorName(event.target.value)
-                }
-                placeholder="第一颗星球"
-                maxLength={30}
-                autoComplete="name"
-                required
-              />
+              <div>
+                <strong>确认创建权限</strong>
+                <p>测试阶段需要先验证暗号</p>
+              </div>
             </div>
 
-            <div>
-              <label htmlFor="partner-name">
-                对方的名字
-              </label>
-              <input
-                id="partner-name"
-                value={partnerName}
-                onChange={(event) =>
-                  setPartnerName(event.target.value)
-                }
-                placeholder="第二颗星球"
-                maxLength={30}
-                required
-              />
-            </div>
-          </div>
+            <label htmlFor="create-code">
+              测试版暗号
+            </label>
 
-          <div className="create-date-grid">
-            <div>
-              <label htmlFor="start-date">恋爱开始日</label>
-              <input
-                id="start-date"
-                type="date"
-                value={startDate}
-                onChange={(event) =>
-                  setStartDate(event.target.value)
-                }
-                required
-              />
+            <input
+              id="create-code"
+              type="password"
+              value={code}
+              onChange={(event) => {
+                setCode(event.target.value);
+                setError("");
+              }}
+              placeholder="输入测试环境暗号"
+              autoComplete="current-password"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              required
+            />
+          </section>
+
+          <section className="create-form-section">
+            <div className="create-section-heading">
+              <span className="create-section-number">02</span>
+
+              <div>
+                <strong>为两颗星球命名</strong>
+                <p>之后仍可以在个人页调整</p>
+              </div>
             </div>
 
-            <div>
-              <label htmlFor="next-meeting">
-                下次见面日
-              </label>
-              <input
-                id="next-meeting"
-                type="date"
-                value={nextMeeting}
-                onChange={(event) =>
-                  setNextMeeting(event.target.value)
-                }
-                required
-              />
-            </div>
-          </div>
+            <div className="create-name-grid">
+              <div className="create-field-card create-field-self">
+                <div className="create-field-label">
+                  <span className="create-field-planet create-field-planet-a" />
+                  <label htmlFor="creator-name">
+                    你的名字
+                  </label>
+                </div>
 
-          {error && <p className="form-error">{error}</p>}
+                <input
+                  id="creator-name"
+                  value={creatorName}
+                  onChange={(event) => {
+                    setCreatorName(event.target.value);
+                    setError("");
+                  }}
+                  placeholder="第一颗星球"
+                  maxLength={30}
+                  autoComplete="name"
+                  required
+                />
+              </div>
+
+              <div className="create-field-card create-field-partner">
+                <div className="create-field-label">
+                  <span className="create-field-planet create-field-planet-b" />
+                  <label htmlFor="partner-name">
+                    对方的名字
+                  </label>
+                </div>
+
+                <input
+                  id="partner-name"
+                  value={partnerName}
+                  onChange={(event) => {
+                    setPartnerName(event.target.value);
+                    setError("");
+                  }}
+                  placeholder="第二颗星球"
+                  maxLength={30}
+                  required
+                />
+              </div>
+            </div>
+          </section>
+
+          <section className="create-form-section">
+            <div className="create-section-heading">
+              <span className="create-section-number">03</span>
+
+              <div>
+                <strong>设置共同时间</strong>
+                <p>首页会根据这些日期自动计算</p>
+              </div>
+            </div>
+
+            <div className="create-date-grid">
+              <div>
+                <label htmlFor="start-date">
+                  恋爱开始日
+                </label>
+
+                <input
+                  id="start-date"
+                  type="date"
+                  value={startDate}
+                  onChange={(event) => {
+                    setStartDate(event.target.value);
+                    setError("");
+                  }}
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="next-meeting">
+                  下次见面日
+                </label>
+
+                <input
+                  id="next-meeting"
+                  type="date"
+                  value={nextMeeting}
+                  onChange={(event) => {
+                    setNextMeeting(event.target.value);
+                    setError("");
+                  }}
+                  required
+                />
+              </div>
+            </div>
+          </section>
+
+          {error && (
+            <p className="form-error create-form-error">
+              {error}
+            </p>
+          )}
 
           <button
-            className="primary-button"
             type="submit"
+            className="primary-button create-submit-button"
             disabled={status === "submitting"}
           >
-            {status === "submitting"
-              ? "正在生成小宇宙…"
-              : "创建并生成邀请链接"}
+            <span>
+              {status === "submitting"
+                ? "正在创建小宇宙"
+                : "创建我们的小宇宙"}
+            </span>
+
+            {status !== "submitting" && (
+              <span aria-hidden="true">→</span>
+            )}
           </button>
         </form>
 
         <p className="create-note">
-          创建成功后，当前设备会固定绑定为第一颗星球。
+          创建完成后，你会获得一条仅供另一颗星球使用的一次性邀请链接。
         </p>
+
+        <a className="create-back-link" href="/">
+          返回入口
+        </a>
       </section>
     </main>
   );
