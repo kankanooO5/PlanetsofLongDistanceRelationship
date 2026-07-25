@@ -4039,3 +4039,145 @@ textarea {
     font-size: 13px;
   }
 }
+
+/* Create form spacing and date alignment */
+.create-relationship-card {
+  width: min(100%, 450px);
+  padding: 24px 22px 20px;
+}
+
+.create-universe {
+  height: 76px;
+  margin-bottom: 8px;
+  transform: scale(0.8);
+}
+
+.create-header .create-eyebrow {
+  margin-bottom: 8px;
+}
+
+.create-header h1 {
+  font-size: 27px;
+}
+
+.create-header .create-copy {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.create-form-compact {
+  gap: 11px;
+  margin-top: 17px;
+}
+
+.create-compact-grid {
+  gap: 10px;
+}
+
+.create-compact-self,
+.create-compact-partner {
+  padding: 10px;
+}
+
+.create-compact-field input {
+  min-height: 45px;
+}
+
+.create-form-compact .create-compact-dates input[type="date"] {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  height: 45px;
+  min-height: 45px;
+  align-items: center;
+  padding: 0 9px;
+  text-align: center;
+  line-height: 45px;
+}
+
+.create-form-compact
+  .create-compact-dates
+  input[type="date"]::-webkit-date-and-time-value {
+  display: block;
+  width: 100%;
+  min-height: 45px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  line-height: 45px;
+}
+
+.create-form-compact
+  .create-compact-dates
+  input[type="date"]::-webkit-datetime-edit {
+  display: flex;
+  width: 100%;
+  min-height: 45px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.create-form-compact
+  .create-compact-dates
+  input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.create-form-compact
+  .create-compact-dates
+  input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: 7px;
+  margin: 0;
+}
+
+.create-compact-dates .create-compact-field {
+  position: relative;
+}
+
+.create-form-compact .create-submit-button {
+  min-height: 49px;
+  margin-top: 3px;
+}
+
+.create-relationship-card .create-back-link {
+  margin-top: 5px;
+}
+
+@media (max-height: 700px) {
+  .create-relationship-card {
+    padding: 18px 18px 14px;
+  }
+
+  .create-universe {
+    height: 58px;
+    margin-bottom: 3px;
+    transform: scale(0.66);
+  }
+
+  .create-form-compact {
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .create-compact-field input,
+  .create-form-compact .create-compact-dates input[type="date"] {
+    min-height: 41px;
+    height: 41px;
+  }
+
+  .create-form-compact
+    .create-compact-dates
+    input[type="date"]::-webkit-date-and-time-value,
+  .create-form-compact
+    .create-compact-dates
+    input[type="date"]::-webkit-datetime-edit {
+    min-height: 41px;
+    line-height: 41px;
+  }
+}
