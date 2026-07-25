@@ -1,0 +1,36 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  "name": "twoplanets-test",
+  "main": "./worker/index.ts",
+  "compatibility_date": "2026-07-25",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "two-planets-test-db",
+      "database_id": "b3202fef-94cf-49fe-8e96-94602ad14eda"
+    }
+  ],
+
+  "r2_buckets": [],
+
+  "env": {
+    "production": {
+      "name": "twoplanets",
+      "workers_dev": true,
+
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "two-planets-prod-db",
+          "database_id": "83b35797-8c7a-4010-adaa-9bea304b4bcc"
+        }
+      ],
+
+      "r2_buckets": []
+    }
+  }
+}
