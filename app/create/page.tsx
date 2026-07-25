@@ -117,6 +117,7 @@ export default function CreateRelationshipPage() {
     try {
       await navigator.clipboard.writeText(result.invite.url);
       setCopied(true);
+      setError("");
 
       window.setTimeout(() => {
         setCopied(false);
@@ -126,32 +127,93 @@ export default function CreateRelationshipPage() {
     }
   }
 
+  async function shareInviteLink() {
+    if (!result) return;
+
+    const shareData = {
+      title: "邀请你进入两颗星球",
+      text: `${result.creator.displayName} 正在邀请你成为另一颗星球。`,
+      url: result.invite.url,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        return;
+      }
+
+      await copyInviteLink();
+    } catch (reason) {
+      if (
+        reason instanceof DOMException &&
+        reason.name === "AbortError"
+      ) {
+        return;
+      }
+
+      setError("分享失败，请复制邀请链接后发送给对方");
+    }
+  }
+
   if (status === "created" && result) {
+    const expiresAt = new Date(
+      result.invite.expiresAt,
+    ).toLocaleString("zh-CN", {
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
     return (
-      <main className="create-page">
+      <main className="create-page invite-page">
         <div className="create-orbit create-orbit-one" />
         <div className="create-orbit create-orbit-two" />
 
-        <section className="create-card create-success-card">
-          <div className="create-success-planets" aria-hidden="true">
-            <span className="create-success-planet create-success-planet-a" />
-            <span className="create-success-path" />
-            <span className="create-success-planet create-success-planet-b" />
+        <section className="create-card create-success-card invite-card">
+          <div className="invite-visual" aria-hidden="true">
+            <div className="invite-orbit invite-orbit-outer" />
+            <div className="invite-orbit invite-orbit-inner" />
+
+            <span className="invite-planet invite-planet-self">
+              <span />
+            </span>
+
+            <span className="invite-planet invite-planet-partner">
+              <span />
+            </span>
+
+            <span className="invite-star invite-star-one">
+              ✦
+            </span>
+
+            <span className="invite-star invite-star-two">
+              ✧
+            </span>
           </div>
 
-          <p className="create-eyebrow">
-            YOUR UNIVERSE IS READY
-          </p>
+          <div className="invite-heading">
+            <p className="create-eyebrow">
+              INVITE YOUR OTHER PLANET
+            </p>
 
-          <h1>你们的小宇宙已经诞生</h1>
+            <h1>
+              邀请
+              <span>{result.invite.partnerName}</span>
+              加入
+            </h1>
 
-          <p className="create-copy">
-            你已经固定成为第一颗星球。把下面的邀请链接发送给
-            {result.invite.partnerName}，对方接受后会固定成为第二颗星球。
-          </p>
+            <p className="create-copy">
+              你的小宇宙已经准备好了。把这份邀请发送给对方，
+              等待另一颗星球与你相遇。
+            </p>
+          </div>
 
           <section className="invite-result">
-            <p>一次性邀请链接</p>
+            <div className="invite-result-header">
+              <span>专属邀请</span>
+              <span>一次有效</span>
+            </div>
 
             <div className="invite-result-url">
               {result.invite.url}
@@ -159,24 +221,34 @@ export default function CreateRelationshipPage() {
 
             <button
               type="button"
-              className="primary-button"
+              className="primary-button invite-share-button"
+              onClick={shareInviteLink}
+            >
+              邀请另一颗星球
+            </button>
+
+            <button
+              type="button"
+              className="invite-copy-button"
               onClick={copyInviteLink}
             >
-              {copied ? "已复制邀请链接" : "复制邀请链接"}
+              {copied ? "邀请链接已复制" : "复制邀请链接"}
             </button>
           </section>
 
-          <p className="create-expiry">
-            邀请有效期至：
-            {new Date(result.invite.expiresAt).toLocaleString(
-              "zh-CN",
-            )}
-          </p>
+          <div className="invite-status-card">
+            <span className="invite-status-dot" />
+
+            <div>
+              <strong>正在等待回应</strong>
+              <p>邀请将在 {expiresAt} 失效</p>
+            </div>
+          </div>
 
           {error && <p className="form-error">{error}</p>}
 
           <a className="create-enter-link" href="/">
-            进入我的星球
+            先进入我的星球
           </a>
         </section>
       </main>

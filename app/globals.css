@@ -2952,3 +2952,298 @@ textarea {
 .profile-device-list .profile-menu-item {
   margin: 0;
 }
+
+/* Refined invitation page */
+.invite-page {
+  background:
+    radial-gradient(
+      circle at 18% 14%,
+      rgba(255, 177, 142, 0.2),
+      transparent 31%
+    ),
+    radial-gradient(
+      circle at 83% 77%,
+      rgba(98, 87, 227, 0.17),
+      transparent 36%
+    ),
+    linear-gradient(160deg, #fffdfa 0%, #ffffff 48%, #faf9ff 100%);
+}
+
+.invite-card {
+  padding-top: 26px;
+  padding-bottom: 24px;
+  overflow: hidden;
+}
+
+.invite-visual {
+  position: relative;
+  width: 196px;
+  height: 118px;
+  margin: 0 auto 22px;
+}
+
+.invite-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px solid rgba(66, 54, 101, 0.14);
+  border-radius: 50%;
+}
+
+.invite-orbit-outer {
+  width: 184px;
+  height: 78px;
+  transform: translate(-50%, -50%) rotate(-13deg);
+}
+
+.invite-orbit-inner {
+  width: 137px;
+  height: 55px;
+  opacity: 0.55;
+  transform: translate(-50%, -50%) rotate(21deg);
+}
+
+.invite-planet {
+  position: absolute;
+  top: 50%;
+  display: block;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow:
+    0 13px 30px rgba(50, 38, 82, 0.14),
+    inset -6px -7px 12px rgba(31, 22, 64, 0.09);
+}
+
+.invite-planet span {
+  position: absolute;
+  top: 21%;
+  left: 23%;
+  width: 28%;
+  height: 17%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.42);
+  transform: rotate(-27deg);
+}
+
+.invite-planet-self {
+  left: 31px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(
+    145deg,
+    #ffb996 0%,
+    #ff826c 58%,
+    #eb6258 100%
+  );
+  transform: translateY(-57%);
+}
+
+.invite-planet-partner {
+  right: 28px;
+  width: 43px;
+  height: 43px;
+  background: linear-gradient(
+    145deg,
+    #b7b0ff 0%,
+    #776de1 58%,
+    #574cc4 100%
+  );
+  transform: translateY(-11%);
+}
+
+.invite-star {
+  position: absolute;
+  color: rgba(72, 60, 108, 0.42);
+  line-height: 1;
+}
+
+.invite-star-one {
+  top: 12px;
+  right: 43px;
+  font-size: 13px;
+}
+
+.invite-star-two {
+  bottom: 8px;
+  left: 59px;
+  font-size: 11px;
+}
+
+.invite-heading h1 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 0.22em;
+}
+
+.invite-heading h1 span {
+  color: #6257d7;
+}
+
+.invite-result {
+  padding: 17px;
+  border-color: rgba(98, 87, 215, 0.12);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(249, 247, 255, 0.96),
+      rgba(255, 250, 247, 0.87)
+    );
+}
+
+.invite-result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 9px;
+}
+
+.invite-result-header span:first-child {
+  color: rgba(49, 43, 66, 0.65);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.invite-result-header span:last-child {
+  padding: 5px 8px;
+  border-radius: 999px;
+  color: rgba(98, 87, 215, 0.74);
+  background: rgba(98, 87, 215, 0.08);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.invite-result-url {
+  max-height: 74px;
+  overflow: auto;
+  padding: 13px 14px;
+  border: 1px solid rgba(66, 54, 101, 0.07);
+  color: rgba(63, 54, 97, 0.75);
+  background: rgba(255, 255, 255, 0.84);
+  font-size: 10px;
+  line-height: 1.65;
+}
+
+.invite-share-button {
+  margin-top: 14px;
+  background:
+    linear-gradient(135deg, #665bdc 0%, #5549c3 100%);
+  box-shadow: 0 14px 30px rgba(98, 87, 215, 0.22);
+}
+
+.invite-copy-button {
+  width: 100%;
+  min-height: 46px;
+  margin-top: 8px;
+  border: 0;
+  border-radius: 14px;
+  color: #6257d7;
+  background: rgba(98, 87, 215, 0.08);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.invite-status-card {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-top: 15px;
+  padding: 13px 14px;
+  border: 1px solid rgba(65, 55, 91, 0.07);
+  border-radius: 17px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.invite-status-dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f28a73;
+  box-shadow: 0 0 0 5px rgba(242, 138, 115, 0.12);
+}
+
+.invite-status-card strong {
+  display: block;
+  color: rgba(43, 38, 58, 0.76);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.invite-status-card p {
+  margin: 3px 0 0;
+  color: rgba(52, 47, 65, 0.43);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.invite-card .create-enter-link {
+  min-height: auto;
+  margin-top: 17px;
+  padding: 8px 12px;
+  color: rgba(78, 68, 115, 0.57);
+  background: transparent;
+  font-size: 11px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .invite-planet-self {
+    animation: invite-planet-self 2200ms ease-in-out infinite alternate;
+  }
+
+  .invite-planet-partner {
+    animation: invite-planet-partner 2500ms ease-in-out infinite alternate;
+  }
+
+  .invite-orbit-outer {
+    animation: invite-orbit-drift 7000ms linear infinite;
+  }
+}
+
+@keyframes invite-planet-self {
+  from {
+    transform: translateY(-61%);
+  }
+
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes invite-planet-partner {
+  from {
+    transform: translateY(-16%);
+  }
+
+  to {
+    transform: translateY(-5%);
+  }
+}
+
+@keyframes invite-orbit-drift {
+  from {
+    transform: translate(-50%, -50%) rotate(-13deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(347deg);
+  }
+}
+
+@media (max-height: 720px) {
+  .invite-card {
+    padding-top: 22px;
+    padding-bottom: 20px;
+  }
+
+  .invite-visual {
+    height: 95px;
+    margin-bottom: 15px;
+    transform: scale(0.88);
+  }
+
+  .invite-result {
+    margin-top: 18px;
+  }
+}
