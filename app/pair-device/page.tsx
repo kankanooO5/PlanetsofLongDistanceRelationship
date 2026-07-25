@@ -38,6 +38,14 @@ export default function PairDevicePage() {
     [code],
   );
 
+  const formattedCode = useMemo(() => {
+    if (normalizedCode.length <= 4) {
+      return normalizedCode;
+    }
+
+    return `${normalizedCode.slice(0, 4)} ${normalizedCode.slice(4)}`;
+  }, [normalizedCode]);
+
   async function submit(event: FormEvent) {
     event.preventDefault();
 
@@ -123,53 +131,153 @@ export default function PairDevicePage() {
 
   return (
     <main className="pairing-page">
+      <div
+        className="pairing-background"
+        aria-hidden="true"
+      >
+        <span className="pairing-background-orbit pairing-background-orbit-one" />
+        <span className="pairing-background-orbit pairing-background-orbit-two" />
+      </div>
+
       <section className="pairing-card">
-        <p className="pairing-eyebrow">
-          CONNECT THIS DEVICE
-        </p>
+        <div
+          className="pairing-universe"
+          aria-hidden="true"
+        >
+          <span className="pairing-orbit pairing-orbit-outer" />
+          <span className="pairing-orbit pairing-orbit-inner" />
 
-        <h1>绑定这台设备</h1>
+          <span className="pairing-planet">
+            <span className="pairing-planet-shine" />
+          </span>
 
-        <p>
-          请在已经登录的 Safari 中打开“生成设备绑定码”，然后将代码输入这里。
-        </p>
+          <span className="pairing-device">
+            <span />
+          </span>
+
+          <span className="pairing-signal pairing-signal-one" />
+          <span className="pairing-signal pairing-signal-two" />
+
+          <span className="pairing-star pairing-star-one">
+            ✦
+          </span>
+
+          <span className="pairing-star pairing-star-two">
+            ✧
+          </span>
+        </div>
+
+        <header className="pairing-header">
+          <p className="pairing-eyebrow">
+            CONNECT THIS DEVICE
+          </p>
+
+          <h1>绑定这台设备</h1>
+
+          <p className="pairing-description">
+            输入另一台已登录设备生成的绑定码，将这台设备连接到属于你的星球。
+          </p>
+        </header>
 
         <form
           className="pairing-form"
           onSubmit={submit}
         >
-          <input
-            type="text"
-            value={normalizedCode}
-            onChange={(event) => {
-              setCode(event.target.value);
-              setError("");
-            }}
-            placeholder="ABCD 2345"
-            autoCapitalize="characters"
-            autoCorrect="off"
-            spellCheck={false}
-            inputMode="text"
-            maxLength={8}
-            aria-label="设备绑定码"
-          />
+          <div className="pairing-code-section">
+            <div className="pairing-code-heading">
+              <label htmlFor="pairing-code">
+                设备绑定码
+              </label>
+
+              <span>
+                {normalizedCode.length}/8
+              </span>
+            </div>
+
+            <input
+              id="pairing-code"
+              type="text"
+              value={formattedCode}
+              onChange={(event) => {
+                setCode(event.target.value);
+                setError("");
+              }}
+              placeholder="ABCD 2345"
+              autoCapitalize="characters"
+              autoComplete="one-time-code"
+              autoCorrect="off"
+              spellCheck={false}
+              inputMode="text"
+              maxLength={9}
+              aria-label="设备绑定码"
+              aria-describedby="pairing-code-help"
+            />
+
+            <p
+              id="pairing-code-help"
+              className="pairing-code-help"
+            >
+              绑定码由 8 位数字或大写字母组成，短时间内有效。
+            </p>
+          </div>
+
+          <div className="pairing-guide">
+            <div className="pairing-guide-item">
+              <span>1</span>
+
+              <p>
+                在已经登录的设备中打开个人页
+              </p>
+            </div>
+
+            <div className="pairing-guide-item">
+              <span>2</span>
+
+              <p>
+                点击“生成设备绑定码”
+              </p>
+            </div>
+
+            <div className="pairing-guide-item">
+              <span>3</span>
+
+              <p>
+                将生成的 8 位代码输入这里
+              </p>
+            </div>
+          </div>
 
           {error && (
-            <p className="pairing-error">
+            <p
+              className="pairing-error"
+              role="alert"
+            >
               {error}
             </p>
           )}
 
           <button
             type="submit"
+            className="pairing-submit"
             disabled={
               submitting ||
               normalizedCode.length !== 8
             }
           >
-            {submitting
-              ? "正在连接星球"
-              : "确认绑定"}
+            <span>
+              {submitting
+                ? "正在连接星球"
+                : "确认绑定"}
+            </span>
+
+            {!submitting && (
+              <span
+                className="pairing-submit-arrow"
+                aria-hidden="true"
+              >
+                →
+              </span>
+            )}
           </button>
         </form>
 
