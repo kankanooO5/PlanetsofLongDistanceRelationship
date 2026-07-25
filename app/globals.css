@@ -174,13 +174,6 @@ button {
   font-weight: 700;
 }
 
-.welcome-card input,
-.wish-form input {
-  width: 100%;
-  border: 1px solid var(--line);
-  outline: none;
-  background: rgba(255, 255, 255, 0.72);
-}
 
 .welcome-card input {
   height: 52px;
@@ -189,12 +182,6 @@ button {
   font-size: 15px;
 }
 
-.welcome-card input:focus,
-.wish-form input:focus,
-.composer textarea:focus {
-  border-color: rgba(111, 29, 58, 0.48);
-  box-shadow: 0 0 0 4px rgba(111, 29, 58, 0.07);
-}
 
 .welcome-card fieldset {
   margin: 21px 0 24px;
@@ -379,11 +366,6 @@ button {
   font-size: 20px;
 }
 
-.section-heading small,
-.page-title > span {
-  color: var(--muted);
-  font-size: 11px;
-}
 
 .section-heading button {
   border: 0;
@@ -409,9 +391,6 @@ button {
   background: #f1dbd5;
 }
 
-.status-card.partner {
-  background: #e4e7dd;
-}
 
 .status-emoji {
   display: block;
@@ -492,9 +471,6 @@ button {
   font-size: 10px;
 }
 
-.miss-you:active .heart {
-  transform: scale(0.9);
-}
 
 .message-preview {
   display: grid;
@@ -671,13 +647,6 @@ button {
   text-align: left;
 }
 
-.wish-list > button.done {
-  opacity: 0.55;
-}
-
-.wish-list > button.done strong {
-  text-decoration: line-through;
-}
 
 .wish-number {
   color: var(--coral);
@@ -724,10 +693,6 @@ button {
   text-align: left;
 }
 
-.mood-list button.active {
-  border-color: rgba(111, 29, 58, 0.52);
-  background: #f2dfda;
-}
 
 .mood-list button > span {
   font-size: 28px;
@@ -808,10 +773,6 @@ button {
   line-height: 1;
 }
 
-.bottom-nav button.active {
-  color: var(--wine);
-  font-weight: 800;
-}
 
 .toast {
   position: fixed;
@@ -841,13 +802,6 @@ button {
   text-align: center;
 }
 
-@keyframes toast-in {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -10px);
-  }
-}
-
 @media (min-width: 721px) {
   body {
     padding: 28px 0;
@@ -862,10 +816,7 @@ button {
     box-shadow: var(--shadow);
   }
 
-  .bottom-nav {
-    position: sticky;
-    margin-top: 24px;
-  }
+
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -42,3 +42,14 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+_refactor_backups/
+*.bak
+*.backup
+node_modules/
+.next/
+.vinext/
+.wrangler/
+dist/
+build/
+.env
+.env.*
