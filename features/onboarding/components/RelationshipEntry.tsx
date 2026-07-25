@@ -1,60 +1,43 @@
-"use client";
+import Link from "next/link";
 
-type RelationshipEntryProps = {
-  error?: string;
-};
-
-export function RelationshipEntry({
-  error = "",
-}: RelationshipEntryProps) {
+export function RelationshipEntry() {
   return (
     <main className="relationship-entry">
-      <div className="relationship-entry-orbit relationship-entry-orbit-one" />
-      <div className="relationship-entry-orbit relationship-entry-orbit-two" />
-
       <section className="relationship-entry-card">
-        <div className="relationship-entry-planets" aria-hidden="true">
-          <span className="relationship-entry-planet relationship-entry-planet-a" />
-          <span className="relationship-entry-path" />
-          <span className="relationship-entry-planet relationship-entry-planet-b" />
+        <div
+          className="relationship-entry-planets"
+          aria-hidden="true"
+        >
+          <span />
+          <span />
         </div>
 
         <p className="relationship-entry-eyebrow">
-          TWO PLANETS · ONE HOME
+          TWO PLANETS
         </p>
 
-        <h1>两颗星球</h1>
+        <h1>进入你们的小宇宙</h1>
 
-        <p className="relationship-entry-copy">
-          创建属于你们的小宇宙，或通过对方发送的一次性邀请链接加入。
+        <p className="relationship-entry-description">
+          每段关系只有两位固定成员。创建后，将一次性邀请链接发送给另一颗星球。
         </p>
 
-        {error && (
-          <p className="relationship-entry-error">
-            {error}
-          </p>
-        )}
-
-        <a
-          className="relationship-entry-primary"
+        <Link
           href="/create"
+          className="relationship-entry-primary"
         >
-          创建我们的星球
-        </a>
+          创建一段关系
+        </Link>
 
-        <section className="relationship-entry-invite-note">
-          <span aria-hidden="true">✦</span>
+        <Link
+          href="/pair-device"
+          className="relationship-entry-secondary"
+        >
+          绑定这台设备
+        </Link>
 
-          <div>
-            <strong>已经收到邀请？</strong>
-            <p>
-              请直接打开对方发送的邀请链接，不需要输入共同暗号。
-            </p>
-          </div>
-        </section>
-
-        <p className="relationship-entry-footer">
-          每段关系只有两位固定成员，绑定后不能随意切换身份。
+        <p className="relationship-entry-note">
+          收到邀请时，请直接打开对方发送的一次性邀请链接。
         </p>
       </section>
     </main>

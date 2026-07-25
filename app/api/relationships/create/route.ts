@@ -161,6 +161,20 @@ export async function POST(request: NextRequest) {
 
       database
         .prepare(
+          `INSERT INTO member_sessions (
+            id,
+            member_id,
+            token_hash
+          ) VALUES (?, ?, ?)`,
+        )
+        .bind(
+          crypto.randomUUID(),
+          creatorMemberId,
+          creatorMemberTokenHash,
+        ),
+
+      database
+        .prepare(
           `INSERT INTO relationship_invites (
             id,
             relationship_id,

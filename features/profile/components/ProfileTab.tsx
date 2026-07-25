@@ -1,62 +1,72 @@
-"use client";
+import Link from "next/link";
 
-import type { CoupleSettings, Role } from "../../shared/types";
-
-type ProfileTabProps = {
-  settings: CoupleSettings;
-  role: Role;
-};
-
-export function ProfileTab({
-  settings,
-  role,
-}: ProfileTabProps) {
-  const currentName =
-    role === "first"
-      ? settings.firstName
-      : settings.secondName;
-
-  const partnerName =
-    role === "first"
-      ? settings.secondName
-      : settings.firstName;
-
+export function ProfileTab() {
   return (
-    <section className="tab-page profile-page">
+    <section className="tab-page">
       <header className="tab-page-header">
-        <p className="tab-page-eyebrow">OUR LITTLE UNIVERSE</p>
+        <p className="tab-page-eyebrow">
+          OUR LITTLE UNIVERSE
+        </p>
+
         <h1>我的星球</h1>
-        <p>管理你们的小宇宙和关系信息。</p>
+
+        <p>
+          管理当前成员身份，以及需要连接的其他设备。
+        </p>
       </header>
 
-      <section className="profile-card">
-        <div className="profile-avatar" aria-hidden="true">
-          {currentName.slice(0, 1)}
+      <div className="profile-identity-card">
+        <div
+          className="profile-identity-icon"
+          aria-hidden="true"
+        >
+          ✦
         </div>
 
-        <div className="profile-card-copy">
-          <p className="profile-card-label">当前身份</p>
-          <h2>{currentName}</h2>
-          <p>和 {partnerName} 共享这颗小宇宙</p>
-        </div>
-      </section>
+        <div className="profile-identity-copy">
+          <h2>固定成员身份</h2>
 
-      <section className="profile-list">
-        <div className="profile-list-item">
-          <span>恋爱开始日</span>
-          <strong>{settings.startDate}</strong>
+          <p>
+            这台设备已经绑定当前星球。每台设备都会保存独立的成员凭证。
+          </p>
         </div>
+      </div>
 
-        <div className="profile-list-item">
-          <span>下次见面</span>
-          <strong>{settings.nextMeeting}</strong>
-        </div>
+      <section className="profile-device-section">
+        <header className="profile-device-header">
+          <p>设备管理</p>
+        </header>
 
-        <div className="profile-list-item">
-          <span>我的身份</span>
-          <strong>
-            {role === "first" ? "星球一" : "星球二"}
-          </strong>
+        <div className="profile-device-list">
+          <Link
+            href="/device-code?target=self"
+            className="profile-menu-item"
+          >
+            <span>
+              <strong>绑定我的另一台设备</strong>
+
+              <small>
+                新设备继续使用当前星球身份
+              </small>
+            </span>
+
+            <span aria-hidden="true">›</span>
+          </Link>
+
+          <Link
+            href="/device-code?target=partner"
+            className="profile-menu-item"
+          >
+            <span>
+              <strong>恢复另一颗星球</strong>
+
+              <small>
+                为关系中的另一位固定成员恢复身份
+              </small>
+            </span>
+
+            <span aria-hidden="true">›</span>
+          </Link>
         </div>
       </section>
     </section>
