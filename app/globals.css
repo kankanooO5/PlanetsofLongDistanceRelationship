@@ -3675,3 +3675,124 @@ textarea {
     grid-template-columns: 1fr;
   }
 }
+
+/* Create page compact layout fix */
+.create-relationship-card {
+  padding-top: 23px;
+  padding-bottom: 18px;
+}
+
+.create-universe {
+  height: 84px;
+  margin-bottom: 12px;
+  transform: scale(0.88);
+  transform-origin: center;
+}
+
+.create-copy {
+  margin-top: 10px;
+  line-height: 1.55;
+}
+
+.create-form-refined {
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.create-form-section {
+  min-width: 0;
+  padding: 13px;
+  border-radius: 18px;
+}
+
+.create-section-heading {
+  margin-bottom: 10px;
+}
+
+.create-section-heading strong {
+  font-size: 12px;
+}
+
+.create-section-heading > strong {
+  align-self: center;
+}
+
+.create-name-grid,
+.create-date-grid {
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.create-name-grid > div,
+.create-date-grid > div,
+.create-field-card {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.create-form-refined input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.create-date-grid input[type="date"] {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding-right: 8px;
+  padding-left: 10px;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.create-date-grid input[type="date"]::-webkit-date-and-time-value {
+  min-width: 0;
+  text-align: left;
+}
+
+.create-date-grid input[type="date"]::-webkit-calendar-picker-indicator {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 3px;
+}
+
+.create-note {
+  margin-top: 11px;
+}
+
+.create-back-link {
+  margin-top: 3px;
+}
+
+@media (max-width: 430px) {
+  .create-date-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .create-date-grid > div {
+    width: 100%;
+  }
+}
+
+@media (max-height: 760px) {
+  .create-universe {
+    height: 68px;
+    margin-bottom: 7px;
+    transform: scale(0.74);
+  }
+
+  .create-form-refined {
+    margin-top: 14px;
+  }
+
+  .create-form-section {
+    padding: 11px 12px;
+  }
+}

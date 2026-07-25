@@ -297,7 +297,7 @@ export default function CreateRelationshipPage() {
           <h1>创建一段关系</h1>
 
           <p className="create-copy">
-            写下属于两颗星球的名字和时间，从这里建立你们共同的小宇宙。
+            写下你们的名字与重要日期。
           </p>
         </header>
 
@@ -309,10 +309,7 @@ export default function CreateRelationshipPage() {
             <div className="create-section-heading">
               <span className="create-section-number">01</span>
 
-              <div>
-                <strong>确认创建权限</strong>
-                <p>测试阶段需要先验证暗号</p>
-              </div>
+              <strong>确认创建权限</strong>
             </div>
 
             <label htmlFor="create-code">
@@ -340,10 +337,7 @@ export default function CreateRelationshipPage() {
             <div className="create-section-heading">
               <span className="create-section-number">02</span>
 
-              <div>
-                <strong>为两颗星球命名</strong>
-                <p>之后仍可以在个人页调整</p>
-              </div>
+              <strong>为两颗星球命名</strong>
             </div>
 
             <div className="create-name-grid">
@@ -396,10 +390,7 @@ export default function CreateRelationshipPage() {
             <div className="create-section-heading">
               <span className="create-section-number">03</span>
 
-              <div>
-                <strong>设置共同时间</strong>
-                <p>首页会根据这些日期自动计算</p>
-              </div>
+              <strong>设置共同时间</strong>
             </div>
 
             <div className="create-date-grid">
@@ -463,7 +454,7 @@ export default function CreateRelationshipPage() {
         </form>
 
         <p className="create-note">
-          创建完成后，你会获得一条仅供另一颗星球使用的一次性邀请链接。
+          创建后会生成一次性邀请链接。
         </p>
 
         <a className="create-back-link" href="/">
