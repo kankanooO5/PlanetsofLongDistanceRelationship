@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import { WelcomeScreen } from "../../auth/components/WelcomeScreen";
 import { useCoupleSession } from "../../auth/hooks/useCoupleSession";
 import { HomeTab } from "../../home/components/HomeTab";
@@ -25,8 +27,23 @@ export function AppRoot() {
 
   useServiceWorkerRegistration();
 
-  if (restoringSession) {
-    return <LaunchScreen />;
+  const [showLaunchScreen, setShowLaunchScreen] = useState(true);
+  const [launchScreenLeaving, setLaunchScreenLeaving] = useState(false);
+
+  useEffect(() => {
+    if (restoringSession || !showLaunchScreen) return;
+
+    setLaunchScreenLeaving(true);
+
+    const timer = window.setTimeout(() => {
+      setShowLaunchScreen(false);
+    }, 320);
+
+    return () => window.clearTimeout(timer);
+  }, [restoringSession, showLaunchScreen]);
+
+  if (restoringSession || showLaunchScreen) {
+    return <LaunchScreen leaving={launchScreenLeaving} />;
   }
 
   if (!entered || !data) {

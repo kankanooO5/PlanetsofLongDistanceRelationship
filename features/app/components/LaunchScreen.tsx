@@ -1,8 +1,15 @@
 "use client";
 
-export function LaunchScreen() {
+type LaunchScreenProps = {
+  leaving?: boolean;
+};
+
+export function LaunchScreen({ leaving = false }: LaunchScreenProps) {
   return (
-    <main className="launch-screen" aria-label="正在进入两颗星球">
+    <main
+      className={`launch-screen${leaving ? " launch-screen-leaving" : ""}`}
+      aria-label="正在进入两颗星球"
+    >
       <div className="launch-background" aria-hidden="true">
         <div className="launch-background-orbit launch-background-orbit-one" />
         <div className="launch-background-orbit launch-background-orbit-two" />

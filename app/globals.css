@@ -1269,3 +1269,34 @@ select {
     transform: translateY(-4px);
   }
 }
+
+/* Launch screen exit transition */
+.launch-screen {
+  transition:
+    opacity 300ms ease,
+    visibility 300ms ease;
+}
+
+.launch-screen .launch-content {
+  transition:
+    opacity 260ms ease,
+    transform 300ms ease;
+}
+
+.launch-screen-leaving {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.launch-screen-leaving .launch-content {
+  opacity: 0;
+  transform: translateY(-8px) scale(1.015);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .launch-screen,
+  .launch-screen .launch-content {
+    transition-duration: 1ms;
+  }
+}
