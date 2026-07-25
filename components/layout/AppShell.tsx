@@ -7,5 +7,9 @@ type AppShellProps = {
 };
 
 export function AppShell({ children }: AppShellProps) {
-  return <main className="app-shell app-shell-enter">{children}</main>;
+  return (
+    <main className="app-shell app-shell-enter">
+      {children}
+    </main>
+  );
 }

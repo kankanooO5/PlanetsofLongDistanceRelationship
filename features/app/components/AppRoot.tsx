@@ -2,11 +2,18 @@
 
 import { useEffect, useState } from "react";
 
+import { AppShell } from "../../../components/layout/AppShell";
 import { WelcomeScreen } from "../../auth/components/WelcomeScreen";
 import { useCoupleSession } from "../../auth/hooks/useCoupleSession";
 import { HomeTab } from "../../home/components/HomeTab";
+import { MemoriesTab } from "../../memories/components/MemoriesTab";
+import {
+  BottomNavigation,
+  type AppTab,
+} from "../../navigation/components/BottomNavigation";
+import { ProfileTab } from "../../profile/components/ProfileTab";
 import { useServiceWorkerRegistration } from "../../pwa/hooks/useServiceWorkerRegistration";
-import { AppShell } from "../../../components/layout/AppShell";
+import { WishesTab } from "../../wishes/components/WishesTab";
 import { LaunchScreen } from "./LaunchScreen";
 
 export function AppRoot() {
@@ -25,10 +32,11 @@ export function AppRoot() {
     enter,
   } = useCoupleSession();
 
-  useServiceWorkerRegistration();
-
+  const [activeTab, setActiveTab] = useState<AppTab>("home");
   const [showLaunchScreen, setShowLaunchScreen] = useState(true);
   const [launchScreenLeaving, setLaunchScreenLeaving] = useState(false);
+
+  useServiceWorkerRegistration();
 
   useEffect(() => {
     if (restoringSession || !showLaunchScreen) return;
@@ -68,7 +76,31 @@ export function AppRoot() {
 
   return (
     <AppShell>
-      <HomeTab settings={data.settings} role={role} now={new Date()} />
+      <div className="app-content">
+        {activeTab === "home" && (
+          <HomeTab
+            settings={data.settings}
+            role={role}
+            now={new Date()}
+          />
+        )}
+
+        {activeTab === "memories" && <MemoriesTab />}
+
+        {activeTab === "wishes" && <WishesTab />}
+
+        {activeTab === "profile" && (
+          <ProfileTab
+            settings={data.settings}
+            role={role}
+          />
+        )}
+      </div>
+
+      <BottomNavigation
+        activeTab={activeTab}
+        onChange={setActiveTab}
+      />
     </AppShell>
   );
 }
