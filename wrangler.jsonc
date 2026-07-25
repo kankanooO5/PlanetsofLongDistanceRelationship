@@ -7,6 +7,11 @@
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
 
+  "assets": {
+    "directory": "./dist/client",
+    "binding": "ASSETS"
+  },
+
   "d1_databases": [
     {
       "binding": "DB",
