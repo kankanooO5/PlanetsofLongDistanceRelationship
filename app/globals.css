@@ -1323,3 +1323,80 @@ select {
     animation-duration: 1ms;
   }
 }
+
+/* Mobile touch feedback */
+button,
+[role="button"],
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  min-height: 44px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition:
+    transform 120ms ease,
+    opacity 120ms ease,
+    box-shadow 160ms ease;
+}
+
+button:not(:disabled):active {
+  transform: scale(0.975);
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.58;
+}
+
+.primary-button:not(:disabled):active {
+  transform: translateY(1px) scale(0.985);
+}
+
+.role-picker button {
+  min-height: 64px;
+}
+
+input,
+textarea,
+select {
+  min-height: 44px;
+  border-radius: 12px;
+  touch-action: manipulation;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid rgba(98, 87, 227, 0.42);
+  outline-offset: 3px;
+}
+
+.app-shell,
+.welcome,
+.launch-screen {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+input,
+textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button:not(:disabled):hover {
+    transform: translateY(-1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button {
+    transition-duration: 1ms;
+  }
+}

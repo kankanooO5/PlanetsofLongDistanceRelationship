@@ -55,6 +55,10 @@ export function WelcomeScreen({
             onChange={(event) => onCodeChange(event.target.value)}
             placeholder="输入只有你们知道的暗号"
             autoComplete="current-password"
+            autoCapitalize="none"
+            autoCorrect="off"
+            enterKeyHint="go"
+            spellCheck={false}
             required
           />
 
