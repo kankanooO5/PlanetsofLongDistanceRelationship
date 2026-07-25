@@ -114,6 +114,11 @@ export async function POST(request: NextRequest) {
   const creatorMemberId = crypto.randomUUID();
   const inviteId = crypto.randomUUID();
 
+  const creatorMemberToken = createRandomToken();
+  const creatorMemberTokenHash = await sha256(
+    creatorMemberToken,
+  );
+
   const inviteToken = createRandomToken();
   const tokenHash = await sha256(inviteToken);
 
@@ -143,13 +148,15 @@ export async function POST(request: NextRequest) {
             id,
             relationship_id,
             role,
-            display_name
-          ) VALUES (?, ?, 'first', ?)`,
+            display_name,
+            member_token_hash
+          ) VALUES (?, ?, 'first', ?, ?)`,
         )
         .bind(
           creatorMemberId,
           relationshipId,
           creatorName,
+          creatorMemberTokenHash,
         ),
 
       database
@@ -184,6 +191,7 @@ export async function POST(request: NextRequest) {
           memberId: creatorMemberId,
           role: "first",
           displayName: creatorName,
+          token: creatorMemberToken,
         },
         invite: {
           partnerName,
