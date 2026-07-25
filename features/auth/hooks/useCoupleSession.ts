@@ -6,6 +6,7 @@ import type { FormEvent } from "react";
 import type { CoupleData, Role } from "../../shared/types";
 import { requestCoupleData } from "../../../lib/api/couple-client";
 import {
+  clearCoupleLoginSession,
   readSavedCoupleSession,
   saveCoupleSession,
 } from "../../../lib/storage/couple-session";
@@ -13,6 +14,7 @@ import {
 export function useCoupleSession() {
   const [code, setCode] = useState("");
   const [role, setRole] = useState<Role>("first");
+  const [boundRole, setBoundRole] = useState<Role | null>(null);
   const [hasChosenRole, setHasChosenRole] = useState(false);
   const [entered, setEntered] = useState(false);
   const [data, setData] = useState<CoupleData | null>(null);
@@ -29,7 +31,6 @@ export function useCoupleSession() {
     [code],
   );
 
-  // 首次启动时尝试恢复已验证的本地会话。
   useEffect(() => {
     let cancelled = false;
 
@@ -38,24 +39,37 @@ export function useCoupleSession() {
       const minimumLaunchDuration = 2000;
       const savedSession = readSavedCoupleSession();
 
+      const restoredRole =
+        savedSession.boundRole ?? savedSession.role;
+
       if (savedSession.code) {
         setCode(savedSession.code);
       }
 
-      if (savedSession.role) {
-        setRole(savedSession.role);
+      if (savedSession.boundRole) {
+        setBoundRole(savedSession.boundRole);
+      }
+
+      if (restoredRole) {
+        setRole(restoredRole);
         setHasChosenRole(true);
       }
 
-      if (!savedSession.code || !savedSession.role) {
+      if (!savedSession.code || !restoredRole) {
         const elapsed = Date.now() - launchStartedAt;
-        const remaining = Math.max(0, minimumLaunchDuration - elapsed);
+        const remaining = Math.max(
+          0,
+          minimumLaunchDuration - elapsed,
+        );
 
         await new Promise((resolve) => {
           window.setTimeout(resolve, remaining);
         });
 
-        if (!cancelled) setRestoringSession(false);
+        if (!cancelled) {
+          setRestoringSession(false);
+        }
+
         return;
       }
 
@@ -77,13 +91,18 @@ export function useCoupleSession() {
         setError("登录状态已失效，请重新输入暗号");
       } finally {
         const elapsed = Date.now() - launchStartedAt;
-        const remaining = Math.max(0, minimumLaunchDuration - elapsed);
+        const remaining = Math.max(
+          0,
+          minimumLaunchDuration - elapsed,
+        );
 
         await new Promise((resolve) => {
           window.setTimeout(resolve, remaining);
         });
 
-        if (!cancelled) setRestoringSession(false);
+        if (!cancelled) {
+          setRestoringSession(false);
+        }
       }
     }
 
@@ -94,7 +113,6 @@ export function useCoupleSession() {
     };
   }, []);
 
-  // 已进入后定时刷新服务端数据。
   useEffect(() => {
     if (!entered) return;
 
@@ -105,8 +123,23 @@ export function useCoupleSession() {
     return () => window.clearInterval(timer);
   }, [entered, loadData]);
 
+  const chooseRole = (nextRole: Role) => {
+    if (boundRole) return;
+
+    setRole(nextRole);
+    setHasChosenRole(true);
+  };
+
   const enter = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!hasChosenRole) {
+      setError("请先确认你是哪颗星球");
+      return;
+    }
+
+    const effectiveRole = boundRole ?? role;
+
     setLoading(true);
     setError("");
 
@@ -114,7 +147,10 @@ export function useCoupleSession() {
       const result = await requestCoupleData<CoupleData>(code);
 
       setData(result);
-      saveCoupleSession(code, role);
+      setRole(effectiveRole);
+      setBoundRole(effectiveRole);
+      setHasChosenRole(true);
+      saveCoupleSession(code, effectiveRole);
       setEntered(true);
     } catch (reason) {
       setEntered(false);
@@ -129,18 +165,34 @@ export function useCoupleSession() {
     }
   };
 
+  const logout = () => {
+    clearCoupleLoginSession();
+
+    setCode("");
+    setEntered(false);
+    setData(null);
+    setError("");
+
+    if (boundRole) {
+      setRole(boundRole);
+      setHasChosenRole(true);
+    }
+  };
+
   return {
     code,
     setCode,
     role,
-    setRole,
+    boundRole,
+    roleLocked: Boolean(boundRole),
     hasChosenRole,
-    setHasChosenRole,
     entered,
     data,
     loading,
     restoringSession,
     error,
+    chooseRole,
+    logout,
     enter,
   };
 }

@@ -6,6 +6,7 @@ import type { Role } from "../../shared/types";
 type WelcomeScreenProps = {
   code: string;
   role: Role;
+  roleLocked: boolean;
   hasChosenRole: boolean;
   loading: boolean;
   error: string;
@@ -19,6 +20,7 @@ type WelcomeScreenProps = {
 export function WelcomeScreen({
   code,
   role,
+  roleLocked,
   hasChosenRole,
   loading,
   error,
@@ -28,6 +30,11 @@ export function WelcomeScreen({
   onRoleChange,
   onSubmit,
 }: WelcomeScreenProps) {
+  const roleName =
+    role === "first"
+      ? firstNameInput || "小行星 A"
+      : secondNameInput || "小行星 B";
+
   return (
     <main className="welcome">
       <div className="orbit orbit-one" />
@@ -62,29 +69,63 @@ export function WelcomeScreen({
             required
           />
 
-          <fieldset>
-            <legend>选择你的星球（此设备确认后不可更改）</legend>
+          {roleLocked ? (
+            <section className="bound-role-card">
+              <span
+                className={`planet ${
+                  role === "first" ? "planet-a" : "planet-b"
+                }`}
+                aria-hidden="true"
+              />
 
-            <div className="role-picker">
-              <button
-                className={role === "first" ? "selected" : ""}
-                type="button"
-                onClick={() => onRoleChange("first")}
-              >
-                <span className="planet planet-a" aria-hidden="true" />
-                {(firstNameInput || "A")}&apos;s 星球
-              </button>
+              <div>
+                <p>本设备已绑定</p>
+                <strong>{roleName}</strong>
+              </div>
 
-              <button
-                className={role === "second" ? "selected" : ""}
-                type="button"
-                onClick={() => onRoleChange("second")}
-              >
-                <span className="planet planet-b" aria-hidden="true" />
-                {(secondNameInput || "B")}&apos;s 星球
-              </button>
-            </div>
-          </fieldset>
+              <span className="bound-role-status">已锁定</span>
+            </section>
+          ) : (
+            <fieldset>
+              <legend>
+                首次确认你的星球，绑定后不可随意更改
+              </legend>
+
+              <div className="role-picker">
+                <button
+                  className={
+                    hasChosenRole && role === "first"
+                      ? "selected"
+                      : ""
+                  }
+                  type="button"
+                  onClick={() => onRoleChange("first")}
+                >
+                  <span
+                    className="planet planet-a"
+                    aria-hidden="true"
+                  />
+                  {(firstNameInput || "A")}&apos;s 星球
+                </button>
+
+                <button
+                  className={
+                    hasChosenRole && role === "second"
+                      ? "selected"
+                      : ""
+                  }
+                  type="button"
+                  onClick={() => onRoleChange("second")}
+                >
+                  <span
+                    className="planet planet-b"
+                    aria-hidden="true"
+                  />
+                  {(secondNameInput || "B")}&apos;s 星球
+                </button>
+              </div>
+            </fieldset>
+          )}
 
           {error && <p className="form-error">{error}</p>}
 
@@ -97,7 +138,9 @@ export function WelcomeScreen({
           </button>
         </form>
 
-        <p className="privacy-note">只有知道暗号的人才能进入</p>
+        <p className="privacy-note">
+          同一设备确认身份后，将固定进入对应星球
+        </p>
       </section>
     </main>
   );

@@ -21,14 +21,14 @@ export function AppRoot() {
     code,
     setCode,
     role,
-    setRole,
+    roleLocked,
     hasChosenRole,
-    setHasChosenRole,
     entered,
     data,
     loading,
     restoringSession,
     error,
+    chooseRole,
     enter,
   } = useCoupleSession();
 
@@ -59,16 +59,14 @@ export function AppRoot() {
       <WelcomeScreen
         code={code}
         role={role}
+        roleLocked={roleLocked}
         hasChosenRole={hasChosenRole}
         loading={loading}
         error={error}
         firstNameInput=""
         secondNameInput=""
         onCodeChange={setCode}
-        onRoleChange={(nextRole) => {
-          setRole(nextRole);
-          setHasChosenRole(true);
-        }}
+        onRoleChange={chooseRole}
         onSubmit={enter}
       />
     );
