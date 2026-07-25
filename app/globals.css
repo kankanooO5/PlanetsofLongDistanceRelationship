@@ -976,3 +976,296 @@ select {
     transform: scale(1);
   }
 }
+
+/* Two Planets launch experience v2 */
+.launch-screen {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  box-sizing: border-box;
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  overflow: hidden;
+  padding:
+    calc(24px + env(safe-area-inset-top))
+    calc(24px + env(safe-area-inset-right))
+    calc(24px + env(safe-area-inset-bottom))
+    calc(24px + env(safe-area-inset-left));
+  color: #27233a;
+  background:
+    radial-gradient(
+      circle at 24% 20%,
+      rgba(255, 177, 146, 0.2),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 78% 74%,
+      rgba(118, 105, 224, 0.17),
+      transparent 38%
+    ),
+    linear-gradient(160deg, #fffdfa 0%, #fff 47%, #faf9ff 100%);
+}
+
+.launch-background {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.launch-background-orbit {
+  position: absolute;
+  border: 1px solid rgba(63, 51, 96, 0.08);
+  border-radius: 50%;
+}
+
+.launch-background-orbit-one {
+  top: -18%;
+  left: -35%;
+  width: 115vw;
+  height: 62vw;
+  transform: rotate(-19deg);
+}
+
+.launch-background-orbit-two {
+  right: -48%;
+  bottom: -12%;
+  width: 126vw;
+  height: 65vw;
+  transform: rotate(17deg);
+}
+
+.launch-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: min(100%, 360px);
+  justify-items: center;
+  text-align: center;
+}
+
+.launch-universe {
+  position: relative;
+  width: 176px;
+  height: 126px;
+  margin-bottom: 34px;
+}
+
+.launch-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px solid rgba(54, 43, 88, 0.16);
+  border-radius: 50%;
+}
+
+.launch-orbit-outer {
+  width: 164px;
+  height: 75px;
+  transform: translate(-50%, -50%) rotate(-13deg);
+}
+
+.launch-orbit-inner {
+  width: 124px;
+  height: 54px;
+  transform: translate(-50%, -50%) rotate(21deg);
+  opacity: 0.55;
+}
+
+.launch-planet {
+  position: absolute;
+  top: 50%;
+  display: block;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow:
+    0 13px 30px rgba(50, 38, 82, 0.14),
+    inset -6px -7px 12px rgba(31, 22, 64, 0.1);
+}
+
+.launch-planet-a {
+  left: 26px;
+  width: 48px;
+  height: 48px;
+  background:
+    radial-gradient(
+      circle at 31% 29%,
+      #ffd4c2 0 9%,
+      transparent 10%
+    ),
+    linear-gradient(145deg, #ffb18e 0%, #ff7c67 58%, #eb5f57 100%);
+  transform: translateY(-52%);
+}
+
+.launch-planet-b {
+  right: 25px;
+  width: 42px;
+  height: 42px;
+  background:
+    radial-gradient(
+      circle at 32% 28%,
+      #dedaff 0 9%,
+      transparent 10%
+    ),
+    linear-gradient(145deg, #aaa3ff 0%, #7469df 58%, #5549c3 100%);
+  transform: translateY(-13%);
+}
+
+.launch-planet-shine {
+  position: absolute;
+  top: 20%;
+  left: 21%;
+  width: 29%;
+  height: 18%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.42);
+  transform: rotate(-28deg);
+}
+
+.launch-star {
+  position: absolute;
+  color: rgba(77, 63, 117, 0.45);
+  line-height: 1;
+}
+
+.launch-star-one {
+  top: 13px;
+  right: 38px;
+  font-size: 13px;
+}
+
+.launch-star-two {
+  bottom: 9px;
+  left: 53px;
+  font-size: 10px;
+}
+
+.launch-star-three {
+  top: 42px;
+  left: 83px;
+  font-size: 18px;
+}
+
+.launch-copy {
+  display: grid;
+  justify-items: center;
+}
+
+.launch-eyebrow {
+  margin: 0 0 13px;
+  color: rgba(55, 44, 91, 0.55);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.23em;
+}
+
+.launch-copy h1 {
+  margin: 0;
+  color: #29253a;
+  font-size: clamp(31px, 9vw, 40px);
+  font-weight: 650;
+  letter-spacing: 0.06em;
+}
+
+.launch-subtitle {
+  max-width: 270px;
+  margin: 17px 0 0;
+  color: rgba(48, 43, 65, 0.62);
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.launch-loading {
+  display: flex;
+  gap: 7px;
+  margin-top: 42px;
+}
+
+.launch-loading span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(80, 68, 121, 0.35);
+  animation: launch-loading-dot 900ms ease-in-out infinite;
+}
+
+.launch-loading span:nth-child(2) {
+  animation-delay: 140ms;
+}
+
+.launch-loading span:nth-child(3) {
+  animation-delay: 280ms;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .launch-planet-a {
+    animation: launch-planet-a 1800ms ease-in-out infinite alternate;
+  }
+
+  .launch-planet-b {
+    animation: launch-planet-b 2100ms ease-in-out infinite alternate;
+  }
+
+  .launch-orbit-outer {
+    animation: launch-orbit-drift 4500ms linear infinite;
+  }
+
+  .launch-content {
+    animation: launch-content-in 520ms ease-out both;
+  }
+}
+
+@keyframes launch-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(7px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes launch-planet-a {
+  from {
+    transform: translateY(-56%) rotate(-2deg);
+  }
+
+  to {
+    transform: translateY(-46%) rotate(2deg);
+  }
+}
+
+@keyframes launch-planet-b {
+  from {
+    transform: translateY(-18%) rotate(2deg);
+  }
+
+  to {
+    transform: translateY(-7%) rotate(-2deg);
+  }
+}
+
+@keyframes launch-orbit-drift {
+  from {
+    transform: translate(-50%, -50%) rotate(-13deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(347deg);
+  }
+}
+
+@keyframes launch-loading-dot {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+
+  50% {
+    opacity: 0.85;
+    transform: translateY(-4px);
+  }
+}

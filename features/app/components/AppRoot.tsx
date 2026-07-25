@@ -5,6 +5,7 @@ import { useCoupleSession } from "../../auth/hooks/useCoupleSession";
 import { HomeTab } from "../../home/components/HomeTab";
 import { useServiceWorkerRegistration } from "../../pwa/hooks/useServiceWorkerRegistration";
 import { AppShell } from "../../../components/layout/AppShell";
+import { LaunchScreen } from "./LaunchScreen";
 
 export function AppRoot() {
   const {
@@ -25,16 +26,7 @@ export function AppRoot() {
   useServiceWorkerRegistration();
 
   if (restoringSession) {
-    return (
-      <main className="launch-screen" aria-label="正在进入两颗星球">
-        <div className="launch-orbit" aria-hidden="true">
-          <span className="launch-planet launch-planet-a" />
-          <span className="launch-planet launch-planet-b" />
-        </div>
-
-        <p>TWO PLANETS · ONE HOME</p>
-      </main>
-    );
+    return <LaunchScreen />;
   }
 
   if (!entered || !data) {

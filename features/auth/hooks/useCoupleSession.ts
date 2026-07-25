@@ -34,6 +34,8 @@ export function useCoupleSession() {
     let cancelled = false;
 
     async function restoreSession() {
+      const launchStartedAt = Date.now();
+      const minimumLaunchDuration = 900;
       const savedSession = readSavedCoupleSession();
 
       if (savedSession.code) {
@@ -46,6 +48,13 @@ export function useCoupleSession() {
       }
 
       if (!savedSession.code || !savedSession.role) {
+        const elapsed = Date.now() - launchStartedAt;
+        const remaining = Math.max(0, minimumLaunchDuration - elapsed);
+
+        await new Promise((resolve) => {
+          window.setTimeout(resolve, remaining);
+        });
+
         if (!cancelled) setRestoringSession(false);
         return;
       }
@@ -67,6 +76,13 @@ export function useCoupleSession() {
         setData(null);
         setError("登录状态已失效，请重新输入暗号");
       } finally {
+        const elapsed = Date.now() - launchStartedAt;
+        const remaining = Math.max(0, minimumLaunchDuration - elapsed);
+
+        await new Promise((resolve) => {
+          window.setTimeout(resolve, remaining);
+        });
+
         if (!cancelled) setRestoringSession(false);
       }
     }
