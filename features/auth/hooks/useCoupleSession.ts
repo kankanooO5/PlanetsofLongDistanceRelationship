@@ -16,55 +16,97 @@ export function useCoupleSession() {
   const [hasChosenRole, setHasChosenRole] = useState(false);
   const [entered, setEntered] = useState(false);
   const [data, setData] = useState<CoupleData | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const request = useCallback(
-    (body?: Record<string, unknown>) =>
-      requestCoupleData<CoupleData>(code, body),
+  const loadData = useCallback(
+    async (sessionCode = code) => {
+      const result = await requestCoupleData<CoupleData>(sessionCode);
+      setData(result);
+      return result;
+    },
     [code],
   );
 
-  const loadData = useCallback(async () => {
-    const result = await request();
-    setData(result);
-  }, [request]);
-
+  // 首次启动时尝试恢复已验证的本地会话。
   useEffect(() => {
-    const savedSession = readSavedCoupleSession();
+    let cancelled = false;
 
-    if (savedSession.code) setCode(savedSession.code);
+    async function restoreSession() {
+      const savedSession = readSavedCoupleSession();
 
-    if (savedSession.role) {
-      setRole(savedSession.role);
-      setHasChosenRole(true);
+      if (savedSession.code) {
+        setCode(savedSession.code);
+      }
+
+      if (savedSession.role) {
+        setRole(savedSession.role);
+        setHasChosenRole(true);
+      }
+
+      if (!savedSession.code || !savedSession.role) {
+        if (!cancelled) setLoading(false);
+        return;
+      }
+
+      try {
+        const result = await requestCoupleData<CoupleData>(
+          savedSession.code,
+        );
+
+        if (cancelled) return;
+
+        setData(result);
+        setEntered(true);
+        setError("");
+      } catch {
+        if (cancelled) return;
+
+        setEntered(false);
+        setData(null);
+        setError("登录状态已失效，请重新输入暗号");
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
     }
+
+    restoreSession();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
+  // 已进入后定时刷新服务端数据。
   useEffect(() => {
     if (!entered) return;
 
-    const timer = window.setInterval(
-      () => loadData().catch(() => undefined),
-      30000,
-    );
+    const timer = window.setInterval(() => {
+      loadData().catch(() => undefined);
+    }, 30000);
 
     return () => window.clearInterval(timer);
   }, [entered, loadData]);
 
-  const enter = async (event: FormEvent) => {
+  const enter = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      const result = await request();
+      const result = await requestCoupleData<CoupleData>(code);
 
       setData(result);
       saveCoupleSession(code, role);
       setEntered(true);
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : "进入失败");
+      setEntered(false);
+      setData(null);
+      setError(
+        reason instanceof Error
+          ? reason.message
+          : "进入失败，请再试一次",
+      );
     } finally {
       setLoading(false);
     }
