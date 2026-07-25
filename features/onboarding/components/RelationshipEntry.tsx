@@ -1,6 +1,12 @@
 import Link from "next/link";
 
-export function RelationshipEntry() {
+type RelationshipEntryProps = {
+  error?: string;
+};
+
+export function RelationshipEntry({
+  error,
+}: RelationshipEntryProps) {
   return (
     <main className="relationship-entry">
       <div
@@ -47,6 +53,12 @@ export function RelationshipEntry() {
             每段关系只属于两颗固定的星球。选择一种方式，开始进入你们共同的空间。
           </p>
         </header>
+
+        {error && (
+          <p className="relationship-entry-error">
+            {error}
+          </p>
+        )}
 
         <div className="relationship-entry-actions">
           <Link
