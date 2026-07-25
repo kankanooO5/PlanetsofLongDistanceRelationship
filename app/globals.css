@@ -3994,3 +3994,48 @@ textarea {
     font-size: 11px;
   }
 }
+
+/* Create form typography tuning */
+.create-form-compact .create-compact-code input,
+.create-form-compact .create-compact-self input,
+.create-form-compact .create-compact-partner input {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.create-form-compact .create-compact-code input::placeholder,
+.create-form-compact .create-compact-self input::placeholder,
+.create-form-compact .create-compact-partner input::placeholder {
+  color: rgba(48, 43, 64, 0.34);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.create-form-compact .create-compact-dates input[type="date"] {
+  font-size: 14px;
+  font-weight: 550;
+  letter-spacing: -0.015em;
+}
+
+.create-form-compact
+  .create-compact-dates
+  input[type="date"]::-webkit-date-and-time-value {
+  font-size: 14px;
+  font-weight: 550;
+}
+
+@media (max-width: 350px) {
+  .create-form-compact .create-compact-code input,
+  .create-form-compact .create-compact-self input,
+  .create-form-compact .create-compact-partner input {
+    font-size: 13px;
+  }
+
+  .create-form-compact .create-compact-dates input[type="date"],
+  .create-form-compact
+    .create-compact-dates
+    input[type="date"]::-webkit-date-and-time-value {
+    font-size: 13px;
+  }
+}
