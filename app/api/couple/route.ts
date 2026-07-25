@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { env } from "cloudflare:workers";
 
 export const runtime = "edge";
 
@@ -24,7 +25,7 @@ function isAuthorized(request: NextRequest) {
 }
 
 function getD1Database() {
-  return process.env.DB as D1Database | undefined;
+  return env.DB as D1Database | undefined;
 }
 
 async function ensureTables(d1: D1Database) {
