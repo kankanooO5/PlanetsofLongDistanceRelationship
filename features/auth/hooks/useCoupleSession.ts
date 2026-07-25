@@ -1,34 +1,38 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import type { FormEvent } from "react";
 
 import type { CoupleData, Role } from "../../shared/types";
-import { requestCoupleData } from "../../../lib/api/couple-client";
+import { requestMemberSession } from "../../../lib/api/member-client";
 import {
-  clearCoupleLoginSession,
-  readSavedCoupleSession,
-  saveCoupleSession,
-} from "../../../lib/storage/couple-session";
+  clearMemberSession,
+  readMemberSession,
+} from "../../../lib/storage/member-session";
 
 export function useCoupleSession() {
-  const [code, setCode] = useState("");
   const [role, setRole] = useState<Role>("first");
-  const [boundRole, setBoundRole] = useState<Role | null>(null);
-  const [hasChosenRole, setHasChosenRole] = useState(false);
   const [entered, setEntered] = useState(false);
   const [data, setData] = useState<CoupleData | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [memberToken, setMemberToken] = useState("");
   const [restoringSession, setRestoringSession] = useState(true);
   const [error, setError] = useState("");
 
   const loadData = useCallback(
-    async (sessionCode = code) => {
-      const result = await requestCoupleData<CoupleData>(sessionCode);
-      setData(result);
+    async (token = memberToken) => {
+      if (!token) {
+        throw new Error("当前设备尚未绑定星球");
+      }
+
+      const result = await requestMemberSession(token);
+
+      setData({
+        settings: result.settings,
+      });
+      setRole(result.member.role);
+
       return result;
     },
-    [code],
+    [memberToken],
   );
 
   useEffect(() => {
@@ -37,58 +41,45 @@ export function useCoupleSession() {
     async function restoreSession() {
       const launchStartedAt = Date.now();
       const minimumLaunchDuration = 2000;
-      const savedSession = readSavedCoupleSession();
-
-      const restoredRole =
-        savedSession.boundRole ?? savedSession.role;
-
-      if (savedSession.code) {
-        setCode(savedSession.code);
-      }
-
-      if (savedSession.boundRole) {
-        setBoundRole(savedSession.boundRole);
-      }
-
-      if (restoredRole) {
-        setRole(restoredRole);
-        setHasChosenRole(true);
-      }
-
-      if (!savedSession.code || !restoredRole) {
-        const elapsed = Date.now() - launchStartedAt;
-        const remaining = Math.max(
-          0,
-          minimumLaunchDuration - elapsed,
-        );
-
-        await new Promise((resolve) => {
-          window.setTimeout(resolve, remaining);
-        });
-
-        if (!cancelled) {
-          setRestoringSession(false);
-        }
-
-        return;
-      }
 
       try {
-        const result = await requestCoupleData<CoupleData>(
-          savedSession.code,
+        const savedSession = readMemberSession();
+
+        if (!savedSession) {
+          if (!cancelled) {
+            setEntered(false);
+            setData(null);
+            setError("");
+          }
+
+          return;
+        }
+
+        const result = await requestMemberSession(
+          savedSession.token,
         );
 
         if (cancelled) return;
 
-        setData(result);
+        setMemberToken(savedSession.token);
+        setRole(result.member.role);
+        setData({
+          settings: result.settings,
+        });
         setEntered(true);
         setError("");
-      } catch {
+      } catch (reason) {
         if (cancelled) return;
 
+        clearMemberSession();
+        setMemberToken("");
         setEntered(false);
         setData(null);
-        setError("登录状态已失效，请重新输入暗号");
+        setError(
+          reason instanceof Error
+            ? reason.message
+            : "成员身份已经失效",
+        );
       } finally {
         const elapsed = Date.now() - launchStartedAt;
         const remaining = Math.max(
@@ -114,85 +105,30 @@ export function useCoupleSession() {
   }, []);
 
   useEffect(() => {
-    if (!entered) return;
+    if (!entered || !memberToken) return;
 
     const timer = window.setInterval(() => {
-      loadData().catch(() => undefined);
+      loadData(memberToken).catch(() => undefined);
     }, 30000);
 
     return () => window.clearInterval(timer);
-  }, [entered, loadData]);
-
-  const chooseRole = (nextRole: Role) => {
-    if (boundRole) return;
-
-    setRole(nextRole);
-    setHasChosenRole(true);
-  };
-
-  const enter = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!hasChosenRole) {
-      setError("请先确认你是哪颗星球");
-      return;
-    }
-
-    const effectiveRole = boundRole ?? role;
-
-    setLoading(true);
-    setError("");
-
-    try {
-      const result = await requestCoupleData<CoupleData>(code);
-
-      setData(result);
-      setRole(effectiveRole);
-      setBoundRole(effectiveRole);
-      setHasChosenRole(true);
-      saveCoupleSession(code, effectiveRole);
-      setEntered(true);
-    } catch (reason) {
-      setEntered(false);
-      setData(null);
-      setError(
-        reason instanceof Error
-          ? reason.message
-          : "进入失败，请再试一次",
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [entered, memberToken, loadData]);
 
   const logout = () => {
-    clearCoupleLoginSession();
+    clearMemberSession();
 
-    setCode("");
+    setMemberToken("");
     setEntered(false);
     setData(null);
     setError("");
-
-    if (boundRole) {
-      setRole(boundRole);
-      setHasChosenRole(true);
-    }
   };
 
   return {
-    code,
-    setCode,
     role,
-    boundRole,
-    roleLocked: Boolean(boundRole),
-    hasChosenRole,
     entered,
     data,
-    loading,
     restoringSession,
     error,
-    chooseRole,
     logout,
-    enter,
   };
 }

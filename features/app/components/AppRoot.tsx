@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 
 import { AppShell } from "../../../components/layout/AppShell";
-import { WelcomeScreen } from "../../auth/components/WelcomeScreen";
 import { useCoupleSession } from "../../auth/hooks/useCoupleSession";
 import { HomeTab } from "../../home/components/HomeTab";
 import { MemoriesTab } from "../../memories/components/MemoriesTab";
@@ -11,6 +10,7 @@ import {
   BottomNavigation,
   type AppTab,
 } from "../../navigation/components/BottomNavigation";
+import { RelationshipEntry } from "../../onboarding/components/RelationshipEntry";
 import { ProfileTab } from "../../profile/components/ProfileTab";
 import { useServiceWorkerRegistration } from "../../pwa/hooks/useServiceWorkerRegistration";
 import { WishesTab } from "../../wishes/components/WishesTab";
@@ -18,23 +18,17 @@ import { LaunchScreen } from "./LaunchScreen";
 
 export function AppRoot() {
   const {
-    code,
-    setCode,
     role,
-    roleLocked,
-    hasChosenRole,
     entered,
     data,
-    loading,
     restoringSession,
     error,
-    chooseRole,
-    enter,
   } = useCoupleSession();
 
   const [activeTab, setActiveTab] = useState<AppTab>("home");
   const [showLaunchScreen, setShowLaunchScreen] = useState(true);
-  const [launchScreenLeaving, setLaunchScreenLeaving] = useState(false);
+  const [launchScreenLeaving, setLaunchScreenLeaving] =
+    useState(false);
 
   useServiceWorkerRegistration();
 
@@ -51,25 +45,13 @@ export function AppRoot() {
   }, [restoringSession, showLaunchScreen]);
 
   if (restoringSession || showLaunchScreen) {
-    return <LaunchScreen leaving={launchScreenLeaving} />;
+    return (
+      <LaunchScreen leaving={launchScreenLeaving} />
+    );
   }
 
   if (!entered || !data) {
-    return (
-      <WelcomeScreen
-        code={code}
-        role={role}
-        roleLocked={roleLocked}
-        hasChosenRole={hasChosenRole}
-        loading={loading}
-        error={error}
-        firstNameInput=""
-        secondNameInput=""
-        onCodeChange={setCode}
-        onRoleChange={chooseRole}
-        onSubmit={enter}
-      />
-    );
+    return <RelationshipEntry error={error} />;
   }
 
   return (
