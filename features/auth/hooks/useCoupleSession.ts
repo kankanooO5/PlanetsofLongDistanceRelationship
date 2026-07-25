@@ -35,7 +35,7 @@ export function useCoupleSession() {
 
     async function restoreSession() {
       const launchStartedAt = Date.now();
-      const minimumLaunchDuration = 900;
+      const minimumLaunchDuration = 2000;
       const savedSession = readSavedCoupleSession();
 
       if (savedSession.code) {
