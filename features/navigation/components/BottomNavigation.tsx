@@ -13,7 +13,7 @@ const items: Array<{
   icon: string;
 }> = [
   { id: "home", label: "首页", icon: "⌂" },
-  { id: "memories", label: "回忆", icon: "◫" },
+  { id: "memories", label: "相簿", icon: "◫" },
   { id: "wishes", label: "心愿", icon: "☆" },
   { id: "profile", label: "我的", icon: "○" },
 ];

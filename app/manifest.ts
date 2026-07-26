@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "只属于两个人的小宇宙",
     start_url: "/",
     display: "standalone",
-    background_color: "#f7f1e8",
-    theme_color: "#6f1d3a",
+    background_color: "#fbfaf8",
+    theme_color: "#fbfaf8",
     orientation: "portrait",
     icons: [
       { src: "/icon-192.png", sizes: "192x192", type: "image/png" },

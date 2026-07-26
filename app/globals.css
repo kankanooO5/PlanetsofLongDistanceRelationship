@@ -28,9 +28,14 @@ body {
   margin: 0;
   color: var(--ink);
   background:
-    radial-gradient(circle at 85% 4%, rgba(222, 115, 95, 0.12), transparent 24rem),
+    radial-gradient(
+      circle at 85% 4%,
+      rgba(222, 115, 95, 0.12),
+      transparent 24rem
+    ),
     var(--cream);
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC",
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC",
     "Noto Sans CJK SC", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -174,14 +179,12 @@ button {
   font-weight: 700;
 }
 
-
 .welcome-card input {
   height: 52px;
   padding: 0 16px;
   border-radius: 15px;
   font-size: 15px;
 }
-
 
 .welcome-card fieldset {
   margin: 21px 0 24px;
@@ -292,8 +295,16 @@ button {
   padding: 29px 28px;
   border-radius: 27px;
   background:
-    radial-gradient(circle at 90% 25%, rgba(255, 255, 255, 0.18) 0 2px, transparent 3px),
-    radial-gradient(circle at 74% 60%, rgba(255, 255, 255, 0.15) 0 1px, transparent 2px),
+    radial-gradient(
+      circle at 90% 25%,
+      rgba(255, 255, 255, 0.18) 0 2px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at 74% 60%,
+      rgba(255, 255, 255, 0.15) 0 1px,
+      transparent 2px
+    ),
     linear-gradient(145deg, #7b2744, #4d1029);
   box-shadow: 0 20px 46px rgba(80, 15, 43, 0.22);
   color: white;
@@ -366,7 +377,6 @@ button {
   font-size: 20px;
 }
 
-
 .section-heading button {
   border: 0;
   background: transparent;
@@ -390,7 +400,6 @@ button {
 .status-card.own {
   background: #f1dbd5;
 }
-
 
 .status-emoji {
   display: block;
@@ -470,7 +479,6 @@ button {
   color: var(--muted);
   font-size: 10px;
 }
-
 
 .message-preview {
   display: grid;
@@ -647,7 +655,6 @@ button {
   text-align: left;
 }
 
-
 .wish-number {
   color: var(--coral);
   font-family: Georgia, serif;
@@ -692,7 +699,6 @@ button {
   background: var(--paper);
   text-align: left;
 }
-
 
 .mood-list button > span {
   font-size: 28px;
@@ -773,7 +779,6 @@ button {
   line-height: 1;
 }
 
-
 .toast {
   position: fixed;
   z-index: 30;
@@ -815,8 +820,6 @@ button {
     background: rgba(247, 241, 232, 0.94);
     box-shadow: var(--shadow);
   }
-
-
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -895,7 +898,6 @@ select {
   }
 }
 
-
 /* Session restore launch screen */
 .launch-screen {
   box-sizing: border-box;
@@ -906,11 +908,8 @@ select {
   place-content: center;
   justify-items: center;
   gap: 24px;
-  padding:
-    env(safe-area-inset-top)
-    env(safe-area-inset-right)
-    env(safe-area-inset-bottom)
-    env(safe-area-inset-left);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
   overflow: hidden;
   background: #fff;
 }
@@ -987,8 +986,7 @@ select {
   min-height: 100dvh;
   place-items: center;
   overflow: hidden;
-  padding:
-    calc(24px + env(safe-area-inset-top))
+  padding: calc(24px + env(safe-area-inset-top))
     calc(24px + env(safe-area-inset-right))
     calc(24px + env(safe-area-inset-bottom))
     calc(24px + env(safe-area-inset-left));
@@ -1088,11 +1086,7 @@ select {
   width: 48px;
   height: 48px;
   background:
-    radial-gradient(
-      circle at 31% 29%,
-      #ffd4c2 0 9%,
-      transparent 10%
-    ),
+    radial-gradient(circle at 31% 29%, #ffd4c2 0 9%, transparent 10%),
     linear-gradient(145deg, #ffb18e 0%, #ff7c67 58%, #eb5f57 100%);
   transform: translateY(-52%);
 }
@@ -1102,11 +1096,7 @@ select {
   width: 42px;
   height: 42px;
   background:
-    radial-gradient(
-      circle at 32% 28%,
-      #dedaff 0 9%,
-      transparent 10%
-    ),
+    radial-gradient(circle at 32% 28%, #dedaff 0 9%, transparent 10%),
     linear-gradient(145deg, #aaa3ff 0%, #7469df 58%, #5549c3 100%);
   transform: translateY(-13%);
 }
@@ -1429,11 +1419,8 @@ textarea {
   display: grid;
   flex: 0 0 auto;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  padding:
-    8px
-    max(12px, env(safe-area-inset-right))
-    calc(8px + env(safe-area-inset-bottom))
-    max(12px, env(safe-area-inset-left));
+  padding: 8px max(12px, env(safe-area-inset-right))
+    calc(8px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
   border-top: 1px solid rgba(48, 42, 67, 0.08);
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 -12px 36px rgba(55, 46, 81, 0.05);
@@ -1496,10 +1483,7 @@ textarea {
   box-sizing: border-box;
   width: 100%;
   min-height: 100%;
-  padding:
-    calc(28px + env(safe-area-inset-top))
-    20px
-    28px;
+  padding: calc(28px + env(safe-area-inset-top)) 20px 28px;
   animation: tab-page-enter 240ms ease-out both;
 }
 
@@ -1545,11 +1529,7 @@ textarea {
       rgba(255, 155, 118, 0.1),
       transparent 38%
     ),
-    radial-gradient(
-      circle at 85% 85%,
-      rgba(98, 87, 227, 0.1),
-      transparent 42%
-    ),
+    radial-gradient(circle at 85% 85%, rgba(98, 87, 227, 0.1), transparent 42%),
     rgba(255, 255, 255, 0.82);
   box-shadow: 0 16px 46px rgba(51, 43, 78, 0.06);
 }
@@ -1588,12 +1568,11 @@ textarea {
   padding: 20px;
   border: 1px solid rgba(59, 49, 91, 0.07);
   border-radius: 24px;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 240, 232, 0.96),
-      rgba(242, 240, 255, 0.96)
-    );
+  background: linear-gradient(
+    135deg,
+    rgba(255, 240, 232, 0.96),
+    rgba(242, 240, 255, 0.96)
+  );
 }
 
 .profile-avatar {
@@ -1693,12 +1672,11 @@ textarea {
   padding: 13px 15px;
   border: 1px solid rgba(98, 87, 227, 0.18);
   border-radius: 18px;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 247, 242, 0.94),
-      rgba(243, 241, 255, 0.94)
-    );
+  background: linear-gradient(
+    135deg,
+    rgba(255, 247, 242, 0.94),
+    rgba(243, 241, 255, 0.94)
+  );
 }
 
 .bound-role-card .planet {
@@ -1746,8 +1724,7 @@ textarea {
   min-height: 100dvh;
   place-items: center;
   overflow: hidden;
-  padding:
-    calc(24px + env(safe-area-inset-top))
+  padding: calc(24px + env(safe-area-inset-top))
     calc(20px + env(safe-area-inset-right))
     calc(24px + env(safe-area-inset-bottom))
     calc(20px + env(safe-area-inset-left));
@@ -1976,8 +1953,7 @@ textarea {
   place-items: center;
   overflow-x: hidden;
   overflow-y: auto;
-  padding:
-    calc(24px + env(safe-area-inset-top))
+  padding: calc(24px + env(safe-area-inset-top))
     calc(18px + env(safe-area-inset-right))
     calc(24px + env(safe-area-inset-bottom))
     calc(18px + env(safe-area-inset-left));
@@ -1993,12 +1969,7 @@ textarea {
       rgba(98, 87, 227, 0.17),
       transparent 39%
     ),
-    linear-gradient(
-      155deg,
-      #fffaf6,
-      #fff 51%,
-      #f8f7ff
-    );
+    linear-gradient(155deg, #fffaf6, #fff 51%, #f8f7ff);
 }
 
 .create-orbit {
@@ -2260,8 +2231,7 @@ textarea {
   place-items: center;
   overflow-x: hidden;
   overflow-y: auto;
-  padding:
-    calc(24px + env(safe-area-inset-top))
+  padding: calc(24px + env(safe-area-inset-top))
     calc(18px + env(safe-area-inset-right))
     calc(24px + env(safe-area-inset-bottom))
     calc(18px + env(safe-area-inset-left));
@@ -2277,12 +2247,7 @@ textarea {
       rgba(103, 91, 221, 0.17),
       transparent 38%
     ),
-    linear-gradient(
-      158deg,
-      #fffaf6 0%,
-      #fff 49%,
-      #f8f7ff 100%
-    );
+    linear-gradient(158deg, #fffaf6 0%, #fff 49%, #f8f7ff 100%);
 }
 
 .relationship-entry-background {
@@ -2377,17 +2342,8 @@ textarea {
   width: 49px;
   height: 49px;
   background:
-    radial-gradient(
-      circle at 30% 28%,
-      #ffd5c4 0 8%,
-      transparent 9%
-    ),
-    linear-gradient(
-      145deg,
-      #ffb794 0%,
-      #ff816b 57%,
-      #eb6258 100%
-    );
+    radial-gradient(circle at 30% 28%, #ffd5c4 0 8%, transparent 9%),
+    linear-gradient(145deg, #ffb794 0%, #ff816b 57%, #eb6258 100%);
   transform: translateY(-56%);
 }
 
@@ -2396,17 +2352,8 @@ textarea {
   width: 41px;
   height: 41px;
   background:
-    radial-gradient(
-      circle at 31% 28%,
-      #dedaff 0 8%,
-      transparent 9%
-    ),
-    linear-gradient(
-      145deg,
-      #b4adff 0%,
-      #776ce0 57%,
-      #574bc4 100%
-    );
+    radial-gradient(circle at 31% 28%, #dedaff 0 8%, transparent 9%),
+    linear-gradient(145deg, #b4adff 0%, #776ce0 57%, #574bc4 100%);
   transform: translateY(-8%);
 }
 
@@ -2496,23 +2443,21 @@ textarea {
 
 .relationship-entry-create {
   border-color: rgba(235, 105, 87, 0.11);
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 247, 242, 0.96),
-      rgba(255, 253, 251, 0.86)
-    );
+  background: linear-gradient(
+    135deg,
+    rgba(255, 247, 242, 0.96),
+    rgba(255, 253, 251, 0.86)
+  );
   box-shadow: 0 10px 26px rgba(216, 105, 82, 0.07);
 }
 
 .relationship-entry-bind {
   border-color: rgba(98, 87, 215, 0.11);
-  background:
-    linear-gradient(
-      135deg,
-      rgba(248, 247, 255, 0.96),
-      rgba(252, 251, 255, 0.86)
-    );
+  background: linear-gradient(
+    135deg,
+    rgba(248, 247, 255, 0.96),
+    rgba(252, 251, 255, 0.86)
+  );
   box-shadow: 0 10px 26px rgba(98, 87, 215, 0.065);
 }
 
@@ -2776,8 +2721,7 @@ textarea {
   place-items: center;
   overflow-x: hidden;
   overflow-y: auto;
-  padding:
-    calc(24px + env(safe-area-inset-top))
+  padding: calc(24px + env(safe-area-inset-top))
     calc(18px + env(safe-area-inset-right))
     calc(24px + env(safe-area-inset-bottom))
     calc(18px + env(safe-area-inset-left));
@@ -2788,17 +2732,8 @@ textarea {
       rgba(255, 170, 135, 0.16),
       transparent 34%
     ),
-    radial-gradient(
-      circle at 84% 78%,
-      rgba(98, 87, 227, 0.2),
-      transparent 39%
-    ),
-    linear-gradient(
-      158deg,
-      #fffaf7 0%,
-      #fff 48%,
-      #f7f6ff 100%
-    );
+    radial-gradient(circle at 84% 78%, rgba(98, 87, 227, 0.2), transparent 39%),
+    linear-gradient(158deg, #fffaf7 0%, #fff 48%, #f7f6ff 100%);
 }
 
 .pairing-background {
@@ -2888,17 +2823,8 @@ textarea {
   overflow: hidden;
   border-radius: 50%;
   background:
-    radial-gradient(
-      circle at 30% 28%,
-      #dedaff 0 8%,
-      transparent 9%
-    ),
-    linear-gradient(
-      145deg,
-      #b6afff 0%,
-      #776ce0 57%,
-      #574bc4 100%
-    );
+    radial-gradient(circle at 30% 28%, #dedaff 0 8%, transparent 9%),
+    linear-gradient(145deg, #b6afff 0%, #776ce0 57%, #574bc4 100%);
   box-shadow:
     0 13px 29px rgba(50, 38, 82, 0.16),
     inset -6px -7px 12px rgba(31, 22, 64, 0.09);
@@ -2927,12 +2853,7 @@ textarea {
   height: 52px;
   border: 3px solid rgba(255, 255, 255, 0.95);
   border-radius: 10px;
-  background:
-    linear-gradient(
-      155deg,
-      #ffb38f 0%,
-      #f47c67 100%
-    );
+  background: linear-gradient(155deg, #ffb38f 0%, #f47c67 100%);
   box-shadow:
     0 12px 27px rgba(80, 56, 95, 0.17),
     0 0 0 1px rgba(242, 111, 95, 0.1);
@@ -3028,12 +2949,11 @@ textarea {
   border: 1px solid rgba(98, 87, 215, 0.11);
   border-radius: 20px;
   text-align: left;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(248, 247, 255, 0.96),
-      rgba(253, 252, 255, 0.86)
-    );
+  background: linear-gradient(
+    145deg,
+    rgba(248, 247, 255, 0.96),
+    rgba(253, 252, 255, 0.86)
+  );
 }
 
 .pairing-code-heading {
@@ -3155,12 +3075,7 @@ textarea {
   border: 0;
   border-radius: 16px;
   color: #fff;
-  background:
-    linear-gradient(
-      135deg,
-      #766ce0 0%,
-      #574bc4 100%
-    );
+  background: linear-gradient(135deg, #766ce0 0%, #574bc4 100%);
   box-shadow: 0 14px 30px rgba(98, 87, 215, 0.22);
   font-size: 14px;
   font-weight: 700;
@@ -3330,12 +3245,7 @@ textarea {
       rgba(98, 87, 215, 0.18),
       transparent 38%
     ),
-    linear-gradient(
-      158deg,
-      #fffaf6 0%,
-      #ffffff 49%,
-      #f8f7ff 100%
-    );
+    linear-gradient(158deg, #fffaf6 0%, #ffffff 49%, #f8f7ff 100%);
 }
 
 .create-background {
@@ -3406,12 +3316,7 @@ textarea {
   left: 25px;
   width: 49px;
   height: 49px;
-  background: linear-gradient(
-    145deg,
-    #ffb794 0%,
-    #ff816b 57%,
-    #eb6258 100%
-  );
+  background: linear-gradient(145deg, #ffb794 0%, #ff816b 57%, #eb6258 100%);
   transform: translateY(-56%);
 }
 
@@ -3419,12 +3324,7 @@ textarea {
   right: 24px;
   width: 41px;
   height: 41px;
-  background: linear-gradient(
-    145deg,
-    #b4adff 0%,
-    #776ce0 57%,
-    #574bc4 100%
-  );
+  background: linear-gradient(145deg, #b4adff 0%, #776ce0 57%, #574bc4 100%);
   transform: translateY(-8%);
 }
 
@@ -3573,11 +3473,7 @@ textarea {
   justify-content: center;
   gap: 9px;
   margin-top: 2px;
-  background: linear-gradient(
-    135deg,
-    #f18a70 0%,
-    #6559d4 100%
-  );
+  background: linear-gradient(135deg, #f18a70 0%, #6559d4 100%);
   box-shadow: 0 14px 30px rgba(91, 72, 157, 0.2);
 }
 
@@ -4501,8 +4397,7 @@ textarea {
     linear-gradient(145deg, #ffb18e, #ff7562);
 }
 
-.device-code-page-partner
-  .device-code-target-planet-partner {
+.device-code-page-partner .device-code-target-planet-partner {
   background:
     radial-gradient(
       circle at 31% 27%,
@@ -4592,12 +4487,11 @@ textarea {
   padding: 15px;
   border: 1px solid rgba(98, 87, 215, 0.1);
   border-radius: 19px;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(248, 247, 255, 0.96),
-      rgba(253, 252, 255, 0.86)
-    );
+  background: linear-gradient(
+    135deg,
+    rgba(248, 247, 255, 0.96),
+    rgba(253, 252, 255, 0.86)
+  );
   box-shadow: 0 10px 26px rgba(98, 87, 215, 0.055);
 }
 
@@ -4822,8 +4716,7 @@ textarea {
 
 @media (prefers-reduced-motion: no-preference) {
   .universe-flow-device {
-    animation: universe-flow-device-float
-      2500ms ease-in-out infinite alternate;
+    animation: universe-flow-device-float 2500ms ease-in-out infinite alternate;
   }
 }
 
@@ -4835,4 +4728,3272 @@ textarea {
   to {
     transform: translateY(-8%) rotate(2deg);
   }
+}
+
+/* Album */
+.album-page {
+  box-sizing: border-box;
+  min-height: 100%;
+  padding: calc(24px + env(safe-area-inset-top)) 20px
+    calc(104px + env(safe-area-inset-bottom));
+  color: #29253a;
+  background:
+    radial-gradient(
+      circle at 10% 3%,
+      rgba(255, 160, 124, 0.13),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 94% 32%,
+      rgba(111, 98, 220, 0.11),
+      transparent 27%
+    ),
+    #fffdfb;
+}
+
+.album-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.album-eyebrow {
+  margin: 0 0 10px;
+  color: rgba(75, 64, 110, 0.55);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.album-header h1 {
+  margin: 0;
+  font-size: clamp(30px, 8vw, 38px);
+  font-weight: 680;
+  letter-spacing: 0.04em;
+}
+
+.album-description {
+  max-width: 260px;
+  margin: 12px 0 0;
+  color: rgba(45, 40, 61, 0.58);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.album-add-button {
+  display: grid;
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  min-height: 46px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: white;
+  background: #6257d9;
+  box-shadow: 0 10px 24px rgba(73, 62, 165, 0.24);
+}
+
+.album-add-button span {
+  font-size: 25px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.album-summary {
+  display: flex;
+  gap: 8px;
+  margin: 27px 0 18px;
+  color: rgba(49, 43, 67, 0.48);
+  font-size: 11px;
+}
+
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 14px 12px;
+}
+
+.album-card {
+  overflow: hidden;
+  border: 1px solid rgba(67, 56, 97, 0.07);
+  border-radius: 21px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 10px 28px rgba(54, 42, 83, 0.07);
+}
+
+.album-image-wrap {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f4f1f8;
+}
+
+.album-card-tall .album-image-wrap {
+  aspect-ratio: 4 / 5;
+}
+
+.album-image-wrap img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.album-card-copy {
+  padding: 12px 12px 13px;
+}
+
+.album-card-copy p {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: rgba(38, 33, 51, 0.86);
+  font-size: 12px;
+  line-height: 1.55;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.album-card-copy time {
+  display: block;
+  margin-top: 8px;
+  color: rgba(51, 44, 70, 0.4);
+  font-size: 10px;
+}
+
+.album-empty {
+  display: grid;
+  min-height: 55vh;
+  place-content: center;
+  justify-items: center;
+  padding: 30px;
+  text-align: center;
+}
+
+.album-empty-illustration {
+  position: relative;
+  width: 135px;
+  height: 90px;
+  margin-bottom: 25px;
+}
+
+.album-empty-illustration::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 128px;
+  height: 48px;
+  border: 1px solid rgba(67, 55, 100, 0.15);
+  border-radius: 50%;
+  content: "";
+  transform: translate(-50%, -50%) rotate(-14deg);
+}
+
+.album-empty-planet {
+  position: absolute;
+  border-radius: 50%;
+  box-shadow: 0 10px 22px rgba(48, 37, 76, 0.13);
+}
+
+.album-empty-planet-a {
+  top: 20px;
+  left: 18px;
+  width: 48px;
+  height: 48px;
+  background: #ff826c;
+}
+
+.album-empty-planet-b {
+  right: 18px;
+  bottom: 13px;
+  width: 38px;
+  height: 38px;
+  background: #7165dc;
+}
+
+.album-empty h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.album-empty p {
+  max-width: 250px;
+  margin: 12px 0 24px;
+  color: rgba(45, 39, 61, 0.53);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.album-empty-button {
+  min-height: 46px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 16px;
+  color: white;
+  background: #6257d9;
+  box-shadow: 0 10px 23px rgba(76, 65, 166, 0.21);
+}
+
+/* Today photos */
+.today-photos-card {
+  margin-bottom: 18px;
+  padding: 18px;
+  border: 1px solid rgba(74, 62, 108, 0.08);
+  border-radius: 24px;
+  background:
+    radial-gradient(
+      circle at 92% 8%,
+      rgba(111, 98, 220, 0.12),
+      transparent 34%
+    ),
+    rgba(255, 255, 255, 0.88);
+  box-shadow: 0 12px 32px rgba(52, 41, 83, 0.07);
+}
+
+.today-photos-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.today-photos-header p {
+  margin: 0 0 5px;
+  color: rgba(75, 64, 110, 0.48);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.17em;
+}
+
+.today-photos-header h2 {
+  margin: 0;
+  color: #29253a;
+  font-size: 18px;
+}
+
+.today-photos-add {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  min-height: 38px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: white;
+  background: #6257d9;
+  font-size: 22px;
+}
+
+.today-photos-file-input {
+  display: none;
+}
+
+.today-photo-empty {
+  display: grid;
+  width: 100%;
+  min-height: 150px;
+  margin-top: 16px;
+  place-items: center;
+  padding: 22px;
+  border: 1px dashed rgba(92, 78, 143, 0.18);
+  border-radius: 19px;
+  color: #39334d;
+  background: rgba(246, 243, 251, 0.58);
+  text-align: center;
+}
+
+.today-photo-empty span {
+  color: #6f63d9;
+  font-size: 22px;
+}
+
+.today-photo-empty strong {
+  margin-top: 7px;
+  font-size: 14px;
+}
+
+.today-photo-empty small {
+  max-width: 220px;
+  margin-top: 6px;
+  color: rgba(48, 42, 65, 0.48);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.today-photo-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.today-photo-thumbnail {
+  aspect-ratio: 1;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: #f2eff7;
+}
+
+.today-photo-thumbnail img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.today-photo-strip > button:last-child {
+  display: grid;
+  aspect-ratio: 1;
+  place-content: center;
+  padding: 7px;
+  border: 1px dashed rgba(94, 80, 147, 0.22);
+  border-radius: 14px;
+  color: rgba(62, 53, 86, 0.58);
+  background: rgba(246, 243, 251, 0.65);
+  font-size: 9px;
+}
+
+.today-photo-strip > button:last-child span {
+  font-size: 18px;
+}
+
+.today-photo-composer {
+  display: grid;
+  gap: 11px;
+  margin-top: 16px;
+}
+
+.today-photo-preview {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border-radius: 18px;
+  background: #f1eef6;
+}
+
+.today-photo-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.today-photo-preview button {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  min-height: 30px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: white;
+  background: rgba(24, 20, 34, 0.68);
+  font-size: 20px;
+}
+
+.today-photo-composer > input,
+.today-photo-date-field {
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid rgba(72, 61, 101, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.today-photo-composer > input {
+  min-height: 44px;
+  padding: 0 13px;
+}
+
+.today-photo-date-field {
+  padding: 11px 13px;
+}
+
+.today-photo-date-field input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.today-photo-submit {
+  min-height: 46px;
+  border: 0;
+  border-radius: 15px;
+  color: white;
+  background: #6257d9;
+  font-weight: 650;
+}
+
+.today-photo-submit:disabled {
+  opacity: 0.58;
+}
+
+.today-photos-error {
+  margin: 12px 0 0;
+  color: #b64755;
+  font-size: 11px;
+}
+
+/* Album interactions */
+.album-image-wrap {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  cursor: zoom-in;
+}
+
+.album-loading {
+  display: grid;
+  min-height: 45vh;
+  place-content: center;
+  justify-items: center;
+  color: rgba(45, 39, 61, 0.5);
+}
+
+.album-loading span,
+.photo-lightbox-loading span {
+  width: 26px;
+  height: 26px;
+  border: 2px solid rgba(255, 255, 255, 0.24);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: photo-loading-spin 700ms linear infinite;
+}
+
+.album-loading p {
+  margin: 12px 0 0;
+  font-size: 12px;
+}
+
+/* Original photo lightbox */
+.photo-lightbox {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: calc(54px + env(safe-area-inset-top)) 16px
+    calc(28px + env(safe-area-inset-bottom));
+  background: rgba(15, 12, 23, 0.94);
+  backdrop-filter: blur(14px);
+}
+
+.photo-lightbox-close {
+  position: absolute;
+  top: calc(14px + env(safe-area-inset-top));
+  right: 16px;
+  z-index: 2;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: white;
+  background: rgba(255, 255, 255, 0.13);
+  font-size: 26px;
+}
+
+.photo-lightbox-content {
+  display: grid;
+  width: 100%;
+  max-width: 900px;
+  max-height: 100%;
+  gap: 14px;
+}
+
+.photo-lightbox-image {
+  display: grid;
+  min-height: 180px;
+  max-height: 72vh;
+  place-items: center;
+}
+
+.photo-lightbox-image img {
+  display: block;
+  max-width: 100%;
+  max-height: 72vh;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.photo-lightbox-loading,
+.photo-lightbox-error {
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.photo-lightbox-loading p,
+.photo-lightbox-error p {
+  margin: 12px 0 0;
+  font-size: 12px;
+}
+
+.photo-lightbox-caption {
+  color: white;
+  text-align: center;
+}
+
+.photo-lightbox-caption p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.photo-lightbox-caption time {
+  display: block;
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.53);
+  font-size: 10px;
+}
+
+@keyframes photo-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Large stacked today-photo carousel */
+.today-photos-card-large {
+  overflow: hidden;
+  padding: 18px 18px 20px;
+}
+
+/* Canonical three-layer stacked-photo interaction */
+.today-photo-stack {
+  position: relative;
+  height: clamp(330px, 108vw, 470px);
+  margin-top: 17px;
+  touch-action: pan-y pinch-zoom;
+  overscroll-behavior-x: contain;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.today-photo-stack-card {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: calc(100% - 28px);
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  border-radius: 25px;
+  background: #eeebf3;
+  box-shadow: none;
+  filter: none;
+  transform-origin: 50% 90%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.today-photo-stack-card::before,
+.today-photo-stack-card::after {
+  display: none;
+  content: none;
+  background: none;
+  box-shadow: none;
+}
+
+.today-photo-stack-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.today-photo-stack-card-0 {
+  z-index: 3;
+  transform: translate3d(
+      var(--photo-drag-x, 0px),
+      calc(-6px * var(--photo-drag-progress, 0)),
+      0
+    )
+    rotate(var(--photo-drag-rotate, 0deg))
+    scale(calc(1 - 0.022 * var(--photo-drag-progress, 0)));
+  opacity: calc(1 - 0.1 * var(--photo-drag-progress, 0));
+}
+
+.today-photo-stack-card-1 {
+  z-index: 2;
+  transform: translate3d(
+      calc(10px * var(--photo-swipe-side, -1) * var(--photo-drag-progress, 0)),
+      calc(13px - 13px * var(--photo-drag-progress, 0)),
+      0
+    )
+    scale(calc(0.955 + 0.045 * var(--photo-drag-progress, 0)))
+    rotate(calc(-1.2deg + 1.2deg * var(--photo-drag-progress, 0)));
+  opacity: calc(0.82 + 0.18 * var(--photo-drag-progress, 0));
+}
+
+.today-photo-stack-card-2 {
+  z-index: 1;
+  transform: translate3d(
+      calc(5px * var(--photo-swipe-side, -1) * var(--photo-drag-progress, 0)),
+      calc(25px - 12px * var(--photo-drag-progress, 0)),
+      0
+    )
+    scale(calc(0.91 + 0.045 * var(--photo-drag-progress, 0)))
+    rotate(calc(1.5deg - 2.7deg * var(--photo-drag-progress, 0)));
+  opacity: calc(0.56 + 0.26 * var(--photo-drag-progress, 0));
+}
+
+.today-photo-stack-dragging .today-photo-stack-card {
+  transition: none;
+}
+
+.today-photo-stack-finishing .today-photo-stack-card-0 {
+  opacity: 0;
+  transition:
+    transform 220ms cubic-bezier(0.32, 0, 0.67, 0),
+    opacity 190ms ease-out;
+}
+
+.today-photo-stack-finishing .today-photo-stack-card-1 {
+  transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  opacity: 1;
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.86, 0.24, 1),
+    opacity 190ms ease-out;
+}
+
+.today-photo-stack-finishing .today-photo-stack-card-2 {
+  transform: translate3d(0, 13px, 0) scale(0.955) rotate(-1.2deg);
+  opacity: 0.82;
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.86, 0.24, 1),
+    opacity 190ms ease-out;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card {
+  transition: none;
+  animation: none;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-0 {
+  transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  opacity: 1;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-1 {
+  transform: translate3d(0, 13px, 0) scale(0.955) rotate(-1.2deg);
+  opacity: 0.82;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-2 {
+  transform: translate3d(0, 25px, 0) scale(0.91) rotate(1.5deg);
+  opacity: 0.56;
+}
+
+.today-photo-stack-overlay {
+  position: absolute;
+  inset: auto 0 0;
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+  padding: 12px 16px 16px;
+  color: white;
+  background: none;
+  background-image: none;
+  box-shadow: none;
+  filter: none;
+  backdrop-filter: none;
+  pointer-events: none;
+}
+
+.today-photo-stack-overlay::before,
+.today-photo-stack-overlay::after {
+  display: none;
+  content: none;
+  background: none;
+  box-shadow: none;
+}
+
+.today-photo-stack-count,
+.today-photo-stack-overlay small {
+  display: none;
+}
+
+.today-photo-stack-overlay strong {
+  max-width: 90%;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.today-photo-controls {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) 38px;
+  align-items: center;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.today-photo-controls > button {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  min-height: 36px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(72, 60, 106, 0.1);
+  border-radius: 50%;
+  color: #4d4565;
+  background: rgba(255, 255, 255, 0.76);
+  font-size: 25px;
+  line-height: 1;
+}
+
+.today-photo-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.today-photo-dots button {
+  width: 6px;
+  height: 6px;
+  min-height: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(84, 71, 120, 0.2);
+  transition:
+    width 220ms ease,
+    background 220ms ease;
+}
+
+.today-photo-dots button.is-active {
+  width: 20px;
+  background: #6257d9;
+}
+
+@media (max-width: 370px) {
+  .today-photo-stack {
+    height: 330px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .today-photo-stack-card {
+    transition: none;
+  }
+}
+
+/* Photo comments */
+.photo-lightbox-with-comments {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.photo-comments {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  margin-top: 2px;
+}
+
+.photo-comments-list {
+  display: flex;
+  max-height: 270px;
+  flex-direction: column;
+  gap: 7px;
+  overflow-y: auto;
+  padding: 10px 2px 4px;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+.photo-comments-list::-webkit-scrollbar {
+  display: none;
+}
+
+.photo-comments-status {
+  margin: 12px 0;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  text-align: center;
+}
+
+.photo-comment-row {
+  display: flex;
+  max-width: 82%;
+  flex-direction: column;
+}
+
+.photo-comment-row-mine {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.photo-comment-row-partner {
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+.photo-comment-meta {
+  display: flex;
+  gap: 6px;
+  margin: 0 6px 3px;
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 9px;
+}
+
+.photo-comment-bubble {
+  position: relative;
+  padding: 9px 13px;
+  border-radius: 18px;
+  font-size: 13px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.photo-comment-row-mine .photo-comment-bubble {
+  color: white;
+  background: #6257d9;
+  border-bottom-right-radius: 5px;
+}
+
+.photo-comment-row-partner .photo-comment-bubble {
+  color: #262230;
+  background: rgba(245, 243, 248, 0.96);
+  border-bottom-left-radius: 5px;
+}
+
+.photo-comment-error {
+  margin: 0;
+  color: #ff9ca8;
+  font-size: 10px;
+  text-align: center;
+}
+
+.photo-comment-composer {
+  position: sticky;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 38px;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 7px 7px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 23px;
+  background: rgba(37, 31, 52, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.photo-comment-composer input {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  color: white;
+  background: transparent;
+  font-size: 13px;
+}
+
+.photo-comment-composer input::placeholder {
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.photo-comment-composer button {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  min-height: 34px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: white;
+  background: #6257d9;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.photo-comment-composer button:disabled {
+  opacity: 0.38;
+}
+
+@media (max-height: 760px) {
+  .photo-comments-list {
+    max-height: 190px;
+  }
+
+  .photo-lightbox-image img {
+    max-height: 48vh;
+  }
+}
+
+/* Stable three-layer stack */
+.today-photo-stack:not(.today-photo-stack-dragging):not(
+    .today-photo-stack-finishing
+  ):not(.today-photo-stack-resetting)
+  .today-photo-stack-card-0 {
+  transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  opacity: 1;
+  transition: none;
+}
+
+.today-photo-stack:not(.today-photo-stack-dragging):not(
+    .today-photo-stack-finishing
+  ):not(.today-photo-stack-resetting)
+  .today-photo-stack-card-1 {
+  transform: translate3d(0, 13px, 0) scale(0.955) rotate(-1.2deg);
+  opacity: 0.82;
+  transition: none;
+}
+
+.today-photo-stack:not(.today-photo-stack-dragging):not(
+    .today-photo-stack-finishing
+  ):not(.today-photo-stack-resetting)
+  .today-photo-stack-card-2 {
+  transform: translate3d(0, 25px, 0) scale(0.91) rotate(1.5deg);
+  opacity: 0.56;
+  transition: none;
+}
+
+/* Gesture-direction synchronized rear stack */
+.today-photo-stack-dragging .today-photo-stack-card-1 {
+  transform: translate3d(
+      calc(
+        -14px * var(--photo-swipe-side, -1) *
+          (1 - var(--photo-drag-progress, 0))
+      ),
+      calc(13px - 13px * var(--photo-drag-progress, 0)),
+      0
+    )
+    scale(calc(0.955 + 0.045 * var(--photo-drag-progress, 0)))
+    rotate(calc(-1.2deg + 1.2deg * var(--photo-drag-progress, 0))) !important;
+  opacity: calc(0.82 + 0.18 * var(--photo-drag-progress, 0));
+  transition: none !important;
+}
+
+.today-photo-stack-dragging .today-photo-stack-card-2 {
+  transform: translate3d(
+      calc(
+        -8px * var(--photo-swipe-side, -1) * (1 - var(--photo-drag-progress, 0))
+      ),
+      calc(25px - 12px * var(--photo-drag-progress, 0)),
+      0
+    )
+    scale(calc(0.91 + 0.045 * var(--photo-drag-progress, 0)))
+    rotate(calc(1.5deg - 2.7deg * var(--photo-drag-progress, 0))) !important;
+  opacity: calc(0.56 + 0.26 * var(--photo-drag-progress, 0));
+  transition: none !important;
+}
+
+.today-photo-stack-finishing .today-photo-stack-card-1 {
+  transform: translate3d(0, 0, 0) scale(1) rotate(0deg) !important;
+  opacity: 1;
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.86, 0.24, 1),
+    opacity 190ms ease-out !important;
+}
+
+.today-photo-stack-finishing .today-photo-stack-card-2 {
+  transform: translate3d(0, 13px, 0) scale(0.955) rotate(-1.2deg) !important;
+  opacity: 0.82;
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.86, 0.24, 1),
+    opacity 190ms ease-out !important;
+}
+
+/* Card deck velocity-snap override v6.5 */
+
+/*
+  v6.5：
+  - 主牌顶部降低，不再顶得过高；
+  - 侧边照片边缘抗锯齿；
+  - 慢拖：随手势完成换位；
+  - 快滑：主牌有短促飞出感，然后迅速插回牌阵。
+*/
+
+.today-photos-card-large {
+  overflow: hidden !important;
+}
+
+.today-photo-stack {
+  height: clamp(340px, 110vw, 486px) !important;
+  overflow: visible !important;
+  touch-action: pan-y pinch-zoom;
+  transform: translateZ(0);
+  isolation: isolate;
+}
+
+.today-photo-stack-card {
+  top: 0 !important;
+  bottom: auto !important;
+  left: 64px !important;
+  right: 64px !important;
+  width: auto !important;
+  height: calc(100% - 58px) !important;
+  overflow: hidden !important;
+  border-radius: 25px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  filter: none !important;
+  outline: 1px solid transparent;
+  transform-origin: 50% 50% !important;
+  will-change: transform;
+  contain: paint;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+
+.today-photo-stack-card img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  background: transparent !important;
+  transform: translateZ(0) scale(1.002);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0) scale(1.002);
+}
+
+.today-photo-stack-card::before,
+.today-photo-stack-card::after {
+  display: none !important;
+  content: none !important;
+}
+
+.today-photo-stack-card,
+.today-photo-stack-card img,
+.today-photo-stack-dragging .today-photo-stack-card,
+.today-photo-stack-resetting .today-photo-stack-card {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* 默认牌阵。 */
+.today-photo-stack-card-0 {
+  z-index: 10 !important;
+  transform: translate3d(var(--photo-drag-x, 0px), 10px, 0)
+    rotate(var(--photo-drag-rotate, 0deg)) scale(1.055) !important;
+  opacity: 1 !important;
+}
+
+.today-photo-stack-card-1 {
+  z-index: 2 !important;
+  transform: translate3d(-64px, 24px, 0) rotate(-0.36deg) scale(0.94) !important;
+  opacity: 1 !important;
+}
+
+.today-photo-stack-card-2 {
+  z-index: 3 !important;
+  transform: translate3d(64px, 24px, 0) rotate(0.36deg) scale(0.94) !important;
+  opacity: 1 !important;
+}
+
+/* 慢拖：左滑进入下一张。 */
+.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card-0 {
+  z-index: 11 !important;
+  transform: translate3d(
+      calc(var(--photo-drag-x, 0px) + 64px * var(--photo-drag-progress, 0)),
+      calc(10px + 14px * var(--photo-drag-progress, 0)),
+      0
+    )
+    rotate(
+      calc(
+        var(--photo-drag-rotate, 0deg) - 0.36deg * var(--photo-drag-progress, 0)
+      )
+    )
+    scale(calc(1.055 - 0.115 * var(--photo-drag-progress, 0))) !important;
+}
+
+.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card-2 {
+  z-index: 6 !important;
+  transform: translate3d(
+      calc(64px - 64px * var(--photo-drag-progress, 0)),
+      calc(24px - 14px * var(--photo-drag-progress, 0)),
+      0
+    )
+    rotate(calc(0.36deg - 0.36deg * var(--photo-drag-progress, 0)))
+    scale(calc(0.94 + 0.115 * var(--photo-drag-progress, 0))) !important;
+}
+
+.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card-1 {
+  transform: translate3d(
+      calc(-64px - 8px * var(--photo-drag-progress, 0)),
+      24px,
+      0
+    )
+    rotate(-0.36deg) scale(0.94) !important;
+}
+
+/* 复位：无补动画。 */
+.today-photo-stack-resetting .today-photo-stack-card-0 {
+  transform: translate3d(0, 10px, 0) rotate(0deg) scale(1.055) !important;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-1 {
+  transform: translate3d(-64px, 24px, 0) rotate(-0.36deg) scale(0.94) !important;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-2 {
+  transform: translate3d(64px, 24px, 0) rotate(0.36deg) scale(0.94) !important;
+}
+
+/* 预加载区。 */
+.today-photo-preload {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.today-photo-preload img {
+  width: 1px;
+  height: 1px;
+}
+
+/* 清理残留装饰。 */
+.today-photo-stack-overlay {
+  background: none !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.today-photo-stack-count,
+.today-photo-stack-overlay small {
+  display: none !important;
+}
+
+/* End Card deck velocity-snap override v6.5 */
+
+/* Card deck 4-3 ratio override v6.6 */
+
+/*
+  v6.6：
+  - 牌阵卡片统一为 4:3；
+  - 图片保持原比例完整显示，不裁剪；
+  - 圆角统一由卡片容器裁切；
+  - 继续保留侧边牌阵露出关系。
+*/
+
+.today-photo-stack {
+  height: clamp(285px, 82vw, 390px) !important;
+}
+
+/* 所有牌统一 4:3。 */
+.today-photo-stack-card {
+  aspect-ratio: 4 / 3 !important;
+  height: auto !important;
+  max-height: calc(100% - 18px) !important;
+  border-radius: 24px !important;
+  overflow: hidden !important;
+  background: rgba(255, 252, 247, 0.78) !important;
+  clip-path: inset(0 round 24px);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+
+/* 图片完整显示，不裁剪。 */
+.today-photo-stack-card img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+/* 主牌：4:3 后稍微压低，避免顶部过高。 */
+.today-photo-stack-card-0 {
+  transform: translate3d(var(--photo-drag-x, 0px), 12px, 0)
+    rotate(var(--photo-drag-rotate, 0deg)) scale(1.045) !important;
+}
+
+/* 侧牌：仍然露出外侧边缘，但不抢主牌高度。 */
+.today-photo-stack-card-1 {
+  transform: translate3d(-64px, 26px, 0) rotate(-0.3deg) scale(0.94) !important;
+}
+
+.today-photo-stack-card-2 {
+  transform: translate3d(64px, 26px, 0) rotate(0.3deg) scale(0.94) !important;
+}
+
+/* 左滑过程中维持 4:3 牌位切换。 */
+.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card-0 {
+  transform: translate3d(
+      calc(var(--photo-drag-x, 0px) + 64px * var(--photo-drag-progress, 0)),
+      calc(12px + 14px * var(--photo-drag-progress, 0)),
+      0
+    )
+    rotate(
+      calc(
+        var(--photo-drag-rotate, 0deg) - 0.3deg * var(--photo-drag-progress, 0)
+      )
+    )
+    scale(calc(1.045 - 0.105 * var(--photo-drag-progress, 0))) !important;
+}
+
+.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card-2 {
+  transform: translate3d(
+      calc(64px - 64px * var(--photo-drag-progress, 0)),
+      calc(26px - 14px * var(--photo-drag-progress, 0)),
+      0
+    )
+    rotate(calc(0.3deg - 0.3deg * var(--photo-drag-progress, 0)))
+    scale(calc(0.94 + 0.105 * var(--photo-drag-progress, 0))) !important;
+}
+
+.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card-1 {
+  transform: translate3d(
+      calc(-64px - 8px * var(--photo-drag-progress, 0)),
+      26px,
+      0
+    )
+    rotate(-0.3deg) scale(0.94) !important;
+}
+
+/* reset 状态同步 4:3 牌位。 */
+.today-photo-stack-resetting .today-photo-stack-card-0 {
+  transform: translate3d(0, 12px, 0) rotate(0deg) scale(1.045) !important;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-1 {
+  transform: translate3d(-64px, 26px, 0) rotate(-0.3deg) scale(0.94) !important;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-2 {
+  transform: translate3d(64px, 26px, 0) rotate(0.3deg) scale(0.94) !important;
+}
+
+/* End Card deck 4-3 ratio override v6.6 */
+
+/* Card deck uniform crop override v6.7 */
+
+/*
+  v6.7：
+  - 每张照片牌统一为 4:3；
+  - 图片填满卡片；
+  - 不满足 4:3 的图片自动放大裁剪；
+  - 圆角由卡片容器统一裁切。
+*/
+
+.today-photo-stack-card {
+  aspect-ratio: 4 / 3 !important;
+  height: auto !important;
+  max-height: calc(100% - 18px) !important;
+  border-radius: 24px !important;
+  overflow: hidden !important;
+  background: rgba(255, 252, 247, 0.9) !important;
+  clip-path: inset(0 round 24px);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+
+.today-photo-stack-card img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+/* End Card deck uniform crop override v6.7 */
+
+/* Card deck portrait crop override v6.8 */
+
+/*
+  v6.8：
+  - 牌阵统一为竖版 3:4；
+  - 图片填满卡片，不满足 3:4 自动放大裁剪；
+  - 主图在三张图中上端最高、下端最低；
+  - 圆角统一由卡片容器裁切。
+*/
+
+.today-photo-stack {
+  height: clamp(360px, 118vw, 520px) !important;
+}
+
+/* 所有牌统一竖版 3:4。 */
+.today-photo-stack-card {
+  aspect-ratio: 3 / 4 !important;
+  height: auto !important;
+  max-height: calc(100% - 18px) !important;
+  border-radius: 25px !important;
+  overflow: hidden !important;
+  background: rgba(255, 252, 247, 0.9) !important;
+  clip-path: inset(0 round 25px);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+
+/* 图片填满 3:4 卡片，比例不符自动裁剪。 */
+.today-photo-stack-card img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+/*
+  主牌：
+  y=8，scale=1.075。
+  虽然整体下移 8px，但放大后顶部仍然高于侧牌；
+  同时底部也会明显低于侧牌。
+*/
+.today-photo-stack-card-0 {
+  transform: translate3d(var(--photo-drag-x, 0px), 8px, 0)
+    rotate(var(--photo-drag-rotate, 0deg)) scale(1.075) !important;
+}
+
+/*
+  侧牌：
+  y=30，scale=0.93。
+  顶部低于主牌，底部高于主牌。
+*/
+.today-photo-stack-card-1 {
+  transform: translate3d(-64px, 30px, 0) rotate(-0.3deg) scale(0.93) !important;
+}
+
+.today-photo-stack-card-2 {
+  transform: translate3d(64px, 30px, 0) rotate(0.3deg) scale(0.93) !important;
+}
+
+/* 左滑：主牌插向左侧，右侧牌变成新主牌。 */
+.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card-0 {
+  transform: translate3d(
+      calc(var(--photo-drag-x, 0px) + 64px * var(--photo-drag-progress, 0)),
+      calc(8px + 22px * var(--photo-drag-progress, 0)),
+      0
+    )
+    rotate(
+      calc(
+        var(--photo-drag-rotate, 0deg) - 0.3deg * var(--photo-drag-progress, 0)
+      )
+    )
+    scale(calc(1.075 - 0.145 * var(--photo-drag-progress, 0))) !important;
+}
+
+.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card-2 {
+  transform: translate3d(
+      calc(64px - 64px * var(--photo-drag-progress, 0)),
+      calc(30px - 22px * var(--photo-drag-progress, 0)),
+      0
+    )
+    rotate(calc(0.3deg - 0.3deg * var(--photo-drag-progress, 0)))
+    scale(calc(0.93 + 0.145 * var(--photo-drag-progress, 0))) !important;
+}
+
+.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card-1 {
+  transform: translate3d(
+      calc(-64px - 8px * var(--photo-drag-progress, 0)),
+      30px,
+      0
+    )
+    rotate(-0.3deg) scale(0.93) !important;
+}
+
+/* reset 状态同步 3:4 牌位。 */
+.today-photo-stack-resetting .today-photo-stack-card-0 {
+  transform: translate3d(0, 8px, 0) rotate(0deg) scale(1.075) !important;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-1 {
+  transform: translate3d(-64px, 30px, 0) rotate(-0.3deg) scale(0.93) !important;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-2 {
+  transform: translate3d(64px, 30px, 0) rotate(0.3deg) scale(0.93) !important;
+}
+
+/* End Card deck portrait crop override v6.8 */
+
+/* Card deck portrait spacing override v6.9 */
+
+/*
+  v6.9：
+  - 牌阵整体下移；
+  - 主图底部更低；
+  - 牌阵下方显示上传者与上传时间；
+  - 今天的照片卡片底部减少留白。
+*/
+
+.today-photos-card-large {
+  padding-bottom: 14px !important;
+}
+
+.today-photo-stack {
+  height: clamp(372px, 122vw, 540px) !important;
+  margin-top: 14px !important;
+  margin-bottom: 4px !important;
+}
+
+/* 主图：整体更长、更低，底部明显低于两侧。 */
+.today-photo-stack-card-0 {
+  transform: translate3d(var(--photo-drag-x, 0px), 18px, 0)
+    rotate(var(--photo-drag-rotate, 0deg)) scale(1.09) !important;
+}
+
+/* 侧牌同步下移，但仍短于主图。 */
+.today-photo-stack-card-1 {
+  transform: translate3d(-64px, 38px, 0) rotate(-0.3deg) scale(0.93) !important;
+}
+
+.today-photo-stack-card-2 {
+  transform: translate3d(64px, 38px, 0) rotate(0.3deg) scale(0.93) !important;
+}
+
+/* 左滑过程同步新牌位。 */
+.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card-0 {
+  transform: translate3d(
+      calc(var(--photo-drag-x, 0px) + 64px * var(--photo-drag-progress, 0)),
+      calc(18px + 20px * var(--photo-drag-progress, 0)),
+      0
+    )
+    rotate(
+      calc(
+        var(--photo-drag-rotate, 0deg) - 0.3deg * var(--photo-drag-progress, 0)
+      )
+    )
+    scale(calc(1.09 - 0.16 * var(--photo-drag-progress, 0))) !important;
+}
+
+.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card-2 {
+  transform: translate3d(
+      calc(64px - 64px * var(--photo-drag-progress, 0)),
+      calc(38px - 20px * var(--photo-drag-progress, 0)),
+      0
+    )
+    rotate(calc(0.3deg - 0.3deg * var(--photo-drag-progress, 0)))
+    scale(calc(0.93 + 0.16 * var(--photo-drag-progress, 0))) !important;
+}
+
+.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card-1 {
+  transform: translate3d(
+      calc(-64px - 8px * var(--photo-drag-progress, 0)),
+      38px,
+      0
+    )
+    rotate(-0.3deg) scale(0.93) !important;
+}
+
+/* reset 状态同步。 */
+.today-photo-stack-resetting .today-photo-stack-card-0 {
+  transform: translate3d(0, 18px, 0) rotate(0deg) scale(1.09) !important;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-1 {
+  transform: translate3d(-64px, 38px, 0) rotate(-0.3deg) scale(0.93) !important;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-2 {
+  transform: translate3d(64px, 38px, 0) rotate(0.3deg) scale(0.93) !important;
+}
+
+/* 牌阵下方 meta。 */
+.today-photo-stack-meta {
+  margin: 2px 0 8px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.35;
+  color: rgba(74, 58, 48, 0.62);
+  letter-spacing: 0.02em;
+}
+
+/* 控件区更贴近内容，减少底部空白。 */
+.today-photo-controls {
+  margin-top: 6px !important;
+  margin-bottom: 0 !important;
+}
+
+/* End Card deck portrait spacing override v6.9 */
+
+/* Card deck balanced portrait override v7.0 */
+
+/*
+  v7.0：
+  - 牌阵整体继续下移；
+  - 主图与侧图视觉中心对齐；
+  - 主图靠 scale 变大，因此上端高出量 = 下端低出量；
+  - 今天的照片卡片底部留白继续减少；
+  - 上传者与时间距离照片适中。
+*/
+
+.today-photos-card-large {
+  padding-bottom: 8px !important;
+}
+
+.today-photo-stack {
+  height: clamp(372px, 122vw, 540px) !important;
+  margin-top: 28px !important;
+  margin-bottom: 0 !important;
+}
+
+/* 继续保持竖版 3:4，图片填满裁剪。 */
+.today-photo-stack-card {
+  aspect-ratio: 3 / 4 !important;
+  height: auto !important;
+  max-height: calc(100% - 18px) !important;
+  border-radius: 25px !important;
+  overflow: hidden !important;
+  background: rgba(255, 252, 247, 0.9) !important;
+  clip-path: inset(0 round 25px);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+
+.today-photo-stack-card img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+/*
+  主图和侧图 y 都是 38px。
+  主图 scale 更大，所以顶部自然更高，底部自然更低；
+  且上下差距相等。
+*/
+.today-photo-stack-card-0 {
+  transform: translate3d(var(--photo-drag-x, 0px), 38px, 0)
+    rotate(var(--photo-drag-rotate, 0deg)) scale(1.09) !important;
+}
+
+.today-photo-stack-card-1 {
+  transform: translate3d(-64px, 38px, 0) rotate(-0.3deg) scale(0.93) !important;
+}
+
+.today-photo-stack-card-2 {
+  transform: translate3d(64px, 38px, 0) rotate(0.3deg) scale(0.93) !important;
+}
+
+/* 左滑过程：主牌变侧牌，右侧牌变主牌。 */
+.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card-0 {
+  transform: translate3d(
+      calc(var(--photo-drag-x, 0px) + 64px * var(--photo-drag-progress, 0)),
+      38px,
+      0
+    )
+    rotate(
+      calc(
+        var(--photo-drag-rotate, 0deg) - 0.3deg * var(--photo-drag-progress, 0)
+      )
+    )
+    scale(calc(1.09 - 0.16 * var(--photo-drag-progress, 0))) !important;
+}
+
+.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card-2 {
+  transform: translate3d(
+      calc(64px - 64px * var(--photo-drag-progress, 0)),
+      38px,
+      0
+    )
+    rotate(calc(0.3deg - 0.3deg * var(--photo-drag-progress, 0)))
+    scale(calc(0.93 + 0.16 * var(--photo-drag-progress, 0))) !important;
+}
+
+.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card-1 {
+  transform: translate3d(
+      calc(-64px - 8px * var(--photo-drag-progress, 0)),
+      38px,
+      0
+    )
+    rotate(-0.3deg) scale(0.93) !important;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-0 {
+  transform: translate3d(0, 38px, 0) rotate(0deg) scale(1.09) !important;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-1 {
+  transform: translate3d(-64px, 38px, 0) rotate(-0.3deg) scale(0.93) !important;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-2 {
+  transform: translate3d(64px, 38px, 0) rotate(0.3deg) scale(0.93) !important;
+}
+
+.today-photo-stack-meta {
+  margin: 0 0 4px !important;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.35;
+  color: rgba(74, 58, 48, 0.62);
+  letter-spacing: 0.02em;
+}
+
+.today-photo-controls {
+  margin-top: 4px !important;
+  margin-bottom: 0 !important;
+}
+
+/* NEW 标记。 */
+.today-photo-new-badge {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  z-index: 12;
+  transform: translateX(-50%) rotate(-3deg);
+  padding: 5px 10px 4px;
+  border-radius: 999px;
+  background: rgba(255, 247, 238, 0.92);
+  color: rgba(220, 83, 73, 0.96);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  box-shadow: 0 6px 18px rgba(154, 81, 62, 0.18);
+  pointer-events: none;
+}
+
+/* End Card deck balanced portrait override v7.0 */
+
+/* Card deck compact bottom override v7.1 */
+.today-photos-card-large {
+  padding-bottom: 6px !important;
+}
+
+.today-photo-stack {
+  height: clamp(328px, 106vw, 468px) !important;
+  margin-top: 24px !important;
+  margin-bottom: -6px !important;
+}
+
+.today-photo-stack-card {
+  max-height: calc(100% - 8px) !important;
+}
+
+.today-photo-stack-card-0 {
+  transform: translate(-50%, 26px) scale(1.09) !important;
+}
+
+.today-photo-stack-card-1 {
+  transform: translate(calc(-50% - 64px), 26px) scale(0.93) rotate(-6deg) !important;
+}
+
+.today-photo-stack-card-2 {
+  transform: translate(calc(-50% + 64px), 26px) scale(0.93) rotate(6deg) !important;
+}
+
+.today-photo-stack.photo-resetting .today-photo-stack-card-0 {
+  transform: translate(-50%, 26px) scale(1.09) !important;
+}
+
+.today-photo-stack-meta {
+  margin: -2px 0 2px !important;
+}
+
+.today-photo-controls {
+  margin-top: 2px !important;
+  margin-bottom: 0 !important;
+}
+
+/* Today photo deck compact bottom override v7.1 */
+.today-photos-card-large {
+  padding-bottom: 4px !important;
+}
+
+.today-photo-stack {
+  height: clamp(318px, 102vw, 452px) !important;
+  margin-top: 22px !important;
+  margin-bottom: -10px !important;
+}
+
+.today-photo-stack-card {
+  max-height: calc(100% - 4px) !important;
+}
+
+.today-photo-stack-card-0 {
+  transform: translate(-50%, 22px) scale(1.09) !important;
+}
+
+.today-photo-stack-card-1 {
+  transform: translate(calc(-50% - 64px), 22px) scale(0.93) rotate(-6deg) !important;
+}
+
+.today-photo-stack-card-2 {
+  transform: translate(calc(-50% + 64px), 22px) scale(0.93) rotate(6deg) !important;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-0,
+.today-photo-stack.photo-resetting .today-photo-stack-card-0 {
+  transform: translate(-50%, 22px) scale(1.09) !important;
+}
+
+.today-photo-stack-meta {
+  margin: -4px 0 0 !important;
+}
+
+.today-photo-controls {
+  margin-top: 2px !important;
+  margin-bottom: 0 !important;
+}
+
+/* Album masonry original-ratio override v1 */
+.album-grid {
+  display: block !important;
+  column-count: 2 !important;
+  column-gap: 10px !important;
+}
+
+.album-card {
+  display: inline-block !important;
+  width: 100% !important;
+  margin: 0 0 10px !important;
+  padding: 0 !important;
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+  overflow: hidden !important;
+}
+
+.album-image-wrap,
+.album-card-tall .album-image-wrap {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+.album-image-wrap img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  margin: 0 !important;
+}
+
+.album-card-copy {
+  padding: 10px 10px 12px !important;
+}
+
+/* Today photo deck center + tighter bottom override v7.2 */
+.today-photo-stack {
+  left: auto !important;
+  right: auto !important;
+  width: min(100%, 360px) !important;
+  height: clamp(300px, 96vw, 432px) !important;
+  margin: 18px auto -18px !important;
+  transform: none !important;
+}
+
+.today-photo-stack-card {
+  left: 50% !important;
+  right: auto !important;
+  top: 0 !important;
+  width: min(72vw, 268px) !important;
+  max-width: 268px !important;
+  max-height: calc(100% - 2px) !important;
+}
+
+.today-photo-stack-card-0 {
+  transform: translateX(-50%) translateY(18px) scale(1.09) !important;
+}
+
+.today-photo-stack-card-1 {
+  transform: translateX(calc(-50% - 58px)) translateY(18px) scale(0.93)
+    rotate(-6deg) !important;
+}
+
+.today-photo-stack-card-2 {
+  transform: translateX(calc(-50% + 58px)) translateY(18px) scale(0.93)
+    rotate(6deg) !important;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-0,
+.today-photo-stack.photo-resetting .today-photo-stack-card-0 {
+  transform: translateX(-50%) translateY(18px) scale(1.09) !important;
+}
+
+.today-photo-stack-meta {
+  margin: -8px 0 0 !important;
+}
+
+.today-photo-controls {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Album masonry thumbnail placeholder + original ratio override v2 */
+.album-grid {
+  display: block !important;
+  column-count: 2 !important;
+  column-gap: 10px !important;
+}
+
+.album-card {
+  display: inline-block !important;
+  width: 100% !important;
+  margin: 0 0 10px !important;
+  padding: 0 !important;
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+  overflow: hidden !important;
+}
+
+.album-image-wrap,
+.album-card-tall .album-image-wrap {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 120px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+.album-image-wrap img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 120px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  margin: 0 !important;
+}
+
+.album-card-copy {
+  padding: 10px 10px 12px !important;
+}
+
+/* Today photo deck safe centered layout override v7.3 */
+.today-photo-stack {
+  width: min(100%, 390px) !important;
+  height: clamp(318px, 101vw, 458px) !important;
+  margin: 18px auto 2px !important;
+  overflow: visible !important;
+}
+
+.today-photo-stack-card {
+  left: 50% !important;
+  top: 0 !important;
+  width: min(70vw, 258px) !important;
+  max-width: 258px !important;
+  max-height: calc(100% - 18px) !important;
+}
+
+.today-photo-stack-card-0 {
+  transform: translateX(-50%) translateY(16px) scale(1.08) !important;
+}
+
+.today-photo-stack-card-1 {
+  transform: translateX(calc(-50% - 54px)) translateY(16px) scale(0.93)
+    rotate(-6deg) !important;
+}
+
+.today-photo-stack-card-2 {
+  transform: translateX(calc(-50% + 54px)) translateY(16px) scale(0.93)
+    rotate(6deg) !important;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-0,
+.today-photo-stack.photo-resetting .today-photo-stack-card-0 {
+  transform: translateX(-50%) translateY(16px) scale(1.08) !important;
+}
+
+.today-photo-stack-meta {
+  position: relative !important;
+  z-index: 5 !important;
+  margin: 4px 0 2px !important;
+}
+
+.today-photo-controls {
+  position: relative !important;
+  z-index: 5 !important;
+  margin-top: 2px !important;
+}
+
+/* Album masonry stable thumbnail override v3 */
+.album-image-wrap,
+.album-card-tall .album-image-wrap {
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  color: transparent !important;
+}
+
+.album-image-wrap img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  color: transparent !important;
+}
+
+.album-image-wrap img::before,
+.album-image-wrap img::after {
+  display: none !important;
+}
+
+/* Final photo visual system override */
+.today-photos-card-large {
+  overflow: visible !important;
+  padding-bottom: 8px !important;
+}
+
+.today-photo-stack {
+  width: min(100%, 360px) !important;
+  height: clamp(330px, 101vw, 454px) !important;
+  margin: 14px auto 8px !important;
+  overflow: visible !important;
+  transform: none !important;
+}
+
+.today-photo-stack-card {
+  left: 50% !important;
+  top: 0 !important;
+  width: min(61vw, 224px) !important;
+  max-width: 224px !important;
+  max-height: calc(100% - 24px) !important;
+  aspect-ratio: 3 / 4 !important;
+}
+
+.today-photo-stack-card-0 {
+  transform: translateX(-50%) translateY(12px) scale(1.06) !important;
+}
+
+.today-photo-stack-card-1 {
+  transform: translateX(calc(-50% - 68px)) translateY(12px) scale(0.86)
+    rotate(-6deg) !important;
+}
+
+.today-photo-stack-card-2 {
+  transform: translateX(calc(-50% + 68px)) translateY(12px) scale(0.86)
+    rotate(6deg) !important;
+}
+
+.today-photo-stack-card img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card-0 {
+  transform: translateX(calc(-50% + var(--photo-drag-x))) translateY(12px)
+    scale(calc(1.06 - 0.2 * var(--photo-drag-progress)))
+    rotate(calc(var(--photo-drag-progress) * -5deg)) !important;
+}
+
+.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card-2 {
+  transform: translateX(calc(-50% + 68px + var(--photo-drag-x) * 0.18))
+    translateY(12px) scale(calc(0.86 + 0.2 * var(--photo-drag-progress)))
+    rotate(calc(6deg - 6deg * var(--photo-drag-progress))) !important;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card-0 {
+  transform: translateX(-50%) translateY(12px) scale(1.06) !important;
+}
+
+.today-photo-stack-meta {
+  position: relative !important;
+  z-index: 20 !important;
+  margin: 8px 0 8px !important;
+  line-height: 1.2 !important;
+  text-align: center !important;
+}
+
+.today-photo-controls {
+  position: relative !important;
+  z-index: 20 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Final album masonry */
+.album-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  align-items: start !important;
+  padding-top: 0 !important;
+}
+
+.album-masonry-column {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  min-width: 0 !important;
+}
+
+.album-card {
+  display: block !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.album-image-wrap,
+.album-card-tall .album-image-wrap {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 96px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  color: transparent !important;
+}
+
+.album-image-wrap img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 96px !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border: 0 !important;
+  outline: 0 !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+
+.album-card-copy {
+  padding: 10px 10px 12px !important;
+}
+
+/* Final lightbox animation */
+.photo-lightbox {
+  animation: photo-lightbox-fade-in 160ms ease-out both !important;
+}
+
+.photo-lightbox-content {
+  transform-origin: center center !important;
+  animation: photo-lightbox-open 240ms cubic-bezier(0.2, 0.85, 0.2, 1) both !important;
+}
+
+.photo-lightbox-image {
+  width: min(100%, 92vw) !important;
+  max-height: 78vh !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: hidden !important;
+}
+
+.photo-lightbox-image img {
+  display: block !important;
+  max-width: 100% !important;
+  max-height: 78vh !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  animation: photo-lightbox-image-open 260ms cubic-bezier(0.2, 0.85, 0.2, 1)
+    both !important;
+  will-change: transform, opacity !important;
+}
+
+@keyframes photo-lightbox-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes photo-lightbox-open {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.975);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes photo-lightbox-image-open {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-lightbox,
+  .photo-lightbox-content,
+  .photo-lightbox-image img {
+    animation: none !important;
+  }
+}
+
+/* Final today photo interaction + equal spacing override */
+.today-photo-stack {
+  height: clamp(326px, 86vw, 342px) !important;
+  margin: 14px auto 10px !important;
+  touch-action: pan-y !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+.today-photo-stack-card {
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+  touch-action: none !important;
+}
+
+.today-photo-stack-card:not(.today-photo-stack-card-0) {
+  pointer-events: none !important;
+}
+
+.today-photo-stack-card img {
+  pointer-events: none !important;
+  -webkit-user-drag: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+.today-photo-stack-meta {
+  margin: 10px 0 10px !important;
+  line-height: 1.2 !important;
+}
+
+.today-photo-controls {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.today-photo-stack-overlay {
+  pointer-events: none !important;
+}
+
+.today-photo-new-badge {
+  pointer-events: none !important;
+}
+
+/* Final consolidated home hero + photo comments */
+.hero-card {
+  min-height: 0 !important;
+  padding: 16px 20px 14px !important;
+  border-radius: 28px !important;
+  background:
+    radial-gradient(
+      circle at 18% 8%,
+      rgba(255, 219, 211, 0.64),
+      transparent 36%
+    ),
+    radial-gradient(
+      circle at 86% 16%,
+      rgba(211, 223, 255, 0.72),
+      transparent 40%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(255, 250, 247, 0.93),
+      rgba(241, 246, 255, 0.91)
+    ) !important;
+  border: 1px solid rgba(255, 255, 255, 0.66) !important;
+  box-shadow:
+    0 16px 34px rgba(116, 122, 158, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+}
+
+.hero-card::after {
+  opacity: 0.16 !important;
+}
+
+.hero-copy {
+  gap: 3px !important;
+}
+
+.hero-copy span,
+.hero-card p {
+  color: rgba(94, 92, 124, 0.68) !important;
+}
+
+.hero-copy strong {
+  line-height: 0.92 !important;
+  color: rgba(92, 75, 124, 0.94) !important;
+  text-shadow: 0 8px 22px rgba(132, 116, 176, 0.11) !important;
+}
+
+.hero-card .stars {
+  margin: 7px 0 5px !important;
+  color: rgba(154, 166, 214, 0.5) !important;
+}
+
+.hero-card p {
+  margin: 0 !important;
+}
+
+.hero-card p b {
+  color: rgba(195, 119, 126, 0.82) !important;
+}
+
+/* Photo lightbox: fixed composer, stable initial position */
+.photo-lightbox-with-comments {
+  display: flex !important;
+  flex-direction: column !important;
+  width: min(94vw, 760px) !important;
+  height: min(92dvh, 800px) !important;
+  max-height: min(92dvh, 800px) !important;
+  gap: 0 !important;
+  overflow: hidden !important;
+}
+
+.photo-lightbox-image {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  min-height: min(55dvh, 520px) !important;
+  max-height: none !important;
+  height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+  padding: 0 0 12px !important;
+}
+
+.photo-lightbox-image img {
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: min(64dvh, 560px) !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+
+.photo-comments {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  padding: 0 4px 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.photo-comments-list {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+  padding: 0 0 12px !important;
+  scroll-behavior: smooth !important;
+}
+
+.photo-comments-list::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.photo-comments-status {
+  margin: 4px 0 10px !important;
+  color: rgba(255, 255, 255, 0.62) !important;
+}
+
+.photo-comment-row {
+  margin-bottom: 8px !important;
+}
+
+.photo-comment-meta {
+  margin-bottom: 3px !important;
+  font-size: 10px !important;
+}
+
+.photo-comment-row-mine .photo-comment-meta {
+  color: rgba(224, 166, 160, 0.78) !important;
+}
+
+.photo-comment-row-partner .photo-comment-meta {
+  color: rgba(166, 184, 230, 0.78) !important;
+}
+
+.photo-comment-bubble {
+  max-width: min(70vw, 520px) !important;
+  padding: 8px 12px !important;
+  border-radius: 17px !important;
+  line-height: 1.42 !important;
+  word-break: break-word !important;
+}
+
+.photo-comment-row-mine .photo-comment-bubble {
+  color: rgba(91, 55, 65, 0.96) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 232, 225, 0.96),
+    rgba(246, 192, 184, 0.9)
+  ) !important;
+  border: 1px solid rgba(255, 255, 255, 0.42) !important;
+  box-shadow:
+    0 10px 22px rgba(222, 148, 142, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.52) !important;
+}
+
+.photo-comment-row-partner .photo-comment-bubble {
+  color: rgba(52, 65, 102, 0.96) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(231, 239, 255, 0.96),
+    rgba(188, 204, 246, 0.9)
+  ) !important;
+  border: 1px solid rgba(255, 255, 255, 0.42) !important;
+  box-shadow:
+    0 10px 22px rgba(138, 160, 222, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.52) !important;
+}
+
+.photo-comment-error {
+  flex: 0 0 auto !important;
+  margin: 0 2px 8px !important;
+  font-size: 11px !important;
+}
+
+.photo-comment-composer {
+  flex: 0 0 auto !important;
+  position: sticky !important;
+  bottom: 0 !important;
+  z-index: 30 !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  gap: 6px !important;
+  width: auto !important;
+  margin: 0 0 2px !important;
+  padding: 6px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 230, 222, 0.11),
+      rgba(229, 237, 255, 0.13)
+    ),
+    rgba(18, 18, 24, 0.7) !important;
+  box-shadow:
+    0 -10px 24px rgba(10, 10, 18, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+}
+
+.photo-comment-composer input {
+  min-width: 0 !important;
+  height: 30px !important;
+  padding: 0 11px !important;
+  font-size: 12px !important;
+  border-radius: 999px !important;
+}
+
+.photo-comment-composer button {
+  min-width: 48px !important;
+  height: 30px !important;
+  padding: 0 11px !important;
+  border-radius: 999px !important;
+  font-size: 12px !important;
+  color: rgba(78, 67, 106, 0.96) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 226, 217, 0.96),
+    rgba(211, 223, 255, 0.96)
+  ) !important;
+  box-shadow:
+    0 8px 18px rgba(140, 151, 198, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.48) !important;
+}
+
+.photo-comment-row-just-sent {
+  animation: photo-comment-row-rise 440ms cubic-bezier(0.18, 0.92, 0.22, 1) both !important;
+}
+
+.photo-comment-row-just-sent .photo-comment-bubble {
+  animation: photo-comment-bubble-emerge 500ms cubic-bezier(0.16, 1.14, 0.28, 1)
+    both !important;
+}
+
+@keyframes photo-comment-row-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  56% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes photo-comment-bubble-emerge {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.76);
+    filter: blur(4px);
+  }
+
+  48% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.035);
+    filter: blur(0);
+  }
+
+  74% {
+    transform: translateY(1px) scale(0.992);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@media (max-height: 720px) {
+  .photo-lightbox-with-comments {
+    height: 92dvh !important;
+  }
+
+  .photo-lightbox-image {
+    min-height: min(49dvh, 420px) !important;
+    padding-bottom: 10px !important;
+  }
+
+  .photo-lightbox-image img {
+    max-height: min(58dvh, 460px) !important;
+  }
+
+  .photo-comment-composer input,
+  .photo-comment-composer button {
+    height: 28px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-comment-row-just-sent,
+  .photo-comment-row-just-sent .photo-comment-bubble {
+    animation: none !important;
+  }
+}
+
+/* Final stable today photo stack motion */
+.today-photo-stack {
+  touch-action: pan-y !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+.today-photo-stack-card {
+  transition:
+    transform 300ms cubic-bezier(0.2, 0.84, 0.22, 1),
+    opacity 240ms ease,
+    filter 240ms ease !important;
+  will-change: transform, opacity, filter !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.today-photo-stack-dragging .today-photo-stack-card {
+  transition: none !important;
+}
+
+.today-photo-stack-resetting .today-photo-stack-card {
+  transition:
+    transform 360ms cubic-bezier(0.18, 0.88, 0.2, 1),
+    opacity 260ms ease,
+    filter 260ms ease !important;
+}
+
+.today-photo-stack-card:not(.today-photo-stack-card-0) {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+.today-photo-stack-card-0 {
+  pointer-events: auto !important;
+  cursor: grab !important;
+}
+
+.today-photo-stack-dragging .today-photo-stack-card-0 {
+  cursor: grabbing !important;
+}
+
+.today-photo-stack-card img,
+.today-photo-stack-overlay,
+.today-photo-new-badge {
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-user-drag: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+/* Final lightbox photo-to-comments fixed gap */
+.photo-lightbox-image {
+  padding-bottom: 0 !important;
+  margin-bottom: 14px !important;
+}
+
+.photo-comments {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+.photo-comments-list {
+  padding-top: 0 !important;
+}
+
+@media (max-height: 720px) {
+  .photo-lightbox-image {
+    margin-bottom: 12px !important;
+  }
+}
+
+/* Final lightbox spacing by real rendered photo height */
+.photo-lightbox-with-comments {
+  width: min(94vw, 760px) !important;
+  max-height: 92dvh !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+  gap: 0 !important;
+}
+
+.photo-lightbox-image {
+  width: 100% !important;
+  max-height: calc(92dvh - 176px) !important;
+  flex: 0 1 auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  aspect-ratio: auto !important;
+}
+
+.photo-lightbox-image img {
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: calc(92dvh - 176px) !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  margin: 0 auto !important;
+}
+
+.photo-lightbox-caption {
+  width: 100% !important;
+  flex: 0 0 auto !important;
+  margin: 8px 0 0 !important;
+  padding: 0 4px !important;
+  text-align: center !important;
+}
+
+/*
+  留言区不再追求起始线统一。
+  它只跟随真实照片/说明文字之后的位置，保持固定视觉间距。
+*/
+.photo-comments {
+  width: 100% !important;
+  flex: 0 0 auto !important;
+  min-height: 112px !important;
+  max-height: min(30dvh, 210px) !important;
+  margin-top: 12px !important;
+  padding: 0 4px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.photo-comments-list {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 0 0 10px !important;
+}
+
+.photo-comment-composer {
+  flex: 0 0 auto !important;
+  position: sticky !important;
+  bottom: 0 !important;
+  z-index: 40 !important;
+  margin: 0 0 2px !important;
+}
+
+@media (max-height: 720px) {
+  .photo-lightbox-image,
+  .photo-lightbox-image img {
+    max-height: calc(92dvh - 158px) !important;
+  }
+
+  .photo-comments {
+    min-height: 104px !important;
+    max-height: min(28dvh, 184px) !important;
+    margin-top: 10px !important;
+  }
+
+  .photo-lightbox-caption {
+    margin-top: 6px !important;
+  }
+}
+
+/* Final ring-motion card deck choreography */
+.today-photo-stack {
+  position: relative !important;
+  width: min(100%, 360px) !important;
+  height: clamp(326px, 86vw, 342px) !important;
+  margin: 14px auto 10px !important;
+  overflow: visible !important;
+  touch-action: pan-y !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+.today-photo-stack .today-photo-stack-card,
+.today-photo-stack.today-photo-stack-forward .today-photo-stack-card,
+.today-photo-stack.today-photo-stack-backward .today-photo-stack-card,
+.today-photo-stack.today-photo-stack-dragging .today-photo-stack-card,
+.today-photo-stack.today-photo-stack-resetting .today-photo-stack-card,
+.today-photo-stack.today-photo-stack-forward.today-photo-stack-dragging
+  .today-photo-stack-card,
+.today-photo-stack.today-photo-stack-backward.today-photo-stack-dragging
+  .today-photo-stack-card {
+  position: absolute !important;
+  left: 50% !important;
+  top: 0 !important;
+  width: min(61vw, 224px) !important;
+  aspect-ratio: 3 / 4 !important;
+  border: 0 !important;
+  border-radius: 28px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: rgba(255, 255, 255, 0.42) !important;
+  box-shadow:
+    0 22px 42px rgba(64, 50, 90, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.48) !important;
+  transform: translateX(calc(-50% + var(--card-x, 0px)))
+    translateY(var(--card-y, 12px)) rotate(var(--card-rotate, 0deg))
+    scale(var(--card-scale, 1)) !important;
+  z-index: var(--card-z, 1) !important;
+  transform-origin: center center !important;
+  opacity: 1 !important;
+  filter: none !important;
+  will-change: transform !important;
+  -webkit-tap-highlight-color: transparent !important;
+  transition: transform 260ms cubic-bezier(0.22, 0.78, 0.22, 1) !important;
+}
+
+.today-photo-stack.today-photo-stack-dragging .today-photo-stack-card {
+  transition: none !important;
+}
+
+.today-photo-stack .today-photo-stack-card-0 {
+  pointer-events: auto !important;
+  cursor: grab !important;
+}
+
+.today-photo-stack.today-photo-stack-dragging .today-photo-stack-card-0 {
+  cursor: grabbing !important;
+}
+
+.today-photo-stack .today-photo-stack-card:not(.today-photo-stack-card-0) {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+.today-photo-stack .today-photo-stack-card img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  opacity: 1 !important;
+  filter: none !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-user-drag: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+.today-photo-stack .today-photo-stack-overlay,
+.today-photo-stack .today-photo-new-badge {
+  pointer-events: none !important;
+}
+
+/* Final stable keyboard composer */
+.photo-lightbox-content.photo-lightbox-with-comments {
+  height: calc(100dvh - 24px) !important;
+  max-height: calc(100dvh - 24px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  padding-bottom: 0 !important;
+}
+
+.photo-lightbox-image {
+  flex: 0 0 auto !important;
+}
+
+.photo-lightbox-caption {
+  flex: 0 0 auto !important;
+  margin: 8px 0 0 !important;
+}
+
+.photo-comments {
+  width: 100% !important;
+  flex: 1 1 auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin-top: 12px !important;
+  padding: 0 4px 94px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.photo-comments-list {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+  padding: 0 0 8px !important;
+}
+
+.photo-comment-error {
+  flex: 0 0 auto !important;
+  margin: 0 0 8px !important;
+}
+
+.photo-comment-composer {
+  position: fixed !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: var(--photo-composer-bottom, 46px) !important;
+  width: min(88vw, 420px) !important;
+  max-width: 420px !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  max-height: 44px !important;
+  transform: translateX(-50%) !important;
+  z-index: 10000 !important;
+  margin: 0 !important;
+  padding: 5px 6px !important;
+  border-radius: 999px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: #eeeeef !important;
+  border: 1px solid #d8d4dc !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.photo-comment-composer input {
+  height: 34px !important;
+  min-height: 34px !important;
+  flex: 1 1 auto !important;
+  font-size: 15px !important;
+  line-height: 1.25 !important;
+  padding: 0 12px !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: rgba(55, 43, 70, 0.94) !important;
+}
+
+.photo-comment-composer input::placeholder {
+  color: rgba(92, 82, 106, 0.48) !important;
+}
+
+.photo-comment-composer button {
+  position: relative !important;
+  width: 62px !important;
+  height: 34px !important;
+  min-width: 62px !important;
+  border-radius: 999px !important;
+  border: 0 !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  color: #fff !important;
+  background: rgba(74, 50, 102, 0.98) !important;
+  box-shadow: none !important;
+  display: block !important;
+  padding: 0 !important;
+}
+
+.photo-comment-composer button::before {
+  content: "↑";
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  display: block !important;
+  width: 22px !important;
+  height: 22px !important;
+  font-size: 21px !important;
+  font-weight: 800 !important;
+  line-height: 22px !important;
+  text-align: center !important;
+  transform: translate(-50%, -52%) !important;
+}
+
+.photo-comment-composer button:disabled {
+  opacity: 0.38 !important;
+}
+
+@media (max-height: 720px) {
+  .photo-lightbox-content.photo-lightbox-with-comments {
+    height: calc(100dvh - 18px) !important;
+    max-height: calc(100dvh - 18px) !important;
+  }
+
+  .photo-comments {
+    margin-top: 10px !important;
+    padding-bottom: 90px !important;
+  }
+
+  .photo-comment-composer {
+    height: 42px !important;
+    min-height: 42px !important;
+    max-height: 42px !important;
+  }
+
+  .photo-comment-composer input {
+    height: 32px !important;
+    min-height: 32px !important;
+    font-size: 15px !important;
+  }
+
+  .photo-comment-composer button {
+    width: 60px !important;
+    height: 32px !important;
+    min-width: 60px !important;
+  }
+
+  .photo-comment-composer button::before {
+    transform: translate(-50%, -52%) !important;
+  }
+}
+
+/* Final plain photo comments bubbles */
+.photo-comments {
+  padding-bottom: 104px !important;
+}
+
+.photo-comments-list {
+  padding-bottom: 14px !important;
+}
+
+.photo-comment-bubble {
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.photo-comment-row-mine .photo-comment-bubble {
+  color: rgba(58, 45, 72, 0.94) !important;
+  background: #e9e1ee !important;
+}
+
+.photo-comment-row-partner .photo-comment-bubble {
+  color: rgba(58, 45, 72, 0.92) !important;
+  background: #f2f0f3 !important;
+}
+
+.photo-comment-row + .photo-comment-row {
+  margin-top: 5px !important;
+}
+
+.photo-comment-meta {
+  margin-bottom: 2px !important;
+}
+
+/* Final plain photo comments and unread comment badge */
+.photo-comment-bubble {
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.photo-comment-row-mine .photo-comment-bubble {
+  color: rgba(58, 45, 72, 0.94) !important;
+  background: #e9e1ee !important;
+}
+
+.photo-comment-row-partner .photo-comment-bubble {
+  color: rgba(58, 45, 72, 0.92) !important;
+  background: #f2f0f3 !important;
+}
+
+.photo-comment-row + .photo-comment-row {
+  margin-top: 5px !important;
+}
+
+.photo-comment-meta {
+  margin-bottom: 2px !important;
+}
+
+.today-photo-comment-unread-badge {
+  position: absolute !important;
+  right: 10px !important;
+  top: 10px !important;
+  z-index: 30 !important;
+  min-width: 22px !important;
+  height: 22px !important;
+  padding: 0 6px !important;
+  border-radius: 999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #fff !important;
+  background: #ff3b30 !important;
+  border: 2px solid rgba(255, 255, 255, 0.92) !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  box-shadow: 0 6px 14px rgba(255, 59, 48, 0.32) !important;
+  pointer-events: none !important;
+}
+
+.today-photo-new-badge + .today-photo-comment-unread-badge {
+  top: 36px !important;
+}
+
+/* Final four-tab visual unification: 首页 / 相簿 / 心愿 / 我的 */
+:root {
+  --four-tab-bg: #fbfaf8;
+  --four-tab-title: rgba(46, 38, 58, 0.94);
+  --four-tab-subtitle: rgba(92, 82, 106, 0.66);
+  --four-tab-eyebrow: rgba(116, 89, 145, 0.72);
+  --four-tab-card: rgba(255, 255, 255, 0.82);
+}
+
+html,
+body,
+.app-shell,
+.app-content,
+.content,
+.tab-page {
+  background: var(--four-tab-bg) !important;
+}
+
+body::before {
+  content: "" !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: env(safe-area-inset-top) !important;
+  z-index: 9998 !important;
+  pointer-events: none !important;
+  background: var(--four-tab-bg) !important;
+}
+
+/* 首页 */
+.home-header {
+  padding-top: calc(24px + env(safe-area-inset-top)) !important;
+  background: var(--four-tab-bg) !important;
+  color: var(--four-tab-title) !important;
+}
+
+.home-header * {
+  color: inherit !important;
+}
+
+.content {
+  padding-bottom: calc(96px + env(safe-area-inset-bottom)) !important;
+}
+
+/* 相簿 / 心愿 / 我的：统一页面容器 */
+.tab-page,
+.album-tab,
+.profile-tab,
+.wishes-tab {
+  min-height: 100dvh !important;
+  padding: calc(26px + env(safe-area-inset-top)) 20px
+    calc(96px + env(safe-area-inset-bottom)) !important;
+  color: var(--four-tab-title) !important;
+  background: var(--four-tab-bg) !important;
+}
+
+/* 相簿 / 心愿 / 我的：统一标题 */
+.tab-page-header,
+.album-header,
+.profile-header,
+.wishes-header,
+.page-title {
+  margin: 0 0 22px !important;
+  text-align: left !important;
+}
+
+.tab-page-eyebrow,
+.album-eyebrow,
+.profile-eyebrow,
+.wishes-eyebrow,
+.page-eyebrow {
+  margin: 0 0 7px !important;
+  font-size: 11px !important;
+  line-height: 1 !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: var(--four-tab-eyebrow) !important;
+}
+
+.tab-page-header h1,
+.album-header h1,
+.profile-header h1,
+.wishes-header h1,
+.page-title h1,
+.page-title h2 {
+  margin: 0 !important;
+  font-size: clamp(28px, 7.3vw, 34px) !important;
+  line-height: 1.08 !important;
+  font-weight: 850 !important;
+  letter-spacing: -0.045em !important;
+  color: var(--four-tab-title) !important;
+}
+
+.tab-page-header > p:last-child,
+.album-header > p:last-child,
+.profile-header > p:last-child,
+.wishes-header > p:last-child,
+.page-title p {
+  margin: 9px 0 0 !important;
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+  color: var(--four-tab-subtitle) !important;
+}
+
+/* 底栏与页面底色统一 */
+.bottom-navigation,
+.bottom-nav {
+  background: var(--four-tab-bg) !important;
+  border-top: 1px solid rgba(80, 65, 98, 0.07) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.empty-state-card {
+  background: var(--four-tab-card) !important;
+  border: 1px solid rgba(80, 65, 98, 0.07) !important;
+  box-shadow: none !important;
+}
+
+/* Final align four bottom tabs with Home visual style */
+:root {
+  --home-like-bg: #fbfaf8;
+}
+
+html,
+body,
+.app-shell,
+.app-content {
+  background: var(--home-like-bg) !important;
+}
+
+body::before {
+  content: "" !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: env(safe-area-inset-top) !important;
+  z-index: 9998 !important;
+  pointer-events: none !important;
+  background: var(--home-like-bg) !important;
+}
+
+.topbar {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  padding: calc(22px + env(safe-area-inset-top)) 22px 18px !important;
+  background: var(--home-like-bg) !important;
+}
+
+.topbar .eyebrow,
+.eyebrow {
+  margin: 0 0 8px !important;
+  color: rgba(83, 70, 138, 0.56) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.19em !important;
+}
+
+.topbar h1 {
+  margin: 0 !important;
+  color: #282437 !important;
+  font-size: 29px !important;
+  font-weight: 650 !important;
+  line-height: 1.12 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.tab-header-description {
+  max-width: 280px !important;
+  margin: 10px 0 0 !important;
+  color: rgba(49, 45, 61, 0.56) !important;
+  font-size: 13px !important;
+  line-height: 1.7 !important;
+}
+
+.content,
+.album-page,
+.tab-page {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-height: auto !important;
+  padding: 0 20px calc(96px + env(safe-area-inset-bottom)) !important;
+  background: var(--home-like-bg) !important;
+  animation: none !important;
+}
+
+.album-summary {
+  margin-top: 0 !important;
+}
+
+.bottom-navigation {
+  background: var(--home-like-bg) !important;
+  border-top: 1px solid rgba(48, 42, 67, 0.08) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Final compact consecutive photo comments */
+.photo-comment-row + .photo-comment-row {
+  margin-top: 3px !important;
+}
+
+.photo-comment-row:has(+ .photo-comment-row) {
+  margin-bottom: 0 !important;
+}
+
+.photo-comment-meta {
+  margin-bottom: 1px !important;
+}
+
+.photo-comment-row-mine + .photo-comment-row-mine,
+.photo-comment-row-partner + .photo-comment-row-partner {
+  margin-top: 2px !important;
+}
+
+.photo-comment-row-mine + .photo-comment-row-partner,
+.photo-comment-row-partner + .photo-comment-row-mine {
+  margin-top: 8px !important;
+}
+
+.photo-comment-bubble {
+  padding-top: 7px !important;
+  padding-bottom: 7px !important;
+}
+
+/* Final hide commenter names in photo comments */
+.photo-comment-meta span {
+  display: none !important;
+}
+
+.photo-comment-meta {
+  min-height: 0 !important;
+  margin-bottom: 1px !important;
 }
