@@ -1,17 +1,16 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-
   "name": "twoplanets-test",
   "main": "./worker/index.ts",
-  "compatibility_date": "2026-07-25",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_date": "2026-05-22",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "workers_dev": true,
-
   "assets": {
     "directory": "./dist/client",
     "binding": "ASSETS"
   },
-
   "d1_databases": [
     {
       "binding": "DB",
@@ -19,14 +18,17 @@
       "database_id": "b3202fef-94cf-49fe-8e96-94602ad14eda"
     }
   ],
-
-  "r2_buckets": [],
-
+  "r2_buckets": [
+    {
+      "binding": "PHOTOS",
+      "bucket_name": "two-planets-test-photos"
+    }
+  ],
   "env": {
     "production": {
       "name": "twoplanets",
+      "compatibility_date": "2026-07-25",
       "workers_dev": true,
-
       "d1_databases": [
         {
           "binding": "DB",
@@ -34,8 +36,12 @@
           "database_id": "83b35797-8c7a-4010-adaa-9bea304b4bcc"
         }
       ],
-
-      "r2_buckets": []
+      "r2_buckets": [
+        {
+          "binding": "PHOTOS",
+          "bucket_name": "two-planets-prod-photos"
+        }
+      ]
     }
   }
 }

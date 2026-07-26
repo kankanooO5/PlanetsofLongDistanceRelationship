@@ -1,15 +1,26 @@
 "use client";
 
 import { AlbumTab } from "../../album/components/AlbumTab";
-import { DEMO_ALBUM_PHOTOS } from "../../album/data/demo-album";
+import type { AlbumPhoto } from "../../album/types/album";
 
-export function MemoriesTab() {
+type MemoriesTabProps = {
+  photos: AlbumPhoto[];
+  loading: boolean;
+  onOpenPhoto: (
+    photo: AlbumPhoto,
+  ) => void;
+};
+
+export function MemoriesTab({
+  photos,
+  loading,
+  onOpenPhoto,
+}: MemoriesTabProps) {
   return (
     <AlbumTab
-      photos={DEMO_ALBUM_PHOTOS}
-      onAddPhoto={() => {
-        window.alert("照片上传功能将在下一步接入");
-      }}
+      photos={photos}
+      loading={loading}
+      onOpenPhoto={onOpenPhoto}
     />
   );
 }

@@ -55,9 +55,7 @@ export function useCoupleSession() {
           return;
         }
 
-        const result = await requestMemberSession(
-          savedSession.token,
-        );
+        const result = await requestMemberSession(savedSession.token);
 
         if (cancelled) return;
 
@@ -71,21 +69,23 @@ export function useCoupleSession() {
       } catch (reason) {
         if (cancelled) return;
 
-        clearMemberSession();
-        setMemberToken("");
+        const savedSession = readMemberSession();
+
+        if (savedSession) {
+          setMemberToken(savedSession.token);
+          setRole(savedSession.role);
+        }
+
         setEntered(false);
         setData(null);
         setError(
           reason instanceof Error
-            ? reason.message
-            : "成员身份已经失效",
+            ? `${reason.message}。本机身份仍已保留，请稍后重试或使用设备恢复。`
+            : "暂时无法恢复成员身份。本机身份仍已保留，请稍后重试或使用设备恢复。",
         );
       } finally {
         const elapsed = Date.now() - launchStartedAt;
-        const remaining = Math.max(
-          0,
-          minimumLaunchDuration - elapsed,
-        );
+        const remaining = Math.max(0, minimumLaunchDuration - elapsed);
 
         await new Promise((resolve) => {
           window.setTimeout(resolve, remaining);

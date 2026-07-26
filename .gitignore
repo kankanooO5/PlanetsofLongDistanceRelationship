@@ -55,3 +55,7 @@ build/
 .env.*
 
 backups/
+
+# local patch backups
+*.before-*
+*.bak
