@@ -7997,3 +7997,38 @@ body::before {
   min-height: 0 !important;
   margin-bottom: 1px !important;
 }
+
+/* 相簿按需加载占位 */
+.album-image-placeholder {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      110deg,
+      rgba(255, 255, 255, 0) 20%,
+      rgba(255, 255, 255, 0.42) 42%,
+      rgba(255, 255, 255, 0) 64%
+    ),
+    rgba(111, 29, 58, 0.08);
+  background-size: 220% 100%;
+  animation: album-placeholder-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes album-placeholder-shimmer {
+  0% {
+    background-position: 120% 0;
+  }
+
+  100% {
+    background-position: -120% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .album-image-placeholder {
+    animation: none;
+  }
+}
+

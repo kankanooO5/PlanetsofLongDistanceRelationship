@@ -1,37 +1,202 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
 import type { AlbumPhoto } from "../types/album";
+import { formatLocalDateTime } from "../../../lib/utils/date";
 
 type AlbumTabProps = {
   photos: AlbumPhoto[];
   loading?: boolean;
   onOpenPhoto: (photo: AlbumPhoto) => void;
+  loadThumbnail: (photoId: string) => Promise<void>;
+  loadMorePhotos: () => Promise<void>;
+  hasMorePhotos: boolean;
+  loadingMorePhotos: boolean;
 };
 
-function formatPhotoDate(value: string) {
-  const date = new Date(`${value}T00:00:00`);
+type AlbumCardProps = {
+  photo: AlbumPhoto;
+  originalIndex: number;
+  onOpenPhoto: (photo: AlbumPhoto) => void;
+  loadThumbnail: (photoId: string) => Promise<void>;
+};
 
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
+function AlbumCard({
+  photo,
+  originalIndex,
+  onOpenPhoto,
+  loadThumbnail,
+}: AlbumCardProps) {
+  const cardRef = useRef<HTMLElement | null>(null);
 
-  return new Intl.DateTimeFormat("zh-CN", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(date);
+  const thumbnailUrl =
+    photo.thumbnailUrl?.startsWith("blob:")
+      ? photo.thumbnailUrl
+      : undefined;
+
+  useEffect(() => {
+    if (thumbnailUrl) {
+      return;
+    }
+
+    const card = cardRef.current;
+
+    if (!card) {
+      return;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      void loadThumbnail(photo.id);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+
+        if (!entry?.isIntersecting) {
+          return;
+        }
+
+        void loadThumbnail(photo.id);
+        observer.disconnect();
+      },
+      {
+        // 提前约 600px 加载，避免滑到照片时才出现空白。
+        rootMargin: "600px 0px",
+        threshold: 0.01,
+      },
+    );
+
+    observer.observe(card);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [loadThumbnail, photo.id, thumbnailUrl]);
+
+  return (
+    <article
+      ref={cardRef}
+      className={`album-card ${
+        photo.height &&
+        photo.width &&
+        photo.height > photo.width
+          ? "album-card-tall"
+          : ""
+      }`}
+    >
+      <button
+        type="button"
+        className="album-image-wrap"
+        style={{
+          aspectRatio:
+            photo.width && photo.height
+              ? `${photo.width} / ${photo.height}`
+              : undefined,
+          backgroundImage: thumbnailUrl
+            ? `url(${thumbnailUrl})`
+            : undefined,
+        }}
+        onClick={() => onOpenPhoto(photo)}
+        aria-label="查看照片原图"
+      >
+        {thumbnailUrl ? (
+          <img
+            src={thumbnailUrl}
+            alt=""
+            loading={originalIndex < 2 ? "eager" : "lazy"}
+            fetchPriority={
+              originalIndex < 2 ? "high" : "auto"
+            }
+            decoding="async"
+            onError={(event) => {
+              event.currentTarget.style.display = "none";
+            }}
+          />
+        ) : (
+          <span
+            className="album-image-placeholder"
+            aria-hidden="true"
+          />
+        )}
+      </button>
+
+      <div className="album-card-copy">
+        {photo.caption && <p>{photo.caption}</p>}
+
+        <time dateTime={photo.takenAt}>
+          {formatLocalDateTime(photo.createdAt)}
+        </time>
+      </div>
+    </article>
+  );
 }
 
 export function AlbumTab({
   photos,
   loading = false,
   onOpenPhoto,
+  loadThumbnail,
+  loadMorePhotos,
+  hasMorePhotos,
+  loadingMorePhotos,
 }: AlbumTabProps) {
+  const loadMoreRef = useRef<HTMLDivElement | null>(
+    null,
+  );
+
+  useEffect(() => {
+    if (
+      !hasMorePhotos ||
+      loadingMorePhotos
+    ) {
+      return;
+    }
+
+    const sentinel = loadMoreRef.current;
+
+    if (!sentinel) {
+      return;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      void loadMorePhotos();
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          void loadMorePhotos();
+        }
+      },
+      {
+        // 接近底部前提前请求下一页。
+        rootMargin: "800px 0px",
+        threshold: 0,
+      },
+    );
+
+    observer.observe(sentinel);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [
+    hasMorePhotos,
+    loadingMorePhotos,
+    loadMorePhotos,
+  ]);
+
   return (
     <>
       <header className="topbar">
         <div>
-          <p className="eyebrow">OUR LITTLE UNIVERSE</p>
+          <p className="eyebrow">
+            OUR LITTLE UNIVERSE
+          </p>
 
           <h1>相簿</h1>
 
@@ -55,74 +220,72 @@ export function AlbumTab({
           </div>
         ) : photos.length === 0 ? (
           <div className="album-empty">
-            <div className="album-empty-illustration" aria-hidden="true">
+            <div
+              className="album-empty-illustration"
+              aria-hidden="true"
+            >
               <span className="album-empty-planet album-empty-planet-a" />
               <span className="album-empty-planet album-empty-planet-b" />
             </div>
 
             <h2>相簿还是空的</h2>
 
-            <p>在首页上传第一张照片，留下属于你们的第一颗记忆星星。</p>
+            <p>
+              在首页上传第一张照片，留下属于你们的第一颗记忆星星。
+            </p>
           </div>
         ) : (
-          <div className="album-grid">
-            {[0, 1].map((columnIndex) => (
-              <div
-                className="album-masonry-column"
-                key={`album-column-${columnIndex}`}
-              >
-                {photos
-                  .filter((_, index) => index % 2 === columnIndex)
-                  .map((photo, columnPhotoIndex) => {
-                    const originalIndex = columnPhotoIndex * 2 + columnIndex;
+          <>
+            <div className="album-grid">
+              {[0, 1].map((columnIndex) => (
+                <div
+                  className="album-masonry-column"
+                  key={`album-column-${columnIndex}`}
+                >
+                  {photos
+                    .filter(
+                      (_, index) =>
+                        index % 2 === columnIndex,
+                    )
+                    .map(
+                      (
+                        photo,
+                        columnPhotoIndex,
+                      ) => {
+                        const originalIndex =
+                          columnPhotoIndex * 2 +
+                          columnIndex;
 
-                    return (
-                      <article
-                        className={`album-card ${
-                          photo.height &&
-                          photo.width &&
-                          photo.height > photo.width
-                            ? "album-card-tall"
-                            : ""
-                        }`}
-                        key={photo.id}
-                      >
-                        <button
-                          type="button"
-                          className="album-image-wrap"
-                          style={{
-                            aspectRatio:
-                              photo.width && photo.height
-                                ? `${photo.width} / ${photo.height}`
-                                : undefined,
-                            backgroundImage: `url(${photo.thumbnailUrl})`,
-                          }}
-                          onClick={() => onOpenPhoto(photo)}
-                          aria-label="查看照片原图"
-                        >
-                          <img
-                            src={photo.thumbnailUrl}
-                            alt=""
-                            loading={originalIndex < 2 ? "eager" : "lazy"}
-                            onError={(event) => {
-                              event.currentTarget.style.display = "none";
-                            }}
+                        return (
+                          <AlbumCard
+                            key={photo.id}
+                            photo={photo}
+                            originalIndex={
+                              originalIndex
+                            }
+                            onOpenPhoto={
+                              onOpenPhoto
+                            }
+                            loadThumbnail={
+                              loadThumbnail
+                            }
                           />
-                        </button>
+                        );
+                      },
+                    )}
+                </div>
+              ))}
+            </div>
 
-                        <div className="album-card-copy">
-                          {photo.caption && <p>{photo.caption}</p>}
-
-                          <time dateTime={photo.takenAt}>
-                            {formatPhotoDate(photo.takenAt)}
-                          </time>
-                        </div>
-                      </article>
-                    );
-                  })}
-              </div>
-            ))}
-          </div>
+            {hasMorePhotos && (
+              <div
+                ref={loadMoreRef}
+                className="album-load-more-sentinel"
+                style={{ height: 1 }}
+                aria-hidden="true"
+              />
+            )}
+          </>
         )}
       </section>
     </>

@@ -43,6 +43,10 @@ export function AppRoot() {
     uploading: uploadingPhoto,
     error: photoError,
     addPhoto,
+    loadThumbnail,
+    loadMorePhotos,
+    hasMorePhotos,
+    loadingMorePhotos,
   } = usePhotos(photosEnabled);
 
   const [activeTab, setActiveTab] =
@@ -141,6 +145,12 @@ export function AppRoot() {
               loading={photosLoading}
               onOpenPhoto={
                 setSelectedPhoto
+              }
+              loadThumbnail={loadThumbnail}
+              loadMorePhotos={loadMorePhotos}
+              hasMorePhotos={hasMorePhotos}
+              loadingMorePhotos={
+                loadingMorePhotos
               }
             />
           )}

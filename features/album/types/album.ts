@@ -5,7 +5,7 @@ export type AlbumPhoto = {
   imageUrl: string;
 
   // 首页和相簿列表使用的缩略图接口。
-  thumbnailUrl: string;
+  thumbnailUrl?: string;
 
   caption: string;
   takenAt: string;

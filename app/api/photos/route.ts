@@ -126,51 +126,207 @@ export async function GET(request: NextRequest) {
       return jsonError("成员身份已经失效", 401);
     }
 
-    const result = await database
-      .prepare(
-        `SELECT
-          photos.id,
-          photos.caption,
-          photos.taken_at AS takenAt,
-          photos.created_at AS createdAt,
-          photos.width,
-          photos.height,
-          photos.mime_type AS mimeType,
-          photos.size_bytes AS sizeBytes,
-          photos.uploaded_by_member_id AS uploadedByMemberId,
-          relationship_members.display_name AS uploaderName,
-          CASE
-            WHEN photos.thumbnail_object_key IS NOT NULL
-            THEN 1
-            ELSE 0
-          END AS hasThumbnail
+    const searchParams = new URL(
+      request.url,
+    ).searchParams;
 
-        FROM photos
+    /*
+     * 为了保证旧客户端暂时不受影响：
+     *
+     * /api/photos
+     *   仍返回全部照片。
+     *
+     * /api/photos?limit=24
+     *   才启用分页。
+     */
+    const paginationEnabled =
+      searchParams.has("limit") ||
+      searchParams.has("cursor");
 
-        INNER JOIN relationship_members
-          ON relationship_members.id =
-             photos.uploaded_by_member_id
+    const requestedLimit = Number.parseInt(
+      searchParams.get("limit") ?? "24",
+      10,
+    );
 
-        WHERE photos.relationship_id = ?
+    const limit = Number.isFinite(requestedLimit)
+      ? Math.min(
+          Math.max(requestedLimit, 1),
+          50,
+        )
+      : 24;
 
-        ORDER BY
-          photos.taken_at DESC,
-          photos.created_at DESC`,
-      )
-      .bind(member.relationshipId)
-      .all<PhotoRow>();
+    type PhotoCursor = {
+      takenAt: string;
+      createdAt: string;
+      id: string;
+    };
+
+    let cursor: PhotoCursor | null = null;
+
+    const rawCursor =
+      searchParams.get("cursor");
+
+    if (rawCursor) {
+      try {
+        const parsed = JSON.parse(
+          rawCursor,
+        ) as Partial<PhotoCursor>;
+
+        if (
+          typeof parsed.takenAt !== "string" ||
+          typeof parsed.createdAt !== "string" ||
+          typeof parsed.id !== "string"
+        ) {
+          return jsonError(
+            "分页游标格式无效",
+            400,
+          );
+        }
+
+        cursor = {
+          takenAt: parsed.takenAt,
+          createdAt: parsed.createdAt,
+          id: parsed.id,
+        };
+      } catch {
+        return jsonError(
+          "分页游标格式无效",
+          400,
+        );
+      }
+    }
+
+    const baseSelect = `
+      SELECT
+        photos.id,
+        photos.caption,
+        photos.taken_at AS takenAt,
+        photos.created_at AS createdAt,
+        photos.width,
+        photos.height,
+        photos.mime_type AS mimeType,
+        photos.size_bytes AS sizeBytes,
+        photos.uploaded_by_member_id AS uploadedByMemberId,
+        relationship_members.display_name AS uploaderName,
+        CASE
+          WHEN photos.thumbnail_object_key IS NOT NULL
+          THEN 1
+          ELSE 0
+        END AS hasThumbnail
+
+      FROM photos
+
+      INNER JOIN relationship_members
+        ON relationship_members.id =
+           photos.uploaded_by_member_id
+
+      WHERE photos.relationship_id = ?
+    `;
+
+    let rows: PhotoRow[];
+
+    if (!paginationEnabled) {
+      const result = await database
+        .prepare(
+          `${baseSelect}
+          ORDER BY
+            photos.taken_at DESC,
+            photos.created_at DESC,
+            photos.id DESC`,
+        )
+        .bind(member.relationshipId)
+        .all<PhotoRow>();
+
+      rows = result.results;
+    } else if (cursor) {
+      const result = await database
+        .prepare(
+          `${baseSelect}
+
+          AND (
+            photos.taken_at < ?
+
+            OR (
+              photos.taken_at = ?
+              AND photos.created_at < ?
+            )
+
+            OR (
+              photos.taken_at = ?
+              AND photos.created_at = ?
+              AND photos.id < ?
+            )
+          )
+
+          ORDER BY
+            photos.taken_at DESC,
+            photos.created_at DESC,
+            photos.id DESC
+
+          LIMIT ?`,
+        )
+        .bind(
+          member.relationshipId,
+          cursor.takenAt,
+          cursor.takenAt,
+          cursor.createdAt,
+          cursor.takenAt,
+          cursor.createdAt,
+          cursor.id,
+          limit + 1,
+        )
+        .all<PhotoRow>();
+
+      rows = result.results;
+    } else {
+      const result = await database
+        .prepare(
+          `${baseSelect}
+
+          ORDER BY
+            photos.taken_at DESC,
+            photos.created_at DESC,
+            photos.id DESC
+
+          LIMIT ?`,
+        )
+        .bind(
+          member.relationshipId,
+          limit + 1,
+        )
+        .all<PhotoRow>();
+
+      rows = result.results;
+    }
+
+    const pageRows = paginationEnabled
+      ? rows.slice(0, limit)
+      : rows;
+
+    const hasMore =
+      paginationEnabled &&
+      rows.length > limit;
+
+    const lastPhoto =
+      pageRows.at(-1);
+
+    const nextCursor =
+      hasMore && lastPhoto
+        ? JSON.stringify({
+            takenAt: lastPhoto.takenAt,
+            createdAt: lastPhoto.createdAt,
+            id: lastPhoto.id,
+          })
+        : null;
 
     return Response.json({
-      photos: result.results.map((photo) => ({
+      photos: pageRows.map((photo) => ({
         id: photo.id,
 
         imageUrl:
           `/api/photos/${photo.id}?variant=original`,
 
-        thumbnailUrl:
-          photo.hasThumbnail
-            ? `/api/photos/${photo.id}?variant=thumbnail`
-            : `/api/photos/${photo.id}?variant=original`,
+        thumbnailUrl: undefined,
 
         caption: photo.caption,
         takenAt: photo.takenAt,
@@ -179,15 +335,26 @@ export async function GET(request: NextRequest) {
         height: photo.height ?? undefined,
         mimeType: photo.mimeType,
         sizeBytes: photo.sizeBytes,
+
         uploadedByMemberId:
           photo.uploadedByMemberId,
-        uploaderName: photo.uploaderName,
+
+        uploaderName:
+          photo.uploaderName,
       })),
+
+      nextCursor,
     });
   } catch (reason) {
-    console.error("Load photos failed", reason);
+    console.error(
+      "Load photos failed",
+      reason,
+    );
 
-    return jsonError("暂时无法读取相簿", 500);
+    return jsonError(
+      "暂时无法读取相簿",
+      500,
+    );
   }
 }
 

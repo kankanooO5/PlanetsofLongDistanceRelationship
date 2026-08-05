@@ -10,7 +10,7 @@ import {
 
 import {
   fetchPhotoObjectUrl,
-  fetchPhotos,
+  fetchPhotoPage,
   uploadPhoto,
 } from "../../../lib/api/photo-client";
 import { readMemberSession } from "../../../lib/storage/member-session";
@@ -18,6 +18,9 @@ import type {
   AlbumPhoto,
   UploadPhotoInput,
 } from "../types/album";
+
+const INITIAL_PHOTO_PAGE_SIZE = 24;
+const NEXT_PHOTO_PAGE_SIZE = 20;
 
 function localDateString(date = new Date()) {
   const year = date.getFullYear();
@@ -35,8 +38,18 @@ export function usePhotos(enabled: boolean) {
   const [loading, setLoading] = useState(enabled);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
+  const [nextCursor, setNextCursor] =
+    useState<string | null>(null);
+  const [loadingMorePhotos, setLoadingMorePhotos] =
+    useState(false);
 
   const objectUrlsRef = useRef(new Set<string>());
+  const photosRef = useRef<AlbumPhoto[]>([]);
+  const thumbnailRequestsRef = useRef(
+    new Set<string>(),
+  );
+  const loadMoreRequestRef = useRef(false);
+
 
   const revokeObjectUrls = useCallback(() => {
     objectUrlsRef.current.forEach((url) => {
@@ -46,47 +59,14 @@ export function usePhotos(enabled: boolean) {
     objectUrlsRef.current.clear();
   }, []);
 
-  const hydrateThumbnails = useCallback(
-    async (
-      sourcePhotos: AlbumPhoto[],
-      memberToken: string,
-    ) => {
-      const createdUrls: string[] = [];
-
-      const hydratedPhotos = await Promise.all(
-        sourcePhotos.map(async (photo) => {
-          try {
-            const thumbnailObjectUrl =
-              await fetchPhotoObjectUrl(
-                photo.id,
-                memberToken,
-                "thumbnail",
-              );
-
-            createdUrls.push(thumbnailObjectUrl);
-
-            return {
-              ...photo,
-              thumbnailUrl: thumbnailObjectUrl,
-            };
-          } catch {
-            return photo;
-          }
-        }),
-      );
-
-      return {
-        hydratedPhotos,
-        createdUrls,
-      };
-    },
-    [],
-  );
-
   const refresh = useCallback(async () => {
     if (!enabled) {
       revokeObjectUrls();
+      photosRef.current = [];
       setPhotos([]);
+      setNextCursor(null);
+      setLoadingMorePhotos(false);
+      loadMoreRequestRef.current = false;
       setLoading(false);
       return;
     }
@@ -95,7 +75,11 @@ export function usePhotos(enabled: boolean) {
 
     if (!session) {
       revokeObjectUrls();
+      photosRef.current = [];
       setPhotos([]);
+      setNextCursor(null);
+      setLoadingMorePhotos(false);
+      loadMoreRequestRef.current = false;
       setLoading(false);
       return;
     }
@@ -104,25 +88,18 @@ export function usePhotos(enabled: boolean) {
     setError("");
 
     try {
-      const remotePhotos = await fetchPhotos(
+      const page = await fetchPhotoPage(
         session.token,
-      );
-
-      const {
-        hydratedPhotos,
-        createdUrls,
-      } = await hydrateThumbnails(
-        remotePhotos,
-        session.token,
+        {
+          limit: INITIAL_PHOTO_PAGE_SIZE,
+        },
       );
 
       revokeObjectUrls();
 
-      createdUrls.forEach((url) => {
-        objectUrlsRef.current.add(url);
-      });
-
-      setPhotos(hydratedPhotos);
+      photosRef.current = page.photos;
+      setPhotos(page.photos);
+      setNextCursor(page.nextCursor);
     } catch (reason) {
       setError(
         reason instanceof Error
@@ -132,11 +109,67 @@ export function usePhotos(enabled: boolean) {
     } finally {
       setLoading(false);
     }
-  }, [
-    enabled,
-    hydrateThumbnails,
-    revokeObjectUrls,
-  ]);
+  }, [enabled, revokeObjectUrls]);
+
+  const loadMorePhotos = useCallback(async () => {
+    if (
+      !enabled ||
+      !nextCursor ||
+      loadMoreRequestRef.current
+    ) {
+      return;
+    }
+
+    const session = readMemberSession();
+
+    if (!session) {
+      return;
+    }
+
+    loadMoreRequestRef.current = true;
+    setLoadingMorePhotos(true);
+    setError("");
+
+    try {
+      const page = await fetchPhotoPage(
+        session.token,
+        {
+          limit: NEXT_PHOTO_PAGE_SIZE,
+          cursor: nextCursor,
+        },
+      );
+
+      setPhotos((current) => {
+        const existingIds = new Set(
+          current.map((photo) => photo.id),
+        );
+
+        const newPhotos = page.photos.filter(
+          (photo) => !existingIds.has(photo.id),
+        );
+
+        const nextPhotos = [
+          ...current,
+          ...newPhotos,
+        ];
+
+        photosRef.current = nextPhotos;
+
+        return nextPhotos;
+      });
+
+      setNextCursor(page.nextCursor);
+    } catch (reason) {
+      setError(
+        reason instanceof Error
+          ? reason.message
+          : "暂时无法继续读取相簿",
+      );
+    } finally {
+      loadMoreRequestRef.current = false;
+      setLoadingMorePhotos(false);
+    }
+  }, [enabled, nextCursor]);
 
   useEffect(() => {
     void refresh();
@@ -165,20 +198,12 @@ export function usePhotos(enabled: boolean) {
           input,
         );
 
-        const {
-          hydratedPhotos,
-          createdUrls,
-        } = await hydrateThumbnails(
-          [createdPhoto],
-          session.token,
-        );
+        const hydratedPhoto = createdPhoto;
 
-        createdUrls.forEach((url) => {
-          objectUrlsRef.current.add(url);
-        });
-
-        const hydratedPhoto =
-          hydratedPhotos[0];
+        photosRef.current = [
+          hydratedPhoto,
+          ...photosRef.current,
+        ];
 
         setPhotos((currentPhotos) => [
           hydratedPhoto,
@@ -198,7 +223,70 @@ export function usePhotos(enabled: boolean) {
         setUploading(false);
       }
     },
-    [hydrateThumbnails],
+    [],
+  );
+
+
+  const loadThumbnail = useCallback(
+    async (photoId: string) => {
+      const session = readMemberSession();
+
+      if (!session) {
+        return;
+      }
+
+      const currentPhoto =
+        photosRef.current.find(
+          (photo) => photo.id === photoId,
+        );
+
+      if (
+        !currentPhoto ||
+        currentPhoto.thumbnailUrl?.startsWith(
+          "blob:",
+        ) ||
+        thumbnailRequestsRef.current.has(photoId)
+      ) {
+        return;
+      }
+
+      thumbnailRequestsRef.current.add(photoId);
+
+      try {
+        const thumbnailUrl =
+          await fetchPhotoObjectUrl(
+            photoId,
+            session.token,
+            "thumbnail",
+          );
+
+        objectUrlsRef.current.add(
+          thumbnailUrl,
+        );
+
+        setPhotos((current) => {
+          const nextPhotos = current.map((photo) =>
+            photo.id === photoId
+              ? {
+                  ...photo,
+                  thumbnailUrl,
+                }
+              : photo,
+          );
+
+          photosRef.current = nextPhotos;
+
+          return nextPhotos;
+        });
+      } catch {
+        return;
+      } finally {
+        thumbnailRequestsRef.current.delete(
+          photoId,
+        );
+      }
+    },
+    [],
   );
 
   const today = localDateString();
@@ -228,5 +316,9 @@ export function usePhotos(enabled: boolean) {
     error,
     refresh,
     addPhoto,
+    loadThumbnail,
+    loadMorePhotos,
+    hasMorePhotos: nextCursor !== null,
+    loadingMorePhotos,
   };
 }

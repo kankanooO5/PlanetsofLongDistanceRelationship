@@ -4,9 +4,9 @@ export type GeneratedThumbnail = {
   originalHeight?: number;
 };
 
-const THUMBNAIL_WIDTH = 720;
-const THUMBNAIL_HEIGHT = 960;
-const TARGET_MAX_BYTES = 1200 * 1024;
+const THUMBNAIL_WIDTH = 600;
+const THUMBNAIL_HEIGHT = 800;
+const TARGET_MAX_BYTES = 220 * 1024;
 
 function loadImage(file: File) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
@@ -63,8 +63,8 @@ function cropSourceRectForPortrait3x4(image: HTMLImageElement) {
 }
 
 async function createCompressedBlob(canvas: HTMLCanvasElement) {
-  const webpQualities = [0.88, 0.82, 0.76, 0.68];
-  const jpegQualities = [0.88, 0.82, 0.76, 0.7];
+  const webpQualities = [0.82, 0.76, 0.7, 0.62, 0.54];
+  const jpegQualities = [0.82, 0.76, 0.7, 0.62, 0.54];
 
   let smallestResult: {
     blob: Blob;
@@ -116,7 +116,7 @@ async function createCompressedBlob(canvas: HTMLCanvasElement) {
     }
   }
 
-  if (smallestResult && smallestResult.blob.size <= 2 * 1024 * 1024) {
+  if (smallestResult && smallestResult.blob.size <= 500 * 1024) {
     return smallestResult;
   }
 

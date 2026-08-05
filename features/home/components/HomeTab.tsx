@@ -30,6 +30,9 @@ type HomeTabProps = {
   onOpenPhoto: (
     photo: AlbumPhoto,
   ) => void;
+  loadThumbnail: (
+    photoId: string,
+  ) => Promise<void>;
 };
 
 export function HomeTab({
@@ -41,6 +44,7 @@ export function HomeTab({
   photoError,
   onUploadPhoto,
   onOpenPhoto,
+  loadThumbnail,
 }: HomeTabProps) {
   const name =
     role === "first"
@@ -72,6 +76,7 @@ export function HomeTab({
           error={photoError}
           onUpload={onUploadPhoto}
           onOpenPhoto={onOpenPhoto}
+          loadThumbnail={loadThumbnail}
         />
 
         <RelationshipHero

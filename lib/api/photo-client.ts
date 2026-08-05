@@ -8,6 +8,16 @@ type ErrorPayload = {
   error?: string;
 };
 
+export type PhotoPage = {
+  photos: AlbumPhoto[];
+  nextCursor: string | null;
+};
+
+type FetchPhotoPageOptions = {
+  limit: number;
+  cursor?: string | null;
+};
+
 async function readError(response: Response) {
   try {
     const payload =
@@ -45,6 +55,51 @@ export async function fetchPhotos(
   return payload.photos;
 }
 
+export async function fetchPhotoPage(
+  memberToken: string,
+  {
+    limit,
+    cursor = null,
+  }: FetchPhotoPageOptions,
+): Promise<PhotoPage> {
+  const searchParams = new URLSearchParams({
+    limit: String(limit),
+  });
+
+  if (cursor) {
+    searchParams.set("cursor", cursor);
+  }
+
+  const response = await fetch(
+    `/api/photos?${searchParams.toString()}`,
+    {
+      headers: {
+        "x-member-token": memberToken,
+      },
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(await readError(response));
+  }
+
+  const payload =
+    (await response.json()) as Partial<PhotoPage>;
+
+  if (!Array.isArray(payload.photos)) {
+    throw new Error("照片列表响应格式无效");
+  }
+
+  return {
+    photos: payload.photos,
+    nextCursor:
+      typeof payload.nextCursor === "string"
+        ? payload.nextCursor
+        : null,
+  };
+}
+
 export async function fetchPhotoObjectUrl(
   photoId: string,
   memberToken: string,
@@ -61,7 +116,7 @@ export async function fetchPhotoObjectUrl(
       cache:
         variant === "original"
           ? "force-cache"
-          : "no-store",
+          : "default",
     },
   );
 

@@ -1,5 +1,7 @@
 "use client";
 
+import { parseLocalDate } from "../../../lib/utils/date";
+
 import { FormEvent, useEffect, useRef, useState } from "react";
 
 import {
@@ -10,6 +12,7 @@ import {
 } from "../../../lib/api/photo-comment-client";
 import { fetchPhotoObjectUrl } from "../../../lib/api/photo-client";
 import { readMemberSession } from "../../../lib/storage/member-session";
+import { formatLocalDate } from "../../../lib/utils/date";
 import type { AlbumPhoto } from "../types/album";
 import type { PhotoComment } from "../types/photo-comment";
 
@@ -18,22 +21,15 @@ type PhotoLightboxProps = {
   onClose: () => void;
 };
 
-function formatPhotoDate(value: string) {
-  const date = new Date(`${value}T00:00:00`);
-
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
-
-  return new Intl.DateTimeFormat("zh-CN", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(date);
-}
 
 function formatCommentTime(value: string) {
-  const date = new Date(value);
+  const normalized =
+    !value.includes("T") &&
+    !value.endsWith("Z")
+      ? value.replace(" ", "T") + "Z"
+      : value;
+
+  const date = new Date(normalized);
 
   if (Number.isNaN(date.getTime())) {
     return "";
@@ -371,7 +367,7 @@ export function PhotoLightbox({ photo, onClose }: PhotoLightboxProps) {
             {photo.caption && <p>{photo.caption}</p>}
 
             <time dateTime={photo.takenAt}>
-              {formatPhotoDate(photo.takenAt)}
+              {formatLocalDate(photo.takenAt)}
             </time>
           </footer>
         )}
@@ -393,8 +389,18 @@ export function PhotoLightbox({ photo, onClose }: PhotoLightboxProps) {
                 !previousComment ||
                 previousComment.memberId !== comment.memberId ||
                 Math.abs(
-                  new Date(comment.createdAt).getTime() -
-                    new Date(previousComment.createdAt).getTime(),
+                  new Date(
+                      comment.createdAt.includes("T") ||
+                      comment.createdAt.endsWith("Z")
+                        ? comment.createdAt
+                        : comment.createdAt.replace(" ", "T") + "Z"
+                    ).getTime() -
+                    new Date(
+                      previousComment.createdAt.includes("T") ||
+                      previousComment.createdAt.endsWith("Z")
+                        ? previousComment.createdAt
+                        : previousComment.createdAt.replace(" ", "T") + "Z"
+                    ).getTime(),
                 ) >=
                   60 * 1000;
 

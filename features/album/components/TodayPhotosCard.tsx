@@ -15,6 +15,7 @@ import {
   preloadPhotoComments,
 } from "../../../lib/api/photo-comment-client";
 import { readMemberSession } from "../../../lib/storage/member-session";
+import { formatLocalTime } from "../../../lib/utils/date";
 import type { AlbumPhoto, UploadPhotoInput } from "../types/album";
 import { createPhotoThumbnail } from "../utils/compress-image";
 
@@ -24,6 +25,7 @@ type TodayPhotosCardProps = {
   error?: string;
   onUpload: (input: UploadPhotoInput) => Promise<unknown>;
   onOpenPhoto: (photo: AlbumPhoto) => void;
+  loadThumbnail: (photoId: string) => Promise<void>;
 };
 
 type SwipeDirection = 1 | -1;
@@ -130,16 +132,29 @@ function photoMetaForDisplay(photo: AlbumPhoto) {
     record.uploaded_at ??
     record.date;
 
+  console.log("PHOTO TIME DEBUG", {
+    createdAt: record.createdAt,
+    created_at: record.created_at,
+    uploadedAt: record.uploadedAt,
+    uploaded_at: record.uploaded_at,
+    date: record.date,
+    rawTime,
+  });
+
   let timeText = "刚刚";
 
   if (typeof rawTime === "string" || typeof rawTime === "number") {
-    const date = new Date(rawTime);
+    const normalized =
+      typeof rawTime === "string" &&
+      !rawTime.includes("T") &&
+      !rawTime.endsWith("Z")
+        ? rawTime.replace(" ", "T") + "Z"
+        : rawTime;
+
+    const date = new Date(normalized);
 
     if (!Number.isNaN(date.getTime())) {
-      timeText = date.toLocaleTimeString("zh-CN", {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+      timeText = formatLocalTime(rawTime);
     }
   }
 
@@ -206,6 +221,7 @@ export function TodayPhotosCard({
   error,
   onUpload,
   onOpenPhoto,
+  loadThumbnail,
 }: TodayPhotosCardProps) {
   const session = readMemberSession();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -507,7 +523,67 @@ export function TodayPhotosCard({
     activeIndex,
   });
 
+
+  useEffect(() => {
+    if (photos.length === 0) {
+      return;
+    }
+
+    const indexes = [
+      activeIndex - 1,
+      activeIndex,
+      activeIndex + 1,
+    ];
+
+    indexes.forEach((index) => {
+      const photo =
+        photos[wrappedIndex(index, photos.length)];
+
+      if (!photo?.thumbnailUrl) {
+        return;
+      }
+
+      const image = new Image();
+      image.src = photo.thumbnailUrl;
+    });
+  }, [activeIndex, photos]);
+
   const activePhoto = photos[activeIndex] ?? null;
+
+  useEffect(() => {
+    if (!activePhoto) {
+      return;
+    }
+
+    const indexes = [
+      activeIndex - 1,
+      activeIndex,
+      activeIndex + 1,
+    ];
+
+    indexes.forEach((index) => {
+      const photo =
+        photos[
+          wrappedIndex(
+            index,
+            photos.length,
+          )
+        ];
+
+      if (
+        photo &&
+        !photo.thumbnailUrl
+      ) {
+        void loadThumbnail(photo.id);
+      }
+    });
+  }, [
+    activeIndex,
+    activePhoto,
+    loadThumbnail,
+    photos,
+  ]);
+
   const dragProgress = Math.min(1, Math.abs(dragOffset) / 96);
 
   useEffect(() => {
@@ -848,7 +924,11 @@ export function TodayPhotosCard({
                   <img
                     src={photo.thumbnailUrl}
                     alt={isActive ? photo.caption || "照片" : ""}
-                    loading="eager"
+                    loading={
+                        isActive || Math.abs(stackIndex) <= 1
+                          ? "eager"
+                          : "lazy"
+                      }
                     decoding="async"
                     draggable={false}
                   />
@@ -878,18 +958,6 @@ export function TodayPhotosCard({
               {photoMetaForDisplay(photos[activeIndex])}
             </p>
           )}
-
-          <div className="today-photo-preload" aria-hidden="true">
-            {photos.map((photo) => (
-              <img
-                key={`preload-${photo.id}`}
-                src={photo.thumbnailUrl}
-                alt=""
-                loading="eager"
-                decoding="async"
-              />
-            ))}
-          </div>
 
           {photos.length > 1 && (
             <div className="today-photo-controls">
