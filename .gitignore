@@ -59,3 +59,7 @@ backups/
 # local patch backups
 *.before-*
 *.bak
+
+# Local development backups / temporary files
+*.bak-*
+.tmp-*
