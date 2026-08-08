@@ -86,14 +86,7 @@ export function IdeaHistoryDetail({
 
   if (loading) {
     return (
-      <div className="idea-state-card">
-        <span
-          className="idea-state-star"
-          aria-hidden="true"
-        >
-          ☆
-        </span>
-
+      <div className="idea-state-card idea-state-card-centered">
         <p>正在翻开这一天的妙想…</p>
       </div>
     );
@@ -101,14 +94,7 @@ export function IdeaHistoryDetail({
 
   if (error) {
     return (
-      <div className="idea-state-card">
-        <span
-          className="idea-state-star"
-          aria-hidden="true"
-        >
-          ☆
-        </span>
-
+      <div className="idea-state-card idea-state-card-centered">
         <p>{error}</p>
       </div>
     );
@@ -161,11 +147,7 @@ export function IdeaHistoryDetail({
             <p>{history.myAnswer.body}</p>
           </div>
         ) : (
-          <div className="idea-partner-state idea-own-empty-state">
-            <span aria-hidden="true">
-              ◌
-            </span>
-
+          <div className="idea-partner-state idea-partner-state-centered idea-own-empty-state">
             <p>那天你没有留下回答。</p>
           </div>
         )}
@@ -189,11 +171,7 @@ export function IdeaHistoryDetail({
         </div>
 
         {!partner ? (
-          <div className="idea-partner-state">
-            <span aria-hidden="true">
-              ◌
-            </span>
-
+          <div className="idea-partner-state idea-partner-state-centered">
             <p>另一颗星球当时还没有加入。</p>
           </div>
         ) : partner.answer ? (
@@ -201,19 +179,11 @@ export function IdeaHistoryDetail({
             <p>{partner.answer.body}</p>
           </div>
         ) : partner.answered ? (
-          <div className="idea-partner-state idea-partner-locked">
-            <span aria-hidden="true">
-              ◇
-            </span>
-
+          <div className="idea-partner-state idea-partner-state-centered idea-partner-locked">
             <p>这份回答暂时没有解锁。</p>
           </div>
         ) : (
-          <div className="idea-partner-state">
-            <span aria-hidden="true">
-              ◌
-            </span>
-
+          <div className="idea-partner-state idea-partner-state-centered">
             <p>TA 那天没有留下回答。</p>
           </div>
         )}
