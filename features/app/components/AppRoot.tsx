@@ -20,7 +20,7 @@ import {
 import { RelationshipEntry } from "../../onboarding/components/RelationshipEntry";
 import { ProfileTab } from "../../profile/components/ProfileTab";
 import { useServiceWorkerRegistration } from "../../pwa/hooks/useServiceWorkerRegistration";
-import { WishesTab } from "../../wishes/components/WishesTab";
+import { IdeasTab } from "../../ideas/components/IdeasTab";
 import { LaunchScreen } from "./LaunchScreen";
 
 export function AppRoot() {
@@ -135,6 +135,7 @@ export function AppRoot() {
               onOpenPhoto={
                 setSelectedPhoto
               }
+              loadThumbnail={loadThumbnail}
             />
           )}
 
@@ -156,8 +157,8 @@ export function AppRoot() {
           )}
 
           {activeTab ===
-            "wishes" && (
-            <WishesTab />
+            "ideas" && (
+            <IdeasTab />
           )}
 
           {activeTab ===

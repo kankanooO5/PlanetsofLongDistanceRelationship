@@ -1,6 +1,6 @@
 "use client";
 
-export type AppTab = "home" | "memories" | "wishes" | "profile";
+export type AppTab = "home" | "memories" | "ideas" | "profile";
 
 type BottomNavigationProps = {
   activeTab: AppTab;
@@ -14,7 +14,7 @@ const items: Array<{
 }> = [
   { id: "home", label: "首页", icon: "⌂" },
   { id: "memories", label: "相簿", icon: "◫" },
-  { id: "wishes", label: "心愿", icon: "☆" },
+  { id: "ideas", label: "妙想", icon: "☆" },
   { id: "profile", label: "我的", icon: "○" },
 ];
 

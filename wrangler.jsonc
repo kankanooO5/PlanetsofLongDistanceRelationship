@@ -41,7 +41,13 @@
           "binding": "PHOTOS",
           "bucket_name": "two-planets-prod-photos"
         }
-      ]
+      ],
+      "ai": {
+        "binding": "AI"
+      }
     }
+  },
+  "ai": {
+    "binding": "AI"
   }
 }

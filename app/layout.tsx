@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: "两颗星球 · 只属于我们的空间",
-    description: "记录想念、心情、见面倒计时与共同心愿的双人空间。",
+    description: "记录想念、心情、见面倒计时与彼此妙想的双人空间。",
     manifest: "/manifest.webmanifest",
     appleWebApp: {
       capable: true,

@@ -1,0 +1,1190 @@
+[
+  {
+    "id": "idea-q-001",
+    "text": "你觉得我们两个人相处时，最自然、最不用费力的一件事是什么？",
+    "category": "relationship",
+    "form": "describe",
+    "intimacyLevel": 2,
+    "tags": [
+      "relationship",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-002",
+    "text": "回想一次你觉得“我们真的很像一对搭档”的时刻，那天发生了什么？",
+    "category": "relationship",
+    "form": "recall",
+    "intimacyLevel": 4,
+    "tags": [
+      "relationship",
+      "recall"
+    ]
+  },
+  {
+    "id": "idea-q-003",
+    "text": "如果要向一个不了解我们的人解释我们为什么合得来，你会怎么说？",
+    "category": "relationship",
+    "form": "explain",
+    "intimacyLevel": 4,
+    "tags": [
+      "relationship",
+      "explain"
+    ]
+  },
+  {
+    "id": "idea-q-004",
+    "text": "你觉得我们刚认识时和现在相比，最大的变化是什么？",
+    "category": "relationship",
+    "form": "compare",
+    "intimacyLevel": 4,
+    "tags": [
+      "relationship",
+      "compare"
+    ]
+  },
+  {
+    "id": "idea-q-005",
+    "text": "如果把我们的关系比作一种天气、一种季节或一种风景，你会选什么？为什么？",
+    "category": "relationship",
+    "form": "imagine",
+    "intimacyLevel": 2,
+    "tags": [
+      "relationship",
+      "imagine"
+    ]
+  },
+  {
+    "id": "idea-q-006",
+    "text": "如果要给我们安排一个最适合最近状态的小约会，你会推荐做什么？",
+    "category": "relationship",
+    "form": "recommend",
+    "intimacyLevel": 2,
+    "tags": [
+      "relationship",
+      "recommend"
+    ]
+  },
+  {
+    "id": "idea-q-007",
+    "text": "在“被理解、被陪伴、被支持、被逗笑”里，你最近最希望从我这里得到哪一种？",
+    "category": "relationship",
+    "form": "choose",
+    "intimacyLevel": 5,
+    "tags": [
+      "relationship",
+      "choose"
+    ]
+  },
+  {
+    "id": "idea-q-008",
+    "text": "你觉得一年后的我们，最可能养成一个什么新的共同习惯？",
+    "category": "relationship",
+    "form": "predict",
+    "intimacyLevel": 3,
+    "tags": [
+      "relationship",
+      "predict"
+    ]
+  },
+  {
+    "id": "idea-q-009",
+    "text": "如果以后我们在一件很重要的事情上长期意见不同，你希望我们用什么方式处理？",
+    "category": "relationship",
+    "form": "hypothetical",
+    "intimacyLevel": 5,
+    "tags": [
+      "relationship",
+      "hypothetical"
+    ]
+  },
+  {
+    "id": "idea-q-010",
+    "text": "你觉得一段让你安心的亲密关系，最重要的三个特点是什么？",
+    "category": "relationship",
+    "form": "describe",
+    "intimacyLevel": 5,
+    "tags": [
+      "relationship",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-011",
+    "text": "最近有哪些很小的日常瞬间，会让你突然觉得生活还不错？",
+    "category": "daily_life",
+    "form": "describe",
+    "intimacyLevel": 1,
+    "tags": [
+      "daily_life",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-012",
+    "text": "最近一次你过得特别舒服的一天，是怎么度过的？",
+    "category": "daily_life",
+    "form": "recall",
+    "intimacyLevel": 3,
+    "tags": [
+      "daily_life",
+      "recall"
+    ]
+  },
+  {
+    "id": "idea-q-013",
+    "text": "如果明天突然多出三个完全不用工作的小时，你最想怎么用？",
+    "category": "daily_life",
+    "form": "imagine",
+    "intimacyLevel": 3,
+    "tags": [
+      "daily_life",
+      "imagine"
+    ]
+  },
+  {
+    "id": "idea-q-014",
+    "text": "你更喜欢提前把一天安排好，还是当天看心情决定？为什么？",
+    "category": "daily_life",
+    "form": "compare",
+    "intimacyLevel": 1,
+    "tags": [
+      "daily_life",
+      "compare"
+    ]
+  },
+  {
+    "id": "idea-q-015",
+    "text": "最近有什么很普通但很好用的小东西，想推荐给我？",
+    "category": "daily_life",
+    "form": "recommend",
+    "intimacyLevel": 1,
+    "tags": [
+      "daily_life",
+      "recommend"
+    ]
+  },
+  {
+    "id": "idea-q-016",
+    "text": "你觉得自己在累的时候，最需要怎样的休息才是真的恢复？",
+    "category": "daily_life",
+    "form": "explain",
+    "intimacyLevel": 4,
+    "tags": [
+      "daily_life",
+      "explain"
+    ]
+  },
+  {
+    "id": "idea-q-017",
+    "text": "如果周末只能选一项：宅家、逛街、散步、短途出门，你现在会选哪个？",
+    "category": "daily_life",
+    "form": "choose",
+    "intimacyLevel": 2,
+    "tags": [
+      "daily_life",
+      "choose"
+    ]
+  },
+  {
+    "id": "idea-q-018",
+    "text": "你觉得我们以后一起生活，最容易形成什么奇怪但可爱的日常习惯？",
+    "category": "daily_life",
+    "form": "predict",
+    "intimacyLevel": 2,
+    "tags": [
+      "daily_life",
+      "predict"
+    ]
+  },
+  {
+    "id": "idea-q-019",
+    "text": "如果我们有一个完全不用考虑效率的星期天，你希望它从早到晚是什么样？",
+    "category": "daily_life",
+    "form": "hypothetical",
+    "intimacyLevel": 3,
+    "tags": [
+      "daily_life",
+      "hypothetical"
+    ]
+  },
+  {
+    "id": "idea-q-020",
+    "text": "最近哪一种情绪出现得最频繁？你觉得它在提醒你什么？",
+    "category": "emotion",
+    "form": "describe",
+    "intimacyLevel": 4,
+    "tags": [
+      "emotion",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-021",
+    "text": "最近一次你被一个很小的事情治愈，是因为什么？",
+    "category": "emotion",
+    "form": "recall",
+    "intimacyLevel": 2,
+    "tags": [
+      "emotion",
+      "recall"
+    ]
+  },
+  {
+    "id": "idea-q-022",
+    "text": "当你心情不好时，你更希望别人主动靠近，还是给你一点空间？为什么？",
+    "category": "emotion",
+    "form": "explain",
+    "intimacyLevel": 5,
+    "tags": [
+      "emotion",
+      "explain"
+    ]
+  },
+  {
+    "id": "idea-q-023",
+    "text": "你觉得自己表达开心和表达难过时，哪一种更容易？",
+    "category": "emotion",
+    "form": "compare",
+    "intimacyLevel": 3,
+    "tags": [
+      "emotion",
+      "compare"
+    ]
+  },
+  {
+    "id": "idea-q-024",
+    "text": "如果我要在你低落的时候哄你，你最推荐我做哪件小事？",
+    "category": "emotion",
+    "form": "recommend",
+    "intimacyLevel": 2,
+    "tags": [
+      "emotion",
+      "recommend"
+    ]
+  },
+  {
+    "id": "idea-q-025",
+    "text": "在“说出来、被抱抱、独处、做点别的转移注意”里，你难受时最需要哪一种？",
+    "category": "emotion",
+    "form": "choose",
+    "intimacyLevel": 4,
+    "tags": [
+      "emotion",
+      "choose"
+    ]
+  },
+  {
+    "id": "idea-q-026",
+    "text": "如果情绪可以变成一个房间，你最近的房间会是什么样子？",
+    "category": "emotion",
+    "form": "imagine",
+    "intimacyLevel": 3,
+    "tags": [
+      "emotion",
+      "imagine"
+    ]
+  },
+  {
+    "id": "idea-q-027",
+    "text": "你觉得未来的自己会比现在更擅长处理哪一种情绪？",
+    "category": "emotion",
+    "form": "predict",
+    "intimacyLevel": 4,
+    "tags": [
+      "emotion",
+      "predict"
+    ]
+  },
+  {
+    "id": "idea-q-028",
+    "text": "如果有一种情绪你希望我以后能更早察觉，你希望是哪一种？",
+    "category": "emotion",
+    "form": "hypothetical",
+    "intimacyLevel": 5,
+    "tags": [
+      "emotion",
+      "hypothetical"
+    ]
+  },
+  {
+    "id": "idea-q-029",
+    "text": "小时候有没有一种味道、声音或天气，一出现就会让你立刻想起某段记忆？",
+    "category": "memory",
+    "form": "recall",
+    "intimacyLevel": 1,
+    "tags": [
+      "memory",
+      "recall"
+    ]
+  },
+  {
+    "id": "idea-q-030",
+    "text": "你记忆里最有“夏天感”的一个画面是什么？",
+    "category": "memory",
+    "form": "describe",
+    "intimacyLevel": 3,
+    "tags": [
+      "memory",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-031",
+    "text": "有没有一件当时觉得很普通、现在回头看却很珍贵的小事？",
+    "category": "memory",
+    "form": "recall",
+    "intimacyLevel": 3,
+    "tags": [
+      "memory",
+      "recall"
+    ]
+  },
+  {
+    "id": "idea-q-032",
+    "text": "小时候的你和现在的你，最像的地方是什么？最不一样的地方呢？",
+    "category": "memory",
+    "form": "compare",
+    "intimacyLevel": 4,
+    "tags": [
+      "memory",
+      "compare"
+    ]
+  },
+  {
+    "id": "idea-q-033",
+    "text": "如果可以带我去看一个和你过去有关的地方，你最想带我去哪？",
+    "category": "memory",
+    "form": "recommend",
+    "intimacyLevel": 3,
+    "tags": [
+      "memory",
+      "recommend"
+    ]
+  },
+  {
+    "id": "idea-q-034",
+    "text": "你觉得哪些过去的经历，最明显地塑造了现在的你？",
+    "category": "memory",
+    "form": "explain",
+    "intimacyLevel": 4,
+    "tags": [
+      "memory",
+      "explain"
+    ]
+  },
+  {
+    "id": "idea-q-035",
+    "text": "如果可以回到人生中的某一天旁观自己，你最想看哪一天？",
+    "category": "memory",
+    "form": "imagine",
+    "intimacyLevel": 4,
+    "tags": [
+      "memory",
+      "imagine"
+    ]
+  },
+  {
+    "id": "idea-q-036",
+    "text": "如果能对某个过去的自己说一句话，你最想对几岁的自己说什么？",
+    "category": "memory",
+    "form": "hypothetical",
+    "intimacyLevel": 5,
+    "tags": [
+      "memory",
+      "hypothetical"
+    ]
+  },
+  {
+    "id": "idea-q-037",
+    "text": "如果一年后有一个普通的星期三，你希望那时的生活大概是什么样？",
+    "category": "future",
+    "form": "imagine",
+    "intimacyLevel": 2,
+    "tags": [
+      "future",
+      "imagine"
+    ]
+  },
+  {
+    "id": "idea-q-038",
+    "text": "你觉得未来一年自己最可能学会什么新东西？",
+    "category": "future",
+    "form": "predict",
+    "intimacyLevel": 2,
+    "tags": [
+      "future",
+      "predict"
+    ]
+  },
+  {
+    "id": "idea-q-039",
+    "text": "你心里理想的“稳定生活”具体是什么样，而不是抽象地说稳定？",
+    "category": "future",
+    "form": "describe",
+    "intimacyLevel": 4,
+    "tags": [
+      "future",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-040",
+    "text": "未来几年里，如果只能优先实现一件事：事业、学习、旅行、生活品质，你会先选什么？",
+    "category": "future",
+    "form": "choose",
+    "intimacyLevel": 3,
+    "tags": [
+      "future",
+      "choose"
+    ]
+  },
+  {
+    "id": "idea-q-041",
+    "text": "你现在想要的未来，和三年前想象的未来有什么不同？",
+    "category": "future",
+    "form": "compare",
+    "intimacyLevel": 4,
+    "tags": [
+      "future",
+      "compare"
+    ]
+  },
+  {
+    "id": "idea-q-042",
+    "text": "如果要给未来的我们留下一项固定仪式，你会推荐什么？",
+    "category": "future",
+    "form": "recommend",
+    "intimacyLevel": 3,
+    "tags": [
+      "future",
+      "recommend"
+    ]
+  },
+  {
+    "id": "idea-q-043",
+    "text": "你做重要人生决定时，通常最看重安全感、兴趣、成长还是自由？为什么？",
+    "category": "future",
+    "form": "explain",
+    "intimacyLevel": 5,
+    "tags": [
+      "future",
+      "explain"
+    ]
+  },
+  {
+    "id": "idea-q-044",
+    "text": "如果未来某个阶段我们的生活节奏差很多，你希望怎样保持彼此仍然在同一条线上？",
+    "category": "future",
+    "form": "hypothetical",
+    "intimacyLevel": 5,
+    "tags": [
+      "future",
+      "hypothetical"
+    ]
+  },
+  {
+    "id": "idea-q-045",
+    "text": "什么样的工作状态会让你觉得自己今天过得很有价值？",
+    "category": "work",
+    "form": "describe",
+    "intimacyLevel": 3,
+    "tags": [
+      "work",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-046",
+    "text": "对你来说，“做得好”和“做得开心”哪个更重要？它们冲突时你通常怎么选？",
+    "category": "work",
+    "form": "compare",
+    "intimacyLevel": 3,
+    "tags": [
+      "work",
+      "compare"
+    ]
+  },
+  {
+    "id": "idea-q-047",
+    "text": "有没有一次工作或项目经历，让你第一次意识到自己其实很擅长某件事？",
+    "category": "work",
+    "form": "recall",
+    "intimacyLevel": 2,
+    "tags": [
+      "work",
+      "recall"
+    ]
+  },
+  {
+    "id": "idea-q-048",
+    "text": "最近有没有一个提高工作效率的小方法，值得推荐给我？",
+    "category": "work",
+    "form": "recommend",
+    "intimacyLevel": 1,
+    "tags": [
+      "work",
+      "recommend"
+    ]
+  },
+  {
+    "id": "idea-q-049",
+    "text": "如果收入完全不是问题，你还会保留现在工作里哪些部分，又会删掉哪些部分？",
+    "category": "work",
+    "form": "hypothetical",
+    "intimacyLevel": 4,
+    "tags": [
+      "work",
+      "hypothetical"
+    ]
+  },
+  {
+    "id": "idea-q-050",
+    "text": "最近有没有一个你突然很想学会的小技能或知识？",
+    "category": "study",
+    "form": "describe",
+    "intimacyLevel": 1,
+    "tags": [
+      "study",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-051",
+    "text": "学生时代有没有一门课或一个老师，真正改变过你看事情的方式？",
+    "category": "study",
+    "form": "recall",
+    "intimacyLevel": 3,
+    "tags": [
+      "study",
+      "recall"
+    ]
+  },
+  {
+    "id": "idea-q-052",
+    "text": "你更喜欢自己慢慢研究，还是和别人讨论着学？为什么？",
+    "category": "study",
+    "form": "compare",
+    "intimacyLevel": 2,
+    "tags": [
+      "study",
+      "compare"
+    ]
+  },
+  {
+    "id": "idea-q-053",
+    "text": "最近学到的一个有意思的小知识是什么？讲给我听听。",
+    "category": "study",
+    "form": "recommend",
+    "intimacyLevel": 1,
+    "tags": [
+      "study",
+      "recommend"
+    ]
+  },
+  {
+    "id": "idea-q-054",
+    "text": "如果可以无压力地重新读一个完全不同的专业，你会选什么？",
+    "category": "study",
+    "form": "hypothetical",
+    "intimacyLevel": 3,
+    "tags": [
+      "study",
+      "hypothetical"
+    ]
+  },
+  {
+    "id": "idea-q-055",
+    "text": "你觉得什么样的人最容易和你成为真正的朋友？",
+    "category": "friends",
+    "form": "describe",
+    "intimacyLevel": 2,
+    "tags": [
+      "friends",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-056",
+    "text": "有没有一段友情里的小事，你到现在想起来还会觉得很温暖？",
+    "category": "friends",
+    "form": "recall",
+    "intimacyLevel": 3,
+    "tags": [
+      "friends",
+      "recall"
+    ]
+  },
+  {
+    "id": "idea-q-057",
+    "text": "你觉得自己对朋友和对伴侣的依赖方式有什么不同？",
+    "category": "friends",
+    "form": "compare",
+    "intimacyLevel": 4,
+    "tags": [
+      "friends",
+      "compare"
+    ]
+  },
+  {
+    "id": "idea-q-058",
+    "text": "当朋友和你价值观差很多时，什么情况下你仍然愿意保持亲近？",
+    "category": "friends",
+    "form": "explain",
+    "intimacyLevel": 4,
+    "tags": [
+      "friends",
+      "explain"
+    ]
+  },
+  {
+    "id": "idea-q-059",
+    "text": "如果我要认识你的一位朋友，你最想先介绍谁？为什么？",
+    "category": "friends",
+    "form": "recommend",
+    "intimacyLevel": 2,
+    "tags": [
+      "friends",
+      "recommend"
+    ]
+  },
+  {
+    "id": "idea-q-060",
+    "text": "如果一个很重要的朋友和我发生误会，你希望自己在中间扮演什么角色？",
+    "category": "friends",
+    "form": "hypothetical",
+    "intimacyLevel": 4,
+    "tags": [
+      "friends",
+      "hypothetical"
+    ]
+  },
+  {
+    "id": "idea-q-061",
+    "text": "你觉得自己从家里带出来的一个最好习惯是什么？",
+    "category": "family",
+    "form": "describe",
+    "intimacyLevel": 3,
+    "tags": [
+      "family",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-062",
+    "text": "有没有一道菜、一个节日或一个习惯，会让你很有“家”的感觉？",
+    "category": "family",
+    "form": "recall",
+    "intimacyLevel": 2,
+    "tags": [
+      "family",
+      "recall"
+    ]
+  },
+  {
+    "id": "idea-q-063",
+    "text": "你希望未来自己的家庭氛围，和成长中的家庭有哪些相似或不同？",
+    "category": "family",
+    "form": "compare",
+    "intimacyLevel": 5,
+    "tags": [
+      "family",
+      "compare"
+    ]
+  },
+  {
+    "id": "idea-q-064",
+    "text": "你觉得家人表达关心的方式里，哪些最容易被你感受到？",
+    "category": "family",
+    "form": "explain",
+    "intimacyLevel": 4,
+    "tags": [
+      "family",
+      "explain"
+    ]
+  },
+  {
+    "id": "idea-q-065",
+    "text": "如果以后我们和各自家庭的期待发生冲突，你希望我们怎样站在彼此身边？",
+    "category": "family",
+    "form": "hypothetical",
+    "intimacyLevel": 5,
+    "tags": [
+      "family",
+      "hypothetical"
+    ]
+  },
+  {
+    "id": "idea-q-066",
+    "text": "如果现在可以立刻拥有一只宠物，你最想养什么？会给它取什么名字？",
+    "category": "pets",
+    "form": "describe",
+    "intimacyLevel": 1,
+    "tags": [
+      "pets",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-067",
+    "text": "小时候有没有遇到过一只让你印象特别深的动物？",
+    "category": "pets",
+    "form": "recall",
+    "intimacyLevel": 1,
+    "tags": [
+      "pets",
+      "recall"
+    ]
+  },
+  {
+    "id": "idea-q-068",
+    "text": "如果我们以后养一只宠物，你觉得它最可能被谁宠坏？为什么？",
+    "category": "pets",
+    "form": "imagine",
+    "intimacyLevel": 1,
+    "tags": [
+      "pets",
+      "imagine"
+    ]
+  },
+  {
+    "id": "idea-q-069",
+    "text": "如果家里只能让一种动物自由进出，你会选猫、狗、鸟还是别的？",
+    "category": "pets",
+    "form": "hypothetical",
+    "intimacyLevel": 2,
+    "tags": [
+      "pets",
+      "hypothetical"
+    ]
+  },
+  {
+    "id": "idea-q-070",
+    "text": "如果现在送我们一张周末往返票，你最想推荐去哪里？",
+    "category": "travel",
+    "form": "recommend",
+    "intimacyLevel": 1,
+    "tags": [
+      "travel",
+      "recommend"
+    ]
+  },
+  {
+    "id": "idea-q-071",
+    "text": "你最喜欢旅行里的哪一部分：出发、路上、抵达、乱逛还是回程？",
+    "category": "travel",
+    "form": "describe",
+    "intimacyLevel": 2,
+    "tags": [
+      "travel",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-072",
+    "text": "过去哪一次旅行里，有一个很小但一直记得的瞬间？",
+    "category": "travel",
+    "form": "recall",
+    "intimacyLevel": 3,
+    "tags": [
+      "travel",
+      "recall"
+    ]
+  },
+  {
+    "id": "idea-q-073",
+    "text": "你更喜欢把行程安排得很细，还是留很多空白临时决定？",
+    "category": "travel",
+    "form": "compare",
+    "intimacyLevel": 2,
+    "tags": [
+      "travel",
+      "compare"
+    ]
+  },
+  {
+    "id": "idea-q-074",
+    "text": "如果让我们去一个完全陌生的城市住一个月，你希望每天怎么生活？",
+    "category": "travel",
+    "form": "imagine",
+    "intimacyLevel": 3,
+    "tags": [
+      "travel",
+      "imagine"
+    ]
+  },
+  {
+    "id": "idea-q-075",
+    "text": "如果一次旅行中我们对节奏意见完全相反，你觉得怎样分配时间最舒服？",
+    "category": "travel",
+    "form": "hypothetical",
+    "intimacyLevel": 4,
+    "tags": [
+      "travel",
+      "hypothetical"
+    ]
+  },
+  {
+    "id": "idea-q-076",
+    "text": "最近吃过最好吃的一样东西是什么？如果可以，现在就带我去吃。",
+    "category": "food",
+    "form": "recommend",
+    "intimacyLevel": 1,
+    "tags": [
+      "food",
+      "recommend"
+    ]
+  },
+  {
+    "id": "idea-q-077",
+    "text": "有什么食物是你一吃就会明显心情变好的？",
+    "category": "food",
+    "form": "describe",
+    "intimacyLevel": 1,
+    "tags": [
+      "food",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-078",
+    "text": "有没有一道食物和某个人、某个地方或某段时间牢牢绑在一起？",
+    "category": "food",
+    "form": "recall",
+    "intimacyLevel": 3,
+    "tags": [
+      "food",
+      "recall"
+    ]
+  },
+  {
+    "id": "idea-q-079",
+    "text": "你更在意一顿饭好不好吃，还是一起吃饭的人和氛围？",
+    "category": "food",
+    "form": "compare",
+    "intimacyLevel": 2,
+    "tags": [
+      "food",
+      "compare"
+    ]
+  },
+  {
+    "id": "idea-q-080",
+    "text": "如果今晚只能用冰箱里现有的东西给我们做一顿饭，你会想做什么？",
+    "category": "food",
+    "form": "imagine",
+    "intimacyLevel": 2,
+    "tags": [
+      "food",
+      "imagine"
+    ]
+  },
+  {
+    "id": "idea-q-081",
+    "text": "如果以后每周固定有一天一起做饭，你希望它是什么风格？",
+    "category": "food",
+    "form": "hypothetical",
+    "intimacyLevel": 2,
+    "tags": [
+      "food",
+      "hypothetical"
+    ]
+  },
+  {
+    "id": "idea-q-082",
+    "text": "有没有一本书、一个故事或一篇文章，你觉得我会喜欢？",
+    "category": "literature",
+    "form": "recommend",
+    "intimacyLevel": 1,
+    "tags": [
+      "literature",
+      "recommend"
+    ]
+  },
+  {
+    "id": "idea-q-083",
+    "text": "你喜欢的文字通常有什么共同气质？",
+    "category": "literature",
+    "form": "describe",
+    "intimacyLevel": 2,
+    "tags": [
+      "literature",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-084",
+    "text": "有没有一句书里的话，在你人生某个阶段真的陪过你？",
+    "category": "literature",
+    "form": "recall",
+    "intimacyLevel": 3,
+    "tags": [
+      "literature",
+      "recall"
+    ]
+  },
+  {
+    "id": "idea-q-085",
+    "text": "如果我们可以一起进入一本书的世界生活一天，你会选哪一本？",
+    "category": "literature",
+    "form": "hypothetical",
+    "intimacyLevel": 3,
+    "tags": [
+      "literature",
+      "hypothetical"
+    ]
+  },
+  {
+    "id": "idea-q-086",
+    "text": "如果今晚一起看一部电影，你现在最想选哪一部？",
+    "category": "film",
+    "form": "recommend",
+    "intimacyLevel": 1,
+    "tags": [
+      "film",
+      "recommend"
+    ]
+  },
+  {
+    "id": "idea-q-087",
+    "text": "什么样的电影最容易让你看完以后还想很久？",
+    "category": "film",
+    "form": "describe",
+    "intimacyLevel": 2,
+    "tags": [
+      "film",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-088",
+    "text": "你看电影更容易被故事、人物、画面还是音乐打动？",
+    "category": "film",
+    "form": "compare",
+    "intimacyLevel": 2,
+    "tags": [
+      "film",
+      "compare"
+    ]
+  },
+  {
+    "id": "idea-q-089",
+    "text": "如果我们的生活被拍成电影，你觉得现在大概处在什么类型、什么段落？",
+    "category": "film",
+    "form": "hypothetical",
+    "intimacyLevel": 3,
+    "tags": [
+      "film",
+      "hypothetical"
+    ]
+  },
+  {
+    "id": "idea-q-090",
+    "text": "最近有没有一首歌很想塞进我的耳机里？",
+    "category": "music",
+    "form": "recommend",
+    "intimacyLevel": 1,
+    "tags": [
+      "music",
+      "recommend"
+    ]
+  },
+  {
+    "id": "idea-q-091",
+    "text": "有没有一首歌，只要前奏响起就会把你带回某段时间？",
+    "category": "music",
+    "form": "recall",
+    "intimacyLevel": 3,
+    "tags": [
+      "music",
+      "recall"
+    ]
+  },
+  {
+    "id": "idea-q-092",
+    "text": "你最喜欢在什么场景下听歌？那时候你通常会选什么类型？",
+    "category": "music",
+    "form": "describe",
+    "intimacyLevel": 2,
+    "tags": [
+      "music",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-093",
+    "text": "如果要给我们最近这段时间配一首背景音乐，你会选什么？",
+    "category": "music",
+    "form": "hypothetical",
+    "intimacyLevel": 3,
+    "tags": [
+      "music",
+      "hypothetical"
+    ]
+  },
+  {
+    "id": "idea-q-094",
+    "text": "你玩游戏时最享受的是赢、探索、收集、社交还是沉浸故事？",
+    "category": "games",
+    "form": "describe",
+    "intimacyLevel": 1,
+    "tags": [
+      "games",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-095",
+    "text": "小时候或学生时代有没有一款游戏，让你特别怀念？",
+    "category": "games",
+    "form": "recall",
+    "intimacyLevel": 1,
+    "tags": [
+      "games",
+      "recall"
+    ]
+  },
+  {
+    "id": "idea-q-096",
+    "text": "你更喜欢一起合作通关，还是互相竞争？为什么？",
+    "category": "games",
+    "form": "compare",
+    "intimacyLevel": 3,
+    "tags": [
+      "games",
+      "compare"
+    ]
+  },
+  {
+    "id": "idea-q-097",
+    "text": "如果现实生活突然变成游戏，你觉得自己的隐藏属性最高的是哪一项？",
+    "category": "games",
+    "form": "hypothetical",
+    "intimacyLevel": 2,
+    "tags": [
+      "games",
+      "hypothetical"
+    ]
+  },
+  {
+    "id": "idea-q-098",
+    "text": "最近有没有一种颜色、材质或画面特别吸引你？",
+    "category": "aesthetics",
+    "form": "describe",
+    "intimacyLevel": 1,
+    "tags": [
+      "aesthetics",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-099",
+    "text": "你更喜欢精致有秩序的空间，还是有生活痕迹、稍微乱一点的空间？",
+    "category": "aesthetics",
+    "form": "compare",
+    "intimacyLevel": 2,
+    "tags": [
+      "aesthetics",
+      "compare"
+    ]
+  },
+  {
+    "id": "idea-q-100",
+    "text": "如果让我换一个手机壁纸风格，你会给我推荐什么？",
+    "category": "aesthetics",
+    "form": "recommend",
+    "intimacyLevel": 1,
+    "tags": [
+      "aesthetics",
+      "recommend"
+    ]
+  },
+  {
+    "id": "idea-q-101",
+    "text": "你觉得自己的审美里，有哪些部分其实和性格很像？",
+    "category": "aesthetics",
+    "form": "explain",
+    "intimacyLevel": 4,
+    "tags": [
+      "aesthetics",
+      "explain"
+    ]
+  },
+  {
+    "id": "idea-q-102",
+    "text": "如果让你设计一个只属于我们的房间，你最想先决定哪三个细节？",
+    "category": "aesthetics",
+    "form": "imagine",
+    "intimacyLevel": 3,
+    "tags": [
+      "aesthetics",
+      "imagine"
+    ]
+  },
+  {
+    "id": "idea-q-103",
+    "text": "如果今天晚上我们可以瞬间移动到世界上任何一个地方待两小时，你会选哪里？",
+    "category": "imagination",
+    "form": "imagine",
+    "intimacyLevel": 1,
+    "tags": [
+      "imagination",
+      "imagine"
+    ]
+  },
+  {
+    "id": "idea-q-104",
+    "text": "如果你突然拥有一种没什么大用但很好玩的超能力，你想要什么？",
+    "category": "imagination",
+    "form": "hypothetical",
+    "intimacyLevel": 1,
+    "tags": [
+      "imagination",
+      "hypothetical"
+    ]
+  },
+  {
+    "id": "idea-q-105",
+    "text": "如果可以体验一天别人的生活，你更想选历史人物、虚构角色还是陌生普通人？",
+    "category": "imagination",
+    "form": "choose",
+    "intimacyLevel": 2,
+    "tags": [
+      "imagination",
+      "choose"
+    ]
+  },
+  {
+    "id": "idea-q-106",
+    "text": "如果未来家里真的有一个很聪明的机器人，你觉得我们最先让它帮忙做什么？",
+    "category": "imagination",
+    "form": "predict",
+    "intimacyLevel": 2,
+    "tags": [
+      "imagination",
+      "predict"
+    ]
+  },
+  {
+    "id": "idea-q-107",
+    "text": "如果你的内心世界是一颗星球，它现在的地貌、天气和居民会是什么样？",
+    "category": "imagination",
+    "form": "describe",
+    "intimacyLevel": 3,
+    "tags": [
+      "imagination",
+      "describe"
+    ]
+  },
+  {
+    "id": "idea-q-108",
+    "text": "如果我们能提前看到十年后的某一个普通片段，你最想看到什么，而不是知道什么答案？",
+    "category": "imagination",
+    "form": "hypothetical",
+    "intimacyLevel": 4,
+    "tags": [
+      "imagination",
+      "hypothetical"
+    ]
+  }
+]

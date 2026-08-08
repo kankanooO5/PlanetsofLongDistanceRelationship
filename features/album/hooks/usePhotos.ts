@@ -198,7 +198,19 @@ export function usePhotos(enabled: boolean) {
           input,
         );
 
-        const hydratedPhoto = createdPhoto;
+        const localThumbnailUrl =
+          URL.createObjectURL(
+            input.thumbnailFile,
+          );
+
+        objectUrlsRef.current.add(
+          localThumbnailUrl,
+        );
+
+        const hydratedPhoto = {
+          ...createdPhoto,
+          thumbnailUrl: localThumbnailUrl,
+        };
 
         photosRef.current = [
           hydratedPhoto,

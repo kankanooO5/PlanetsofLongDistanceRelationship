@@ -539,7 +539,9 @@ export function TodayPhotosCard({
       const photo =
         photos[wrappedIndex(index, photos.length)];
 
-      if (!photo?.thumbnailUrl) {
+      if (
+        !photo?.thumbnailUrl?.startsWith("blob:")
+      ) {
         return;
       }
 
@@ -572,7 +574,7 @@ export function TodayPhotosCard({
 
       if (
         photo &&
-        !photo.thumbnailUrl
+        !photo.thumbnailUrl?.startsWith("blob:")
       ) {
         void loadThumbnail(photo.id);
       }
@@ -922,7 +924,11 @@ export function TodayPhotosCard({
                   tabIndex={isActive ? 0 : -1}
                 >
                   <img
-                    src={photo.thumbnailUrl}
+                    src={
+                      photo.thumbnailUrl?.startsWith("blob:")
+                        ? photo.thumbnailUrl
+                        : undefined
+                    }
                     alt={isActive ? photo.caption || "照片" : ""}
                     loading={
                         isActive || Math.abs(stackIndex) <= 1

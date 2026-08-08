@@ -7758,7 +7758,7 @@ textarea {
   top: 36px !important;
 }
 
-/* Final four-tab visual unification: 首页 / 相簿 / 心愿 / 我的 */
+/* Final four-tab visual unification: 首页 / 相簿 / 妙想 / 我的 */
 :root {
   --four-tab-bg: #fbfaf8;
   --four-tab-title: rgba(46, 38, 58, 0.94);
@@ -7803,7 +7803,7 @@ body::before {
   padding-bottom: calc(96px + env(safe-area-inset-bottom)) !important;
 }
 
-/* 相簿 / 心愿 / 我的：统一页面容器 */
+/* 相簿 / 妙想 / 我的：统一页面容器 */
 .tab-page,
 .album-tab,
 .profile-tab,
@@ -7815,7 +7815,7 @@ body::before {
   background: var(--four-tab-bg) !important;
 }
 
-/* 相簿 / 心愿 / 我的：统一标题 */
+/* 相簿 / 妙想 / 我的：统一标题 */
 .tab-page-header,
 .album-header,
 .profile-header,
@@ -8032,3 +8032,904 @@ body::before {
   }
 }
 
+
+
+/* Album header single-line control */
+.album-header-description {
+  max-width: 100% !important;
+  white-space: nowrap !important;
+  font-size: clamp(11px, 3.35vw, 14px) !important;
+  letter-spacing: -0.015em !important;
+}
+
+
+/* =========================================================
+   Ideas · daily question
+   ========================================================= */
+
+.ideas-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.idea-question-card,
+.idea-answer-card,
+.idea-state-card {
+  border: 1px solid rgba(79, 67, 92, 0.08);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow:
+    0 12px 32px rgba(66, 48, 78, 0.06);
+}
+
+.idea-question-card {
+  padding: 22px 20px 24px;
+}
+
+.idea-question-meta {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--four-tab-subtitle);
+}
+
+.idea-question-card h2 {
+  margin: 0;
+  font-size: clamp(21px, 5.6vw, 26px);
+  line-height: 1.45;
+  font-weight: 760;
+  letter-spacing: -0.03em;
+  color: var(--four-tab-title);
+}
+
+.idea-answer-card {
+  padding: 20px;
+}
+
+.idea-answer-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 13px;
+}
+
+.idea-answer-heading > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.idea-answer-label {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--four-tab-title);
+}
+
+.idea-answer-heading small,
+.idea-answer-count {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--four-tab-subtitle);
+}
+
+.idea-answer-count {
+  flex: 0 0 auto;
+}
+
+.idea-answer-card textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 150px;
+  padding: 15px 16px;
+  resize: vertical;
+  border: 1px solid rgba(79, 67, 92, 0.1);
+  border-radius: 18px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.75);
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--four-tab-title);
+}
+
+.idea-answer-card textarea:focus {
+  border-color: rgba(220, 130, 164, 0.42);
+  box-shadow:
+    0 0 0 3px rgba(220, 130, 164, 0.08);
+}
+
+.idea-answer-card button {
+  width: 100%;
+  margin-top: 14px;
+  padding: 13px 18px;
+  border: 0;
+  border-radius: 16px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.idea-answer-card button:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.idea-answer-error,
+.idea-answer-success {
+  margin: 10px 2px 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.idea-answer-error {
+  color: #b55767;
+}
+
+.idea-answer-success {
+  color: #668870;
+}
+
+.idea-state-card {
+  padding: 36px 20px;
+  text-align: center;
+  color: var(--four-tab-subtitle);
+}
+
+.idea-state-star {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 26px;
+}
+
+
+/* =========================================================
+   Ideas · partner answer
+   ========================================================= */
+
+.idea-partner-card {
+  padding: 20px;
+  border: 1px solid rgba(79, 67, 92, 0.08);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow:
+    0 12px 32px rgba(66, 48, 78, 0.06);
+}
+
+.idea-partner-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.idea-partner-heading > span {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--four-tab-title);
+}
+
+.idea-partner-heading small {
+  font-size: 11px;
+  color: var(--four-tab-subtitle);
+}
+
+.idea-partner-state {
+  display: flex;
+  min-height: 118px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  border-radius: 18px;
+  text-align: center;
+  background: rgba(247, 244, 248, 0.72);
+}
+
+.idea-partner-state > span {
+  margin-bottom: 8px;
+  font-size: 24px;
+  color: var(--four-tab-subtitle);
+}
+
+.idea-partner-state p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  font-weight: 700;
+  color: var(--four-tab-title);
+}
+
+.idea-partner-state small {
+  margin-top: 6px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--four-tab-subtitle);
+}
+
+.idea-partner-locked {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(244, 220, 230, 0.46),
+      rgba(220, 229, 248, 0.46)
+    );
+}
+
+.idea-partner-answer {
+  padding: 17px 16px;
+  border-radius: 18px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(225, 234, 250, 0.55),
+      rgba(255, 255, 255, 0.8)
+    );
+}
+
+.idea-partner-answer p {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--four-tab-title);
+}
+
+.idea-partner-answer small {
+  display: block;
+  margin-top: 14px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--four-tab-subtitle);
+}
+
+
+/* =========================================================
+   Ideas · calendar
+   ========================================================= */
+
+.idea-calendar-card {
+  padding: 18px 16px 16px;
+  border: 1px solid rgba(79, 67, 92, 0.08);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow:
+    0 12px 32px rgba(66, 48, 78, 0.06);
+}
+
+.idea-calendar-loading {
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 12px;
+  color: var(--four-tab-subtitle);
+}
+
+.idea-calendar-header {
+  display: grid;
+  grid-template-columns: 36px 1fr 36px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.idea-calendar-title {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+}
+
+.idea-calendar-title strong {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--four-tab-title);
+}
+
+.idea-calendar-title small {
+  font-size: 10px;
+  color: var(--four-tab-subtitle);
+}
+
+.idea-calendar-arrow {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(247, 244, 248, 0.8);
+  font-size: 24px;
+  line-height: 1;
+  color: var(--four-tab-title);
+  cursor: pointer;
+}
+
+.idea-calendar-arrow:disabled {
+  opacity: 0.24;
+  cursor: default;
+}
+
+.idea-calendar-weekdays,
+.idea-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.idea-calendar-weekdays {
+  margin-bottom: 7px;
+}
+
+.idea-calendar-weekdays span {
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--four-tab-subtitle);
+}
+
+.idea-calendar-grid {
+  row-gap: 5px;
+}
+
+.idea-calendar-empty,
+.idea-calendar-day {
+  aspect-ratio: 1;
+}
+
+.idea-calendar-day {
+  position: relative;
+  display: grid;
+  width: 100%;
+  place-items: center;
+  padding: 4px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  font: inherit;
+  color: var(--four-tab-title);
+  cursor: pointer;
+}
+
+.idea-calendar-day > span {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 680;
+}
+
+.idea-calendar-day:disabled {
+  opacity: 0.26;
+  cursor: default;
+}
+
+.idea-calendar-day-self > span {
+  background: rgba(241, 181, 204, 0.62);
+}
+
+.idea-calendar-day-partner > span {
+  background: rgba(177, 205, 241, 0.66);
+}
+
+.idea-calendar-day-both > span {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(241, 181, 204, 0.72) 0%,
+      rgba(241, 181, 204, 0.72) 48%,
+      rgba(177, 205, 241, 0.76) 52%,
+      rgba(177, 205, 241, 0.76) 100%
+    );
+}
+
+.idea-calendar-day-recorded > span::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 3px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--four-tab-subtitle);
+  transform: translateX(-50%);
+}
+
+.idea-calendar-day-today > span {
+  font-weight: 850;
+}
+
+.idea-calendar-day-selected > span {
+  box-shadow:
+    0 0 0 2px rgba(94, 78, 107, 0.56);
+}
+
+.idea-calendar-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 12px;
+  font-size: 10px;
+  color: var(--four-tab-subtitle);
+}
+
+.idea-calendar-legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.idea-calendar-key {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.idea-calendar-key-self {
+  background: rgba(241, 181, 204, 0.8);
+}
+
+.idea-calendar-key-partner {
+  background: rgba(177, 205, 241, 0.82);
+}
+
+.idea-calendar-key-both {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(241, 181, 204, 0.9) 0%,
+      rgba(241, 181, 204, 0.9) 48%,
+      rgba(177, 205, 241, 0.9) 52%,
+      rgba(177, 205, 241, 0.9) 100%
+    );
+}
+
+
+/* =========================================================
+   Ideas · own submitted answer
+   ========================================================= */
+
+.idea-own-answer {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(247, 218, 229, 0.68),
+      rgba(255, 250, 252, 0.88)
+    );
+}
+
+.idea-own-edit-button {
+  padding: 4px 8px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(196, 105, 140, 0.92);
+  cursor: pointer;
+}
+
+.idea-own-saved-notice {
+  color: rgba(178, 101, 130, 0.86) !important;
+}
+
+.idea-answer-cancel {
+  width: 100%;
+  margin-top: 12px !important;
+  padding: 10px 16px !important;
+  background: transparent !important;
+  color: var(--four-tab-subtitle) !important;
+  font-size: 12px !important;
+}
+
+
+/* Ideas · history */
+
+.idea-own-empty-state {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(247, 218, 229, 0.38),
+      rgba(255, 250, 252, 0.7)
+    );
+}
+
+
+/* =========================================================
+   Ideas · couple analysis
+   ========================================================= */
+
+.idea-analysis-unlock-card,
+.idea-analysis-result {
+  border: 1px solid rgba(79, 67, 92, 0.08);
+  border-radius: 24px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 250, 252, 0.88),
+      rgba(249, 251, 255, 0.9)
+    );
+  box-shadow:
+    0 14px 36px rgba(66, 48, 78, 0.07);
+}
+
+.idea-analysis-unlock-card {
+  padding: 28px 22px 24px;
+  text-align: center;
+}
+
+.idea-analysis-symbol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-bottom: 13px;
+}
+
+.idea-analysis-symbol span {
+  width: 26px;
+  height: 1px;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(124, 103, 139, 0.26)
+    );
+}
+
+.idea-analysis-symbol span:last-child {
+  transform: scaleX(-1);
+}
+
+.idea-analysis-symbol i {
+  font-style: normal;
+  font-size: 17px;
+  color: rgba(194, 119, 151, 0.9);
+}
+
+.idea-analysis-eyebrow {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--four-tab-subtitle);
+}
+
+.idea-analysis-unlock-card h3,
+.idea-analysis-result h3 {
+  margin: 0;
+  color: var(--four-tab-title);
+}
+
+.idea-analysis-unlock-card h3 {
+  font-size: 19px;
+  line-height: 1.45;
+  letter-spacing: -0.025em;
+}
+
+.idea-analysis-unlock-card > p {
+  max-width: 260px;
+  margin:
+    10px auto 0;
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--four-tab-subtitle);
+}
+
+.idea-analysis-unlock-card button {
+  width: 100%;
+  margin-top: 18px;
+  padding: 13px 18px;
+  border: 0;
+  border-radius: 16px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.idea-analysis-unlock-card button:disabled {
+  opacity: 0.48;
+  cursor: default;
+}
+
+.idea-analysis-error {
+  color: #b55767 !important;
+}
+
+
+/* generating */
+
+.idea-analysis-generating {
+  min-height: 172px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.idea-analysis-generating strong {
+  margin-top: 18px;
+  font-size: 15px;
+  color: var(--four-tab-title);
+}
+
+.idea-analysis-generating p {
+  margin: 6px 0 0;
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--four-tab-subtitle);
+}
+
+.idea-analysis-planets {
+  position: relative;
+  width: 150px;
+  height: 56px;
+}
+
+.idea-analysis-planet {
+  position: absolute;
+  top: 15px;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  box-shadow:
+    0 7px 15px rgba(73, 55, 88, 0.12);
+}
+
+.idea-analysis-planet-first {
+  left: 10px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(245, 183, 207, 1),
+      rgba(222, 136, 171, 0.92)
+    );
+  animation:
+    ideaPlanetFirst 1.55s
+    ease-in-out infinite alternate;
+}
+
+.idea-analysis-planet-second {
+  right: 10px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(185, 211, 246, 1),
+      rgba(137, 177, 229, 0.92)
+    );
+  animation:
+    ideaPlanetSecond 1.55s
+    ease-in-out infinite alternate;
+}
+
+.idea-analysis-glow {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle,
+      rgba(239, 207, 226, 0.55),
+      rgba(209, 220, 245, 0.22) 50%,
+      transparent 72%
+    );
+  opacity: 0.35;
+  transform:
+    translateX(-50%)
+    scale(0.7);
+  animation:
+    ideaPlanetGlow 1.55s
+    ease-in-out infinite alternate;
+}
+
+@keyframes ideaPlanetFirst {
+  from {
+    transform:
+      translateX(0)
+      scale(0.94);
+  }
+
+  to {
+    transform:
+      translateX(43px)
+      scale(1);
+  }
+}
+
+@keyframes ideaPlanetSecond {
+  from {
+    transform:
+      translateX(0)
+      scale(0.94);
+  }
+
+  to {
+    transform:
+      translateX(-43px)
+      scale(1);
+  }
+}
+
+@keyframes ideaPlanetGlow {
+  from {
+    opacity: 0.22;
+    transform:
+      translateX(-50%)
+      scale(0.65);
+  }
+
+  to {
+    opacity: 0.86;
+    transform:
+      translateX(-50%)
+      scale(1.25);
+  }
+}
+
+
+/* result */
+
+.idea-analysis-result {
+  padding: 21px 18px 19px;
+  animation:
+    ideaAnalysisReveal 420ms ease-out both;
+}
+
+.idea-analysis-result-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 17px;
+}
+
+.idea-analysis-result-header small {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--four-tab-subtitle);
+}
+
+.idea-analysis-result-header h3 {
+  font-size: 18px;
+  letter-spacing: -0.025em;
+}
+
+.idea-analysis-mini-orbit {
+  position: relative;
+  width: 43px;
+  height: 31px;
+  flex: 0 0 auto;
+}
+
+.idea-analysis-mini-orbit i {
+  position: absolute;
+  top: 7px;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+}
+
+.idea-analysis-mini-orbit i:first-child {
+  left: 3px;
+  background: rgba(232, 157, 187, 0.88);
+}
+
+.idea-analysis-mini-orbit i:last-child {
+  right: 3px;
+  background: rgba(153, 191, 237, 0.88);
+}
+
+.idea-analysis-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.idea-analysis-section {
+  padding: 15px 15px 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.64);
+}
+
+.idea-analysis-section > span {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 11px;
+  font-weight: 800;
+  color: rgba(121, 95, 119, 0.88);
+}
+
+.idea-analysis-section p {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--four-tab-title);
+}
+
+.idea-analysis-conversation {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(247, 219, 230, 0.46),
+      rgba(220, 232, 249, 0.5)
+    );
+}
+
+.idea-analysis-conversation > span {
+  color: rgba(177, 102, 132, 0.9);
+}
+
+.idea-analysis-conversation p {
+  font-weight: 650;
+}
+
+@keyframes ideaAnalysisReveal {
+  from {
+    opacity: 0;
+    transform:
+      translateY(8px)
+      scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .idea-analysis-planet-first,
+  .idea-analysis-planet-second,
+  .idea-analysis-glow,
+  .idea-analysis-result {
+    animation: none !important;
+  }
+
+  .idea-analysis-planet-first {
+    transform: translateX(43px);
+  }
+
+  .idea-analysis-planet-second {
+    transform: translateX(-43px);
+  }
+}
+
+
+/* Ideas · stale analysis */
+
+.idea-analysis-unlock-card:has(
+  .idea-analysis-eyebrow:first-of-type
+) {
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
