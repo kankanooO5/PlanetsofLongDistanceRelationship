@@ -1,6 +1,7 @@
 import {
   index,
   integer,
+  real,
   sqliteTable,
   text,
   uniqueIndex,
@@ -238,6 +239,238 @@ export const ideaAnalyses = sqliteTable(
     ),
     index("idea_analyses_relationship_idx").on(
       table.relationshipId,
+      table.createdAt,
+    ),
+  ],
+);
+
+
+// =========================================================
+// 妙想 · 可修正洞察假设
+// =========================================================
+
+export const ideaInsightHypotheses = sqliteTable(
+  "idea_insight_hypotheses",
+  {
+    id: text("id").primaryKey(),
+
+    relationshipId:
+      text("relationship_id").notNull(),
+
+    subjectType:
+      text("subject_type").notNull(),
+
+    subjectMemberId:
+      text("subject_member_id"),
+
+    dimension:
+      text("dimension").notNull(),
+
+    hypothesisText:
+      text("hypothesis_text").notNull(),
+
+    confidence:
+      real("confidence")
+        .notNull()
+        .default(0.25),
+
+    supportCount:
+      integer("support_count")
+        .notNull()
+        .default(0),
+
+    contradictionCount:
+      integer("contradiction_count")
+        .notNull()
+        .default(0),
+
+    status:
+      text("status")
+        .notNull()
+        .default("candidate"),
+
+    firstSeenAt:
+      text("first_seen_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+
+    lastSeenAt:
+      text("last_seen_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+
+    createdAt:
+      text("created_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+
+    updatedAt:
+      text("updated_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+  },
+  (table) => [
+    index(
+      "idea_insight_hypotheses_relationship_idx",
+    ).on(
+      table.relationshipId,
+      table.status,
+      table.confidence,
+    ),
+
+    index(
+      "idea_insight_hypotheses_member_idx",
+    ).on(
+      table.subjectMemberId,
+      table.status,
+    ),
+
+    index(
+      "idea_insight_hypotheses_dimension_idx",
+    ).on(
+      table.relationshipId,
+      table.dimension,
+    ),
+  ],
+);
+
+
+// =========================================================
+// 妙想 · 洞察证据
+// =========================================================
+
+export const ideaInsightEvidence = sqliteTable(
+  "idea_insight_evidence",
+  {
+    id: text("id").primaryKey(),
+
+    hypothesisId:
+      text("hypothesis_id").notNull(),
+
+    relationshipId:
+      text("relationship_id").notNull(),
+
+    dailyQuestionId:
+      text("daily_question_id").notNull(),
+
+    evidenceType:
+      text("evidence_type").notNull(),
+
+    direction:
+      text("direction").notNull(),
+
+    strength:
+      text("strength")
+        .notNull()
+        .default("weak"),
+
+    evidenceText:
+      text("evidence_text").notNull(),
+
+    createdAt:
+      text("created_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+  },
+  (table) => [
+    index(
+      "idea_insight_evidence_hypothesis_idx",
+    ).on(
+      table.hypothesisId,
+      table.createdAt,
+    ),
+
+    index(
+      "idea_insight_evidence_daily_idx",
+    ).on(
+      table.dailyQuestionId,
+    ),
+
+    index(
+      "idea_insight_evidence_relationship_idx",
+    ).on(
+      table.relationshipId,
+      table.createdAt,
+    ),
+  ],
+);
+
+
+// =========================================================
+// 妙想 · 洞察线索
+//
+// Signal 只记录观察事实，
+// 不承担人格或心理解释。
+// =========================================================
+
+export const ideaInsightSignals = sqliteTable(
+  "idea_insight_signals",
+  {
+    id: text("id").primaryKey(),
+
+    relationshipId:
+      text("relationship_id").notNull(),
+
+    dailyQuestionId:
+      text("daily_question_id").notNull(),
+
+    subjectType:
+      text("subject_type").notNull(),
+
+    subjectMemberId:
+      text("subject_member_id"),
+
+    signalType:
+      text("signal_type").notNull(),
+
+    signalText:
+      text("signal_text").notNull(),
+
+    sourceExcerpt:
+      text("source_excerpt"),
+
+    salience:
+      text("salience")
+        .notNull()
+        .default("medium"),
+
+    fingerprint:
+      text("fingerprint")
+        .notNull()
+        .unique(),
+
+    createdAt:
+      text("created_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+  },
+  (table) => [
+    index(
+      "idea_insight_signals_relationship_idx",
+    ).on(
+      table.relationshipId,
+      table.createdAt,
+    ),
+
+    index(
+      "idea_insight_signals_daily_idx",
+    ).on(
+      table.dailyQuestionId,
+      table.createdAt,
+    ),
+
+    index(
+      "idea_insight_signals_member_idx",
+    ).on(
+      table.subjectMemberId,
+      table.createdAt,
+    ),
+
+    index(
+      "idea_insight_signals_type_idx",
+    ).on(
+      table.relationshipId,
+      table.signalType,
       table.createdAt,
     ),
   ],
