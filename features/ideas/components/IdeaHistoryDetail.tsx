@@ -116,14 +116,7 @@ export function IdeaHistoryDetail({
 
   if (!history?.exists) {
     return (
-      <div className="idea-state-card">
-        <span
-          className="idea-state-star"
-          aria-hidden="true"
-        >
-          ◌
-        </span>
-
+      <div className="idea-state-card idea-state-card-centered">
         <p>
           {formatDate(date)}
           还没有留下妙想。
