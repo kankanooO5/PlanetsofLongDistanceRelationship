@@ -9,7 +9,7 @@ export const IDEA_ANALYSIS_MODEL =
   避免继续命中旧模型结果。
 */
 export const IDEA_ANALYSIS_PIPELINE_VERSION =
-  "deepseek-v4-flash-v3";
+  "deepseek-v4-flash-v4";
 
 export type IdeaAnalysisContent = {
   commonGround: string;
