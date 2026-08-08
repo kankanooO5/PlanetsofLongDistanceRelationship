@@ -469,11 +469,7 @@ export function IdeasTab() {
                   ) : null}
                 </div>
               ) : partner.answered ? (
-                <div className="idea-partner-state idea-partner-locked">
-                  <span aria-hidden="true">
-                    ◇
-                  </span>
-
+                <div className="idea-partner-state idea-partner-state-centered idea-partner-locked">
                   <p>
                     TA 已经留下回答。
                   </p>
@@ -484,11 +480,7 @@ export function IdeasTab() {
                   </small>
                 </div>
               ) : (
-                <div className="idea-partner-state">
-                  <span aria-hidden="true">
-                    ◌
-                  </span>
-
+                <div className="idea-partner-state idea-partner-state-centered">
                   <p>
                     TA 还没有回答今天的问题。
                   </p>
