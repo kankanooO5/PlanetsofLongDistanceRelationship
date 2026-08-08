@@ -200,9 +200,6 @@ export function AlbumTab({
 
           <h1>相簿</h1>
 
-          <p className="tab-header-description album-header-description">
-            收藏我们在不同星球上，共同经历的每一个瞬间。
-          </p>
         </div>
       </header>
 

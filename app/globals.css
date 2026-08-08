@@ -8977,3 +8977,34 @@ body::before {
 .idea-analysis-narrative p:first-child::first-letter {
   font-size: 1.04em;
 }
+
+
+/* Ideas · clean answer states */
+
+.idea-state-card-centered {
+  display: flex;
+  min-height: 108px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.idea-state-card-centered p {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+}
+
+.idea-partner-state-centered {
+  display: flex;
+  min-height: 86px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.idea-partner-state-centered p {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+}

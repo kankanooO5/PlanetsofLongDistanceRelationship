@@ -293,14 +293,7 @@ export function IdeasTab() {
             </p>
           </div>
         ) : error && !todayIdea ? (
-          <div className="idea-state-card">
-            <span
-              className="idea-state-star"
-              aria-hidden="true"
-            >
-              ☆
-            </span>
-
+          <div className="idea-state-card idea-state-card-centered">
             <p>{error}</p>
           </div>
         ) : todayIdea ? (
@@ -457,11 +450,7 @@ export function IdeasTab() {
               </div>
 
               {!partner ? (
-                <div className="idea-partner-state">
-                  <span aria-hidden="true">
-                    ◌
-                  </span>
-
+                <div className="idea-partner-state idea-partner-state-centered">
                   <p>
                     另一颗星球还没有加入。
                   </p>
