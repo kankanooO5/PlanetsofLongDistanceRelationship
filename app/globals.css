@@ -8034,13 +8034,6 @@ body::before {
 
 
 
-/* Album header single-line control */
-.album-header-description {
-  max-width: 100% !important;
-  white-space: nowrap !important;
-  font-size: clamp(11px, 3.35vw, 14px) !important;
-  letter-spacing: -0.015em !important;
-}
 
 
 /* =========================================================
@@ -8932,4 +8925,55 @@ body::before {
   transition:
     border-color 180ms ease,
     box-shadow 180ms ease;
+}
+
+
+/* Ideas · loading refinement */
+
+.idea-state-card-loading {
+  display: flex;
+  min-height: 108px;
+  align-items: center;
+  justify-content: center;
+}
+
+.idea-state-card-loading p {
+  margin: 0;
+  text-align: center;
+}
+
+
+/* Ideas · softer daily question */
+
+.idea-question-card {
+  padding: 20px 19px 21px;
+}
+
+.idea-question-card h2 {
+  font-size: clamp(17px, 4.45vw, 20px);
+  line-height: 1.58;
+  font-weight: 720;
+  letter-spacing: -0.018em;
+}
+
+
+/* Ideas · continuous analysis narrative */
+
+.idea-analysis-narrative {
+  padding: 17px 16px 18px;
+}
+
+.idea-analysis-narrative p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.82;
+  letter-spacing: 0.005em;
+}
+
+.idea-analysis-narrative p + p {
+  margin-top: 12px;
+}
+
+.idea-analysis-narrative p:first-child::first-letter {
+  font-size: 1.04em;
 }

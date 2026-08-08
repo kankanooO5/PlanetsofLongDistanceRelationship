@@ -31,10 +31,6 @@ export function ProfileTab({ settings, role, onLogout }: ProfileTabProps) {
           <p className="eyebrow">OUR LITTLE UNIVERSE</p>
 
           <h1>我的</h1>
-
-          <p className="tab-header-description">
-            管理当前成员身份，以及需要连接的其他设备。
-          </p>
         </div>
       </header>
 

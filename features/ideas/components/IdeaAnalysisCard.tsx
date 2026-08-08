@@ -10,6 +10,10 @@ import {
   generateIdeaAnalysis,
   type IdeaAnalysisContent,
 } from "../../../lib/api/idea-analysis-client";
+import {
+  readIdeaAnalysisCache,
+  writeIdeaAnalysisCache,
+} from "../../../lib/storage/idea-page-cache";
 import { readMemberSession } from "../../../lib/storage/member-session";
 
 const MINIMUM_ANIMATION_MS = 1800;
@@ -34,19 +38,32 @@ export function IdeaAnalysisCard({
   revision: string;
   date?: string;
 }) {
+  const cachedDate =
+    date ?? "";
+
+  const [initialAnalysis] =
+    useState(() =>
+      readIdeaAnalysisCache(
+        cachedDate,
+        revision,
+      ),
+    );
+
   const [
     analysis,
     setAnalysis,
   ] =
     useState<IdeaAnalysisContent | null>(
-      null,
+      initialAnalysis,
     );
 
   const [
     revealed,
     setRevealed,
   ] =
-    useState(false);
+    useState(
+      Boolean(initialAnalysis),
+    );
 
   const [
     generating,
@@ -80,8 +97,18 @@ export function IdeaAnalysisCard({
       立即收起旧解析，重新向服务端确认
       当前答案是否已有对应缓存。
     */
-    setAnalysis(null);
-    setRevealed(false);
+    const localAnalysis =
+      readIdeaAnalysisCache(
+        date ?? "",
+        revision,
+      );
+
+    setAnalysis(
+      localAnalysis,
+    );
+    setRevealed(
+      Boolean(localAnalysis),
+    );
     setNeedsRefresh(false);
     setError("");
 
@@ -125,6 +152,18 @@ export function IdeaAnalysisCard({
           setAnalysis(
             result.analysis,
           );
+
+          writeIdeaAnalysisCache(
+            date ?? "",
+            revision,
+            result.analysis,
+          );
+
+          /*
+            D1 已经有当前答案版本的解析时，
+            直接展示，不要求再次点击解锁。
+          */
+          setRevealed(true);
           setNeedsRefresh(false);
           return;
         }
@@ -211,6 +250,13 @@ export function IdeaAnalysisCard({
         setAnalysis(
           result.analysis,
         );
+
+        writeIdeaAnalysisCache(
+          date ?? "",
+          revision,
+          result.analysis,
+        );
+
         setNeedsRefresh(false);
       }
 
@@ -269,46 +315,24 @@ export function IdeaAnalysisCard({
         </div>
 
         <div className="idea-analysis-grid">
-          <article className="idea-analysis-section">
-            <span>
-              想到一起的地方
-            </span>
-
+          <article className="idea-analysis-section idea-analysis-narrative">
             <p>
               {
                 analysis.commonGround
               }
             </p>
-          </article>
-
-          <article className="idea-analysis-section">
-            <span>
-              不一样的视角
-            </span>
 
             <p>
               {
                 analysis.differentViews
               }
             </p>
-          </article>
-
-          <article className="idea-analysis-section">
-            <span>
-              你们各自在意的
-            </span>
 
             <p>
               {
                 analysis.hiddenFocus
               }
             </p>
-          </article>
-
-          <article className="idea-analysis-section">
-            <span>
-              再多懂彼此一点
-            </span>
 
             <p>
               {
@@ -379,12 +403,6 @@ export function IdeaAnalysisCard({
               ? "答案更新了，再看看现在的我们"
               : "看看我们今天想到了一起吗？"}
           </h3>
-
-          <p>
-            {needsRefresh
-              ? "刚才的解析已经收起，会按照最新的两个答案重新生成。"
-              : "不评判答案，只是把两颗星球看到的东西放在一起。"}
-          </p>
 
           {error ? (
             <p className="idea-analysis-error">

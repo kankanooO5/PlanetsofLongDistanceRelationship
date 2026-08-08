@@ -11,6 +11,10 @@ import {
   type IdeaCalendarDay,
   type IdeaCalendarMonth,
 } from "../../../lib/api/idea-calendar-client";
+import {
+  readIdeaCalendarCache,
+  writeIdeaCalendarCache,
+} from "../../../lib/storage/idea-page-cache";
 import { readMemberSession } from "../../../lib/storage/member-session";
 
 const WEEKDAYS = [
@@ -153,18 +157,23 @@ export function IdeaCalendar({
   selectedDate: string;
   onSelectDate: (date: string) => void;
 }) {
+  const [initialCalendar] =
+    useState(() =>
+      readIdeaCalendarCache(),
+    );
+
   const [
     calendar,
     setCalendar,
   ] =
     useState<IdeaCalendarMonth | null>(
-      null,
+      initialCalendar,
     );
 
   const [
     loading,
     setLoading,
-  ] = useState(true);
+  ] = useState(!initialCalendar);
 
   const [
     changingMonth,
@@ -204,6 +213,9 @@ export function IdeaCalendar({
         );
 
       setCalendar(result);
+      writeIdeaCalendarCache(
+        result,
+      );
 
       if (
         !selectedDate &&
@@ -230,7 +242,9 @@ export function IdeaCalendar({
   }
 
   useEffect(() => {
-    void loadMonth();
+    void loadMonth(
+      initialCalendar?.month,
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -333,11 +347,7 @@ export function IdeaCalendar({
             <small>
               正在翻页…
             </small>
-          ) : (
-            <small>
-              这个月一起留下的妙想
-            </small>
-          )}
+          ) : null}
         </div>
 
         <button
@@ -443,22 +453,6 @@ export function IdeaCalendar({
         )}
       </div>
 
-      <div className="idea-calendar-legend">
-        <span>
-          <i className="idea-calendar-key idea-calendar-key-self" />
-          我
-        </span>
-
-        <span>
-          <i className="idea-calendar-key idea-calendar-key-partner" />
-          TA
-        </span>
-
-        <span>
-          <i className="idea-calendar-key idea-calendar-key-both" />
-          两个人
-        </span>
-      </div>
     </section>
   );
 }

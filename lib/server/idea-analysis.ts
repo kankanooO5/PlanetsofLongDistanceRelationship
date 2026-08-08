@@ -1,5 +1,15 @@
 export const IDEA_ANALYSIS_MODEL =
-  "@cf/zai-org/glm-4.7-flash";
+  "deepseek-v4-flash";
+
+/*
+  解析管线版本。
+
+  即使双方答案没有变化，
+  更换模型 / prompt / 分析架构后也应重新生成，
+  避免继续命中旧模型结果。
+*/
+export const IDEA_ANALYSIS_PIPELINE_VERSION =
+  "deepseek-v4-flash-v3";
 
 export type IdeaAnalysisContent = {
   commonGround: string;
@@ -11,7 +21,15 @@ export type IdeaAnalysisContent = {
 
 type AnalysisAnswerInput = {
   memberId: string;
+  displayName: string;
   body: string;
+};
+
+export type IdeaAnalysisHistoryInput = {
+  dailyQuestionId: string;
+  localDate: string;
+  questionText: string;
+  answers: AnalysisAnswerInput[];
 };
 
 async function sha256(
@@ -39,6 +57,7 @@ export async function buildIdeaAnalysisSourceVersion(
   dailyQuestionId: string,
   questionId: string,
   answers: AnalysisAnswerInput[],
+  history: IdeaAnalysisHistoryInput[] = [],
 ) {
   /*
     不只依赖 updated_at。
@@ -59,16 +78,53 @@ export async function buildIdeaAnalysisSourceVersion(
       .map((answer) => ({
         memberId:
           answer.memberId,
+        displayName:
+          answer.displayName,
         body:
           answer.body,
       }));
 
+  const normalizedHistory =
+    history
+      .map((item) => ({
+        dailyQuestionId:
+          item.dailyQuestionId,
+        localDate:
+          item.localDate,
+        questionText:
+          item.questionText,
+        answers:
+          [...item.answers]
+            .sort((a, b) =>
+              a.memberId.localeCompare(
+                b.memberId,
+              ),
+            )
+            .map((answer) => ({
+              memberId:
+                answer.memberId,
+              displayName:
+                answer.displayName,
+              body:
+                answer.body,
+            })),
+      }))
+      .sort((a, b) =>
+        a.localDate.localeCompare(
+          b.localDate,
+        ),
+      );
+
   return sha256(
     JSON.stringify({
+      pipelineVersion:
+        IDEA_ANALYSIS_PIPELINE_VERSION,
       dailyQuestionId,
       questionId,
       answers:
         normalizedAnswers,
+      history:
+        normalizedHistory,
     }),
   );
 }

@@ -19,6 +19,11 @@ import {
   type TodayIdea,
   type TodayIdeaExchange,
 } from "../../../lib/api/idea-client";
+import {
+  clearLegacyIdeaSessionCache,
+  readIdeaTodayCache,
+  writeIdeaTodayCache,
+} from "../../../lib/storage/idea-page-cache";
 import { readMemberSession } from "../../../lib/storage/member-session";
 
 function formatIdeaDate(
@@ -35,15 +40,24 @@ function formatIdeaDate(
 }
 
 export function IdeasTab() {
+  const [initialCache] =
+    useState(() =>
+      readIdeaTodayCache(),
+    );
+
   const [todayIdea, setTodayIdea] =
-    useState<TodayIdea | null>(null);
+    useState<TodayIdea | null>(
+      initialCache?.todayIdea ?? null,
+    );
 
   const [answer, setAnswer] =
-    useState<IdeaAnswer | null>(null);
+    useState<IdeaAnswer | null>(
+      initialCache?.answer ?? null,
+    );
 
   const [exchange, setExchange] =
     useState<TodayIdeaExchange | null>(
-      null,
+      initialCache?.exchange ?? null,
     );
 
   const [body, setBody] =
@@ -60,7 +74,7 @@ export function IdeasTab() {
   ] = useState(false);
 
   const [loading, setLoading] =
-    useState(true);
+    useState(!initialCache);
 
   const [saving, setSaving] =
     useState(false);
@@ -74,6 +88,8 @@ export function IdeasTab() {
   ] = useState("");
 
   useEffect(() => {
+    clearLegacyIdeaSessionCache();
+
     let cancelled = false;
 
     async function load() {
@@ -130,6 +146,13 @@ export function IdeasTab() {
         setExchange(
           loadedExchange,
         );
+
+        writeIdeaTodayCache({
+          todayIdea: idea,
+          answer: savedAnswer,
+          exchange: loadedExchange,
+        });
+
         setError("");
       } catch (reason) {
         if (cancelled) return;
@@ -207,6 +230,14 @@ export function IdeasTab() {
         loadedExchange,
       );
 
+      if (todayIdea) {
+        writeIdeaTodayCache({
+          todayIdea,
+          answer: saved,
+          exchange: loadedExchange,
+        });
+      }
+
       setSavedNotice(
         wasAlreadyAnswered
           ? "回答已经更新"
@@ -235,10 +266,6 @@ export function IdeasTab() {
           </p>
 
           <h1>妙想</h1>
-
-          <p className="tab-header-description">
-            交换每天的想法，慢慢读懂彼此的世界。
-          </p>
         </div>
       </header>
 
@@ -260,14 +287,7 @@ export function IdeasTab() {
             date={selectedDate}
           />
         ) : loading ? (
-          <div className="idea-state-card">
-            <span
-              className="idea-state-star"
-              aria-hidden="true"
-            >
-              ☆
-            </span>
-
+          <div className="idea-state-card idea-state-card-loading">
             <p>
               正在寻找今天的妙想…
             </p>
@@ -495,6 +515,9 @@ export function IdeasTab() {
               enabled={Boolean(
                 exchange?.bothAnswered,
               )}
+              date={
+                todayIdea.dailyQuestion.localDate
+              }
               revision={[
                 exchange?.myAnswer?.updatedAt ?? "",
                 exchange?.partner?.answer?.updatedAt ?? "",
