@@ -190,6 +190,7 @@ export function IdeaHistoryDetail({
       </article>
 
       <IdeaAnalysisCard
+        historical
         enabled={Boolean(
           history.bothAnswered,
         )}

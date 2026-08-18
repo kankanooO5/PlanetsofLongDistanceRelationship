@@ -664,11 +664,13 @@ function serializeReadyAnalysis(
   row: AnalysisRow,
   analysis: IdeaAnalysisContent,
   cached: boolean,
+  updateAvailable = false,
 ) {
   return {
     available: true,
     status: "ready",
     cached,
+    updateAvailable,
 
     analysis: {
       ...analysis,
@@ -694,6 +696,11 @@ export async function GET(
       503,
     );
   }
+
+  const historicalRequest =
+    request.nextUrl.searchParams.get(
+      "historical",
+    ) === "1";
 
   try {
     const context =
@@ -723,6 +730,45 @@ export async function GET(
         context.dailyQuestion
           .dailyQuestionId,
       );
+
+    /*
+      历史日期采用“快照优先”。
+
+      只要曾经成功保存过 analysis_json，
+      新版本部署后仍然继续返回旧解析。
+
+      sourceVersion 不一致只意味着：
+      可以由用户主动点击“更新分析”。
+
+      pending / failed 的历史更新也不会让
+      原来的 analysis_json 从页面消失。
+    */
+    if (
+      historicalRequest &&
+      cached?.analysisJson
+    ) {
+      try {
+        const analysis =
+          parseIdeaAnalysisContent(
+            cached.analysisJson,
+          );
+
+        return Response.json(
+          serializeReadyAnalysis(
+            cached,
+            analysis,
+            true,
+            (
+              cached.sourceVersion !==
+                context.sourceVersion ||
+              cached.status !== "ready"
+            ),
+          ),
+        );
+      } catch {
+        // 真正损坏的旧 JSON 才继续走普通逻辑。
+      }
+    }
 
     if (
       cached?.status ===
@@ -1005,6 +1051,21 @@ export async function POST(
     );
   }
 
+  const insightsOnly =
+    request.nextUrl.searchParams.get(
+      "mode",
+    ) === "insights";
+
+  const historicalRequest =
+    request.nextUrl.searchParams.get(
+      "historical",
+    ) === "1";
+
+  const forceUpdate =
+    request.nextUrl.searchParams.get(
+      "force",
+    ) === "1";
+
   let dailyQuestionId = "";
   let sourceVersion = "";
 
@@ -1035,6 +1096,7 @@ export async function POST(
     sourceVersion =
       context.sourceVersion;
 
+    if (!insightsOnly) {
     /*
       如果双方答案没有变化，
       直接返回缓存，不再次消耗 AI。
@@ -1045,7 +1107,43 @@ export async function POST(
         dailyQuestionId,
       );
 
+    /*
+      历史解析默认永远保留。
+
+      如果前端没有明确 force=1，
+      即使 pipeline / prompt 已经升级，
+      也只返回旧快照，不自动重新生成。
+    */
     if (
+      historicalRequest &&
+      !forceUpdate &&
+      cached?.analysisJson
+    ) {
+      try {
+        const analysis =
+          parseIdeaAnalysisContent(
+            cached.analysisJson,
+          );
+
+        return Response.json(
+          serializeReadyAnalysis(
+            cached,
+            analysis,
+            true,
+            (
+              cached.sourceVersion !==
+                sourceVersion ||
+              cached.status !== "ready"
+            ),
+          ),
+        );
+      } catch {
+        // JSON 真损坏才重新生成。
+      }
+    }
+
+    if (
+      !forceUpdate &&
       cached?.status ===
         "ready" &&
       cached.sourceVersion ===
@@ -1080,47 +1178,84 @@ export async function POST(
       如果双方答案已经变了，
       新 source_version 会覆盖旧版本。
     */
-    await database
-      .prepare(
-        `INSERT INTO idea_analyses (
-          id,
-          daily_question_id,
-          relationship_id,
-          status,
-          analysis_json,
-          source_version,
-          model,
-          error_message,
-          generated_at
-        )
-        VALUES (
-          ?, ?, ?, 'pending',
-          NULL, ?, ?, NULL, NULL
-        )
+    if (
+      historicalRequest &&
+      forceUpdate &&
+      cached?.analysisJson
+    ) {
+      /*
+        更新历史解析时只把状态改成 pending，
+        但旧 analysis_json / generated_at 原样保留。
 
-        ON CONFLICT(
-          daily_question_id
-        ) DO UPDATE SET
-          status = 'pending',
-          analysis_json = NULL,
-          source_version =
-            excluded.source_version,
-          model =
-            excluded.model,
-          error_message = NULL,
-          generated_at = NULL,
-          updated_at =
-            CURRENT_TIMESTAMP`,
-      )
-      .bind(
-        analysisId,
-        dailyQuestionId,
-        context.member
-          .relationshipId,
-        sourceVersion,
-        IDEA_ANALYSIS_MODEL,
-      )
-      .run();
+        如果新版生成失败，
+        下次打开历史页仍然能看到旧版本。
+      */
+      await database
+        .prepare(
+          `UPDATE idea_analyses
+
+           SET
+             status = 'pending',
+             source_version = ?,
+             model = ?,
+             error_message = NULL,
+             updated_at =
+               CURRENT_TIMESTAMP
+
+           WHERE
+             daily_question_id = ?`,
+        )
+        .bind(
+          sourceVersion,
+          IDEA_ANALYSIS_MODEL,
+          dailyQuestionId,
+        )
+        .run();
+    } else {
+      await database
+        .prepare(
+          `INSERT INTO idea_analyses (
+            id,
+            daily_question_id,
+            relationship_id,
+            status,
+            analysis_json,
+            source_version,
+            model,
+            error_message,
+            generated_at
+          )
+          VALUES (
+            ?, ?, ?, 'pending',
+            NULL, ?, ?, NULL, NULL
+          )
+
+          ON CONFLICT(
+            daily_question_id
+          ) DO UPDATE SET
+            status = 'pending',
+            analysis_json = NULL,
+            source_version =
+              excluded.source_version,
+            model =
+              excluded.model,
+            error_message = NULL,
+            generated_at = NULL,
+            updated_at =
+              CURRENT_TIMESTAMP`,
+        )
+        .bind(
+          analysisId,
+          dailyQuestionId,
+          context.member
+            .relationshipId,
+          sourceVersion,
+          IDEA_ANALYSIS_MODEL,
+        )
+        .run();
+    }
+
+    }
 
     const first =
       context.answers[0];
@@ -1984,158 +2119,499 @@ JSON 必须严格使用以下字段：
 }
 `.trim();
 
-    const deepSeekResponse =
-      await fetch(
-        "https://api.deepseek.com/chat/completions",
-        {
-          method: "POST",
+    /*
+      用户可见解析不再承担长期记忆写入。
 
-          headers: {
-            Authorization:
-              `Bearer ${apiKey}`,
-            "Content-Type":
-              "application/json",
-          },
+      现有完整 prompt 保留给 insights 阶段，
+      visiblePrompt 则在长期记忆规则开始前截断，
+      只要求五个用户可见字段。
 
-          body: JSON.stringify({
-            model:
-              IDEA_ANALYSIS_MODEL,
+      这样第一阶段不再为 Signal / Candidate /
+      Evaluation 消耗 reasoning 和输出预算。
+    */
+    const insightPromptMarker =
+      `
 
-            messages: [
-              {
-                role: "system",
-                content:
-                  "你是一位擅长文本细读、文化语义理解与关系观察的中文分析助手。具体优先于抽象，特殊优先于通用。面对电影、书籍、歌曲、人物、地点或其他高信息密度实体时，不要把它们只当作字符串；在知识可靠的前提下，主动理解它们的主题、气质与文化语义，再结合用户为什么在此刻提到它们进行分析。请进行必要且充分的推理，但避免为了显得深刻而过度解读。你的目标是从具体细节出发，帮助两个人发现答案背后更值得注意的东西，而不是评价、诊断、贴标签或预测关系。最终必须只输出合法 JSON。",
-              },
-              {
-                role: "user",
-                content:
-                  prompt,
-              },
-            ],
+历史 Signal 可以帮助你提出跨日模式，`;
 
-            /*
-              V4 Flash 默认即支持 thinking。
-              high 是普通请求的标准 reasoning effort，
-              不使用 max，优先控制响应时间。
-            */
-            thinking: {
-              type:
-                "enabled",
-            },
-
-            reasoning_effort:
-              "high",
-
-            /*
-              DeepSeek JSON Output。
-              具体字段约束由 prompt + 本地 parser 双重控制。
-            */
-            response_format: {
-              type:
-                "json_object",
-            },
-
-            /*
-              留出 reasoning + 正文空间，
-              同时避免无限制拉长解析时间。
-            */
-            max_tokens:
-              12000,
-
-            stream: false,
-          }),
-        },
+    const markerIndex =
+      prompt.indexOf(
+        insightPromptMarker,
       );
 
-    const deepSeekRaw =
-      await deepSeekResponse.text();
-
-    if (!deepSeekResponse.ok) {
-      console.error(
-        "DeepSeek analysis failed",
-        deepSeekResponse.status,
-        deepSeekRaw.slice(
-          0,
-          1000,
-        ),
-      );
-
+    if (markerIndex < 0) {
       throw new Error(
-        `DeepSeek API 请求失败（${deepSeekResponse.status}）`,
+        "无法定位长期记忆 Prompt 分界",
       );
     }
 
-    const result =
-      JSON.parse(
-        deepSeekRaw,
-      ) as {
-        choices?: Array<{
-          finish_reason?:
-            | string
-            | null;
+    const visiblePrompt =
+      (
+        prompt.slice(
+          0,
+          markerIndex,
+        ) +
+        `
 
-          message?: {
-            content?:
-              | string
-              | null;
+最终只输出以下合法 JSON。
+不要输出 insightSignals、
+insightCandidates 或 insightEvaluations。
 
-            reasoning_content?:
-              | string
-              | null;
-          };
-        }>;
+{
+  "commonGround": "想到一起的地方",
+  "differentViews": "双方不同的视角以及背后的判断路径",
+  "hiddenFocus": "双方这次回答中更在意的东西，以及关系中的情感流动",
+  "mutualUnderstanding": "这些信息如何帮助两个人更理解彼此",
+  "conversationPrompt": "一个值得继续聊的问题"
+}`
+      ).trim();
 
-        usage?: {
-          prompt_tokens?:
-            number;
-          completion_tokens?:
-            number;
-          total_tokens?:
-            number;
-        };
-      };
+    const requestPrompt =
+      insightsOnly
+        ? prompt
+        : visiblePrompt;
 
-    const choice =
-      result.choices?.[0];
+    const systemInstruction =
+      `你是一位擅长文本细读、文化语义理解与关系观察的中文分析助手。
 
-    let content =
-      choice?.message?.content
-        ?.trim() ||
-      null;
+具体优先于抽象，特殊优先于通用。
+
+面对电影、书籍、歌曲、人物、地点、事件或其他高信息密度实体时，
+如果准确理解其公开背景会影响分析质量，
+应优先核验相关事实。
+
+搜索得到的内容只能作为“外部语义背景”，
+不能自动变成关于用户本人心理、经历或人格的事实。
+
+普通食物、日常偏好、无需外部知识即可理解的表达，
+不要为了搜索而搜索。
+
+避免为了显得深刻而过度解读。
+不评价、诊断、贴标签或预测关系。
+最终必须只输出合法 JSON。`;
+
 
     /*
-      reasoning_content 不写数据库、
-      不返回前端。
+      ======================================================
+      VISIBLE
+      Responses API + server-side Web Search
 
-      这里只使用最终 analysis JSON。
+      用户正在等待这一阶段，所以：
+      - non-thinking
+      - web_search = auto
+      - 只生成五个可见字段
 
-      DeepSeek 偶发会完成 reasoning，
-      但没有产生最终 content。
-
-      第一次出现这种情况时，
-      后端自动重试一次，
-      不立即把失败暴露给用户。
+      INSIGHTS 暂时继续使用已经验证稳定的
+      Chat Completions + high reasoning。
+      ======================================================
     */
-    if (!content) {
-      console.warn(
-        "DeepSeek first attempt returned empty content",
-        {
-          finishReason:
-            choice?.finish_reason ??
-            null,
-          promptTokens:
-            result.usage
-              ?.prompt_tokens ??
-            null,
-          completionTokens:
-            result.usage
-              ?.completion_tokens ??
-            null,
-        },
+
+    type DeepSeekResponsesResult = {
+      status?: string;
+
+      incomplete_details?: {
+        reason?: string | null;
+      } | null;
+
+      output?: Array<{
+        type?: string;
+
+        content?: Array<{
+          type?: string;
+          text?: string | null;
+        }>;
+      }>;
+
+      usage?: {
+        input_tokens?: number;
+        output_tokens?: number;
+
+        output_tokens_details?: {
+          reasoning_tokens?: number;
+        };
+      };
+    };
+
+    function extractResponseText(
+      result: DeepSeekResponsesResult,
+    ) {
+      const parts: string[] = [];
+
+      for (
+        const item
+        of result.output ?? []
+      ) {
+        if (
+          item.type !== "message"
+        ) {
+          continue;
+        }
+
+        for (
+          const part
+          of item.content ?? []
+        ) {
+          if (
+            part.type ===
+              "output_text" &&
+            part.text
+          ) {
+            parts.push(
+              part.text,
+            );
+          }
+        }
+      }
+
+      return (
+        parts.join("").trim() ||
+        null
+      );
+    }
+
+    function countWebSearchCalls(
+      result: DeepSeekResponsesResult,
+    ) {
+      return (
+        result.output ?? []
+      ).filter(
+        (item) =>
+          item.type ===
+            "web_search_call",
+      ).length;
+    }
+
+    /*
+      是否强制联网。
+
+      对带《》的明确文化作品，
+      不依赖模型已有记忆，
+      强制通过 Web Search 核验。
+
+      其他普通内容仍然使用 auto，
+      避免每一道日常题都无意义搜索。
+    */
+    const entitySearchSource =
+      [
+        context.dailyQuestion
+          .questionText,
+        first.body,
+        second.body,
+      ].join("\n");
+
+    const visibleEntityTitles =
+      Array.from(
+        entitySearchSource.matchAll(
+          /《([^》]{1,120})》/g,
+        ),
+        (match) => match[1],
       );
 
-      const retryResponse =
+    const forceVisibleWebSearch =
+      visibleEntityTitles.length > 0;
+
+    /*
+      TEST 临时运行时标记。
+      确认 Web Search 路径后会删除。
+    */
+
+    /*
+      ======================================================
+      Entity Research
+
+      这里只负责查公开实体背景。
+
+      Prompt 极短，并且给较小的 output budget，
+      尽量避免 Web Search agent 无限浏览。
+
+      即使 response 最终没有 message，
+      只要拿到了 web_search_call，
+      下一阶段就可以原样回传，由 DeepSeek
+      服务端恢复对应搜索结果。
+      ======================================================
+    */
+    async function callEntityResearch() {
+      const entityList =
+        visibleEntityTitles
+          .map(
+            (title, index) =>
+              `${index + 1}. 《${title}》`,
+          )
+          .join("\n");
+
+      const researchPrompt =
+        `请核验以下文化作品的公开背景：
+
+${entityList}
+
+任务仅限于为后续文本分析提供可靠背景。
+
+每个作品只需要核验：
+- 核心主题
+- 主要人物或关系
+- 核心冲突
+- 情绪气质
+- 如果作品名称存在歧义，确认具体作品
+
+请尽量少调用 Web Search。
+优先每个实体一次 search。
+不要分析用户本人。
+不要推测用户心理。
+不要为了补充细枝末节反复 open_page 或 find_in_page。`;
+
+      const response =
+        await fetch(
+          "https://api.deepseek.com/responses",
+          {
+            method: "POST",
+
+            headers: {
+              Authorization:
+                `Bearer ${apiKey}`,
+              "Content-Type":
+                "application/json",
+            },
+
+            body: JSON.stringify({
+              model:
+                IDEA_ANALYSIS_MODEL,
+
+              instructions:
+                "你只负责核验文化实体的公开事实。检索够用即可，不做用户分析。",
+
+              input:
+                researchPrompt,
+
+              reasoning: {
+                effort: "none",
+              },
+
+              tools: [
+                {
+                  type:
+                    "web_search",
+                },
+              ],
+
+              tool_choice: {
+                type:
+                  "web_search",
+              },
+
+              /*
+                这里只需要产生搜索动作，
+                不需要长篇回答。
+
+                max_tool_calls 在 DeepSeek
+                Responses API 中不会生效，
+                因此通过小输出预算 +
+                短任务限制搜索代理扩张。
+              */
+              max_output_tokens:
+                500,
+
+              stream: false,
+            }),
+          },
+        );
+
+      const raw =
+        await response.text();
+
+      if (!response.ok) {
+        console.error(
+          "DeepSeek entity research failed",
+          response.status,
+          raw.slice(
+            0,
+            1000,
+          ),
+        );
+
+        return {
+          result: null,
+          searchItems: [],
+        };
+      }
+
+      const result =
+        JSON.parse(
+          raw,
+        ) as DeepSeekResponsesResult;
+
+      /*
+        保留本轮全部 server-side search action。
+
+        当前产品策略优先分析质量，
+        不再人为截断 Web Search 次数。
+
+        下一阶段会原样回传这些
+        web_search_call，由 DeepSeek
+        服务端恢复对应搜索结果。
+      */
+      const searchItems =
+        (
+          result.output ?? []
+        )
+          .filter(
+            (item) =>
+              item.type ===
+                "web_search_call",
+          );
+
+      return {
+        result,
+        searchItems,
+      };
+    }
+
+
+    /*
+      ======================================================
+      Visible Synthesis
+
+      这里只生成用户真正看到的五段解析。
+
+      - 禁止继续调用工具
+      - non-thinking
+      - 如果存在 researchItems，
+        原样放回 input，DeepSeek 服务端会
+        恢复对应搜索结果
+      ======================================================
+    */
+    async function callVisibleSynthesis(
+      visibleInput: unknown,
+      maxOutputTokens: number,
+    ) {
+      const response =
+        await fetch(
+          "https://api.deepseek.com/responses",
+          {
+            method: "POST",
+
+            headers: {
+              Authorization:
+                `Bearer ${apiKey}`,
+              "Content-Type":
+                "application/json",
+            },
+
+            body: JSON.stringify({
+              model:
+                IDEA_ANALYSIS_MODEL,
+
+              instructions:
+                systemInstruction,
+
+              input:
+                visibleInput,
+
+              reasoning: {
+                effort: "none",
+              },
+
+              tool_choice:
+                "none",
+
+              text: {
+                format: {
+                  type:
+                    "json_object",
+                },
+              },
+
+              max_output_tokens:
+                maxOutputTokens,
+
+              stream: false,
+            }),
+          },
+        );
+
+      const raw =
+        await response.text();
+
+      if (!response.ok) {
+        console.error(
+          "DeepSeek visible synthesis failed",
+          response.status,
+          raw.slice(
+            0,
+            1000,
+          ),
+        );
+
+        throw new Error(
+          `DeepSeek Responses API 请求失败（${response.status}）`,
+        );
+      }
+
+      const result =
+        JSON.parse(
+          raw,
+        ) as DeepSeekResponsesResult;
+
+      return {
+        result,
+
+        content:
+          extractResponseText(
+            result,
+          ),
+      };
+    }
+
+
+    function buildVisibleSynthesisInput(
+      searchItems: Array<
+        NonNullable<
+          DeepSeekResponsesResult["output"]
+        >[number]
+      >,
+      visiblePromptText: string,
+    ) {
+      if (!searchItems.length) {
+        return visiblePromptText;
+      }
+
+      /*
+        web_search_call 必须原样回传。
+
+        后面再追加新的 user message，
+        要求模型利用已恢复的搜索结果
+        完成真正的情侣解析。
+      */
+      return [
+        ...searchItems,
+
+        {
+          type: "message",
+          role: "user",
+
+          content:
+            `${visiblePromptText}
+
+补充要求：
+
+前面的 web_search_call 是针对回答中具体文化作品所做的公开资料核验。
+
+请利用这些已核验的公共背景帮助理解作品，
+但搜索结果只属于二级证据。
+
+不能因为作品包含某种主题，
+就直接断言选择作品的人具有相同性格、
+经历或心理需求。
+
+现在请完成最终五字段 JSON。`,
+        },
+      ];
+    }
+
+
+    async function callInsightAnalysis(
+      input: string,
+    ) {
+      const response =
         await fetch(
           "https://api.deepseek.com/chat/completions",
           {
@@ -2156,17 +2632,12 @@ JSON 必须严格使用以下字段：
                 {
                   role: "system",
                   content:
-                    "你是一位擅长文本细读、文化语义理解与关系观察的中文分析助手。具体优先于抽象，特殊优先于通用。面对电影、书籍、歌曲、人物、地点或其他高信息密度实体时，不要把它们只当作字符串；在知识可靠的前提下，主动理解它们的主题、气质与文化语义，再结合用户为什么在此刻提到它们进行分析。请进行必要且充分的推理，但避免为了显得深刻而过度解读。你的目标是从具体细节出发，帮助两个人发现答案背后更值得注意的东西，而不是评价、诊断、贴标签或预测关系。最终必须只输出合法 JSON。",
+                    systemInstruction,
                 },
                 {
                   role: "user",
                   content:
-                    `${prompt}
-
-重要补充：
-前一次生成没有产生最终 JSON。
-这一次请务必完成推理后输出完整、合法的最终 JSON。
-不要只停留在 reasoning 阶段，不要省略任何必需字段。`,
+                    input,
                 },
               ],
 
@@ -2191,100 +2662,371 @@ JSON 必须严格使用以下字段：
           },
         );
 
-      const retryRaw =
-        await retryResponse.text();
+      const raw =
+        await response.text();
 
-      if (!retryResponse.ok) {
+      if (!response.ok) {
         console.error(
-          "DeepSeek analysis retry failed",
-          retryResponse.status,
-          retryRaw.slice(
+          "DeepSeek insight analysis failed",
+          response.status,
+          raw.slice(
             0,
             1000,
           ),
         );
 
         throw new Error(
-          `DeepSeek API 重试失败（${retryResponse.status}）`,
+          `DeepSeek API 请求失败（${response.status}）`,
         );
       }
 
-      const retryResult =
+      const result =
         JSON.parse(
-          retryRaw,
-        ) as typeof result;
+          raw,
+        ) as {
+          choices?: Array<{
+            finish_reason?:
+              | string
+              | null;
 
-      const retryChoice =
-        retryResult.choices?.[0];
+            message?: {
+              content?:
+                | string
+                | null;
+            };
+          }>;
+
+          usage?: {
+            prompt_tokens?:
+              number;
+
+            completion_tokens?:
+              number;
+          };
+        };
+
+      const choice =
+        result.choices?.[0];
+
+      return {
+        result,
+        choice,
+
+        content:
+          choice
+            ?.message
+            ?.content
+            ?.trim() ||
+          null,
+      };
+    }
+
+
+    let content:
+      | string
+      | null =
+      null;
+
+
+    if (!insightsOnly) {
+      /*
+        -----------------------------
+        用户可见解析
+
+        明确文化作品：
+        research → synthesis
+
+        普通内容：
+        直接 synthesis
+        -----------------------------
+      */
+
+      let researchItems:
+        Array<
+          NonNullable<
+            DeepSeekResponsesResult["output"]
+          >[number]
+        > = [];
+
+
+      if (
+        forceVisibleWebSearch
+      ) {
+        const research =
+          await callEntityResearch();
+
+        researchItems =
+          research.searchItems;
+
+        console.info(
+          "DeepSeek entity research completed",
+          {
+            status:
+              research.result
+                ?.status ??
+              null,
+
+            totalWebSearchCalls:
+              research.result
+                ? countWebSearchCalls(
+                    research.result,
+                  )
+                : 0,
+
+            passedSearchCalls:
+              researchItems.length,
+
+            inputTokens:
+              research.result
+                ?.usage
+                ?.input_tokens ??
+              null,
+
+            outputTokens:
+              research.result
+                ?.usage
+                ?.output_tokens ??
+              null,
+
+            incompleteReason:
+              research.result
+                ?.incomplete_details
+                ?.reason ??
+              null,
+          },
+        );
+
+        if (
+          !researchItems.length
+        ) {
+          console.warn(
+            "Entity research produced no reusable web_search_call; falling back to model knowledge",
+          );
+        }
+      }
+
+
+      const synthesisInput =
+        buildVisibleSynthesisInput(
+          researchItems,
+          requestPrompt,
+        );
+
+      const firstAttempt =
+        await callVisibleSynthesis(
+          synthesisInput,
+          3500,
+        );
 
       content =
-        retryChoice
-          ?.message
-          ?.content
-          ?.trim() ||
-        null;
+        firstAttempt.content;
+
+      console.info(
+        "DeepSeek visible synthesis completed",
+        {
+          status:
+            firstAttempt
+              .result
+              .status ??
+            null,
+
+          usedResearch:
+            researchItems.length > 0,
+
+          researchItems:
+            researchItems.length,
+
+          inputTokens:
+            firstAttempt
+              .result
+              .usage
+              ?.input_tokens ??
+            null,
+
+          outputTokens:
+            firstAttempt
+              .result
+              .usage
+              ?.output_tokens ??
+            null,
+        },
+      );
+
+
+      /*
+        synthesis retry 永远禁止新搜索。
+
+        如果第一轮 JSON 没出来，
+        只重新做最后的文本生成，
+        不再付第二轮联网成本。
+      */
+      if (!content) {
+        console.warn(
+          "DeepSeek visible synthesis returned empty content",
+          {
+            status:
+              firstAttempt
+                .result
+                .status ??
+              null,
+
+            incompleteReason:
+              firstAttempt
+                .result
+                .incomplete_details
+                ?.reason ??
+              null,
+          },
+        );
+
+        const retryInput =
+          buildVisibleSynthesisInput(
+            researchItems,
+
+            `${requestPrompt}
+
+重要补充：
+
+前一次最终生成没有产生完整 JSON。
+不要再进行任何新的检索。
+请直接使用已经提供的题目、回答、历史资料
+以及已恢复的 Web Search 背景，
+输出完整合法的五字段 JSON。`,
+          );
+
+        const retry =
+          await callVisibleSynthesis(
+            retryInput,
+            6000,
+          );
+
+        content =
+          retry.content;
+
+        if (!content) {
+          console.error(
+            "DeepSeek visible synthesis retry returned empty content",
+            {
+              status:
+                retry.result
+                  .status ??
+                null,
+
+              incompleteReason:
+                retry.result
+                  .incomplete_details
+                  ?.reason ??
+                null,
+            },
+          );
+
+          throw new Error(
+            "AI 连续两次没有返回解析正文",
+          );
+        }
+
+        console.info(
+          "DeepSeek visible synthesis retry succeeded",
+        );
+      }
+    } else {
+      /*
+        -----------------------------
+        长期记忆推断
+        -----------------------------
+      */
+      const firstAttempt =
+        await callInsightAnalysis(
+          requestPrompt,
+        );
+
+      content =
+        firstAttempt.content;
 
       if (!content) {
-        console.error(
-          "DeepSeek retry returned empty content",
+        console.warn(
+          "DeepSeek insight first attempt returned empty content",
           {
             finishReason:
-              retryChoice
+              firstAttempt
+                .choice
                 ?.finish_reason ??
               null,
+
             promptTokens:
-              retryResult.usage
+              firstAttempt
+                .result
+                .usage
                 ?.prompt_tokens ??
               null,
+
             completionTokens:
-              retryResult.usage
+              firstAttempt
+                .result
+                .usage
                 ?.completion_tokens ??
               null,
           },
         );
 
-        throw new Error(
-          "AI 连续两次没有返回解析正文",
+        const retry =
+          await callInsightAnalysis(
+            `${requestPrompt}
+
+重要补充：
+前一次生成没有产生最终 JSON。
+这一次请务必完成推理后输出完整、合法的最终 JSON。
+不要只停留在 reasoning 阶段，不要省略任何必需字段。`,
+          );
+
+        content =
+          retry.content;
+
+        if (!content) {
+          console.error(
+            "DeepSeek insight retry returned empty content",
+            {
+              finishReason:
+                retry.choice
+                  ?.finish_reason ??
+                null,
+
+              promptTokens:
+                retry.result
+                  .usage
+                  ?.prompt_tokens ??
+                null,
+
+              completionTokens:
+                retry.result
+                  .usage
+                  ?.completion_tokens ??
+                null,
+            },
+          );
+
+          throw new Error(
+            "AI 连续两次没有返回长期记忆结果",
+          );
+        }
+
+        console.info(
+          "DeepSeek insight analysis retry succeeded",
         );
       }
-
-      console.info(
-        "DeepSeek analysis retry succeeded",
-      );
     }
 
-    const analysis =
-      parseIdeaAnalysisContent(
-        content,
-      );
 
-    /*
-      主解析严格校验；
-      洞察候选宽松解析。
+    if (!insightsOnly) {
+      const analysis =
+        parseIdeaAnalysisContent(
+          content,
+        );
 
-      insightCandidates 即使完全损坏，
-      也只会得到 []，
-      绝不能拖垮用户可见的双人解析。
-    */
-    const insightSignals =
-      parseIdeaInsightSignals(
-        content,
-      );
-
-    const insightCandidates =
-      parseIdeaInsightCandidates(
-        content,
-      );
-
-    const insightEvaluations =
-      parseIdeaInsightEvaluations(
-        content,
-      );
-
-    const analysisJson =
-      JSON.stringify(
-        analysis,
-      );
+      const analysisJson =
+        JSON.stringify(
+          analysis,
+        );
 
     /*
       WHERE source_version = ?
@@ -2335,6 +3077,56 @@ JSON 必须严格使用以下字段：
         },
       );
     }
+
+
+      /*
+        visible analysis 到这里已经完成。
+
+        不再等待长期记忆推断，
+        直接把 ready 结果返回给前端。
+      */
+      const saved =
+        await findAnalysis(
+          database,
+          dailyQuestionId,
+        );
+
+      if (!saved) {
+        throw new Error(
+          "解析已生成但无法读取缓存",
+        );
+      }
+
+      return Response.json(
+        serializeReadyAnalysis(
+          saved,
+          analysis,
+          false,
+        ),
+      );
+    }
+
+    /*
+      insightsOnly 才会走到这里。
+
+      主解析已经由另一个请求完成，
+      所以下面的任何失败都不能修改
+      idea_analyses 的 ready 状态。
+    */
+    const insightSignals =
+      parseIdeaInsightSignals(
+        content,
+      );
+
+    const insightCandidates =
+      parseIdeaInsightCandidates(
+        content,
+      );
+
+    const insightEvaluations =
+      parseIdeaInsightEvaluations(
+        content,
+      );
 
 
     /*
@@ -3240,25 +4032,10 @@ JSON 必须严格使用以下字段：
       }
     }
 
-    const saved =
-      await findAnalysis(
-        database,
-        dailyQuestionId,
-      );
-
-    if (!saved) {
-      throw new Error(
-        "解析已生成但无法读取缓存",
-      );
-    }
-
-    return Response.json(
-      serializeReadyAnalysis(
-        saved,
-        analysis,
-        false,
-      ),
-    );
+    return Response.json({
+      ok: true,
+      mode: "insights",
+    });
   } catch (reason) {
     console.error(
       "Generate idea analysis failed",
@@ -3270,6 +4047,7 @@ JSON 必须严格使用以下字段：
       的 pending 记录才标记失败。
     */
     if (
+      !insightsOnly &&
       database &&
       dailyQuestionId &&
       sourceVersion
@@ -3303,7 +4081,9 @@ JSON 必须严格使用以下字段：
     }
 
     return jsonError(
-      "双人解析暂时没有生成成功，请稍后再试",
+      insightsOnly
+        ? "长期记忆推断暂时没有完成"
+        : "双人解析暂时没有生成成功，请稍后再试",
       500,
     );
   }

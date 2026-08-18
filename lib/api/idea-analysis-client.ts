@@ -21,6 +21,7 @@ export type IdeaAnalysisState = {
 
   cached?: boolean;
   stale?: boolean;
+  updateAvailable?: boolean;
   reason?: string;
   message?: string;
 
@@ -49,23 +50,63 @@ async function readError(
 
 function analysisUrl(
   date?: string,
+  options?: {
+    historical?: boolean;
+    force?: boolean;
+    mode?: "insights";
+  },
 ) {
-  if (!date) {
-    return "/api/ideas/analysis";
+  const params =
+    new URLSearchParams();
+
+  if (date) {
+    params.set(
+      "date",
+      date,
+    );
   }
 
-  return (
-    "/api/ideas/analysis?date=" +
-    encodeURIComponent(date)
-  );
+  if (options?.historical) {
+    params.set(
+      "historical",
+      "1",
+    );
+  }
+
+  if (options?.force) {
+    params.set(
+      "force",
+      "1",
+    );
+  }
+
+  if (options?.mode) {
+    params.set(
+      "mode",
+      options.mode,
+    );
+  }
+
+  const query =
+    params.toString();
+
+  return query
+    ? `/api/ideas/analysis?${query}`
+    : "/api/ideas/analysis";
 }
 
 export async function fetchIdeaAnalysis(
   memberToken: string,
   date?: string,
+  historical = false,
 ) {
   const response = await fetch(
-    analysisUrl(date),
+    analysisUrl(
+      date,
+      {
+        historical,
+      },
+    ),
     {
       headers: {
         "x-member-token":
@@ -87,9 +128,16 @@ export async function fetchIdeaAnalysis(
 export async function generateIdeaAnalysis(
   memberToken: string,
   date?: string,
+  options?: {
+    historical?: boolean;
+    force?: boolean;
+  },
 ) {
   const response = await fetch(
-    analysisUrl(date),
+    analysisUrl(
+      date,
+      options,
+    ),
     {
       method: "POST",
       headers: {
@@ -106,4 +154,38 @@ export async function generateIdeaAnalysis(
   }
 
   return response.json() as Promise<IdeaAnalysisState>;
+}
+
+
+export async function generateIdeaInsights(
+  memberToken: string,
+  date?: string,
+) {
+  const response =
+    await fetch(
+      analysisUrl(
+        date,
+        {
+          mode: "insights",
+        },
+      ),
+      {
+        method: "POST",
+        headers: {
+          "x-member-token":
+            memberToken,
+        },
+      },
+    );
+
+  if (!response.ok) {
+    throw new Error(
+      await readError(response),
+    );
+  }
+
+  return response.json() as Promise<{
+    ok: boolean;
+    mode: "insights";
+  }>;
 }

@@ -22,7 +22,7 @@ import type {
   避免同一设备切换成员身份后看到旧成员数据。
 */
 
-const CACHE_VERSION = "v14";
+const CACHE_VERSION = "v15";
 
 type TodayCache = {
   savedAt: number;

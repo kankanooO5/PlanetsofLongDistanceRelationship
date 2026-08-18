@@ -1,14 +1,18 @@
 "use client";
 
 import {
+  useCallback,
   useEffect,
+  useRef,
   useState,
 } from "react";
 
 import {
   fetchIdeaAnalysis,
   generateIdeaAnalysis,
+  generateIdeaInsights,
   type IdeaAnalysisContent,
+  type IdeaAnalysisState,
 } from "../../../lib/api/idea-analysis-client";
 import {
   readIdeaAnalysisCache,
@@ -33,10 +37,12 @@ export function IdeaAnalysisCard({
   enabled,
   revision,
   date,
+  historical = false,
 }: {
   enabled: boolean;
   revision: string;
   date?: string;
+  historical?: boolean;
 }) {
   const cachedDate =
     date ?? "";
@@ -89,6 +95,99 @@ export function IdeaAnalysisCard({
   ] =
     useState(false);
 
+  const [
+    updateAvailable,
+    setUpdateAvailable,
+  ] =
+    useState(false);
+
+  /*
+    同一张解析卡只维护一份正在进行中的
+    visible analysis 请求。
+
+    后台预热与用户主动点击都会复用它，
+    避免在同一页面重复调用 DeepSeek。
+  */
+  const generationPromiseRef =
+    useRef<
+      Promise<IdeaAnalysisState> | null
+    >(null);
+
+  const startAnalysisGeneration =
+    useCallback(
+      (
+        memberToken: string,
+        force = false,
+      ) => {
+        /*
+          历史“更新分析”必须启动一份新的请求，
+          不能复用之前已经 resolve 的 Promise。
+        */
+        if (force) {
+          generationPromiseRef.current =
+            null;
+        }
+
+        if (
+          !generationPromiseRef.current
+        ) {
+          generationPromiseRef.current =
+            generateIdeaAnalysis(
+              memberToken,
+              date,
+              {
+                historical,
+                force,
+              },
+            )
+              .then((result) => {
+                /*
+                  Visible 一完成，
+                  长期记忆立刻后台继续。
+
+                  不等待、不阻塞 UI。
+                */
+                if (
+                  !historical &&
+                  result.status ===
+                    "ready" &&
+                  result.analysis
+                ) {
+                  void generateIdeaInsights(
+                    memberToken,
+                    date,
+                  ).catch(
+                    (reason) => {
+                      console.error(
+                        "idea insight generation failed",
+                        reason,
+                      );
+                    },
+                  );
+                }
+
+                return result;
+              })
+              .catch((reason) => {
+                /*
+                  失败后释放 Promise，
+                  用户点击时仍可重新尝试。
+                */
+                generationPromiseRef.current =
+                  null;
+
+                throw reason;
+              });
+        }
+
+        return generationPromiseRef.current;
+      },
+      [
+        date,
+        historical,
+      ],
+    );
+
   useEffect(() => {
     /*
       双方任意一人的回答发生变化，
@@ -97,6 +196,13 @@ export function IdeaAnalysisCard({
       立即收起旧解析，重新向服务端确认
       当前答案是否已有对应缓存。
     */
+    /*
+      新的一天或双方答案发生变化后，
+      不复用上一版本的生成请求。
+    */
+    generationPromiseRef.current =
+      null;
+
     const localAnalysis =
       readIdeaAnalysisCache(
         date ?? "",
@@ -110,6 +216,7 @@ export function IdeaAnalysisCard({
       Boolean(localAnalysis),
     );
     setNeedsRefresh(false);
+    setUpdateAvailable(false);
     setError("");
 
     if (!enabled) {
@@ -133,6 +240,7 @@ export function IdeaAnalysisCard({
           await fetchIdeaAnalysis(
             session.token,
             date,
+            historical,
           );
 
         if (cancelled) {
@@ -165,6 +273,11 @@ export function IdeaAnalysisCard({
           */
           setRevealed(true);
           setNeedsRefresh(false);
+          setUpdateAvailable(
+            Boolean(
+              result.updateAvailable,
+            ),
+          );
           return;
         }
 
@@ -175,6 +288,29 @@ export function IdeaAnalysisCard({
         setNeedsRefresh(
           Boolean(result.stale),
         );
+
+        /*
+          服务端没有当前版本 ready 解析。
+
+          不等用户点击：
+          现在就开始静默生成。
+
+          用户之后点击时会复用
+          generationPromiseRef，
+          不会再发第二份 visible 请求。
+        */
+        if (!historical) {
+          void startAnalysisGeneration(
+            session.token,
+          ).catch(() => {
+            /*
+              今天的解析允许静默预热。
+
+              历史日期绝不自动重算，
+              必须由用户主动点击。
+            */
+          });
+        }
       } catch {
         /*
           这里只是静默预检查。
@@ -194,7 +330,13 @@ export function IdeaAnalysisCard({
     return () => {
       cancelled = true;
     };
-  }, [enabled, revision, date]);
+  }, [
+    enabled,
+    revision,
+    date,
+    startAnalysisGeneration,
+    historical,
+  ]);
 
   if (!enabled) {
     return null;
@@ -228,10 +370,19 @@ export function IdeaAnalysisCard({
           );
         }
 
+        /*
+          如果后台预热正在进行：
+          → 等同一份 Promise。
+
+          如果已经预热完成：
+          → Promise 几乎立即返回。
+
+          如果此前没有预热：
+          → 此处才真正启动请求。
+        */
         const result =
-          await generateIdeaAnalysis(
+          await startAnalysisGeneration(
             session.token,
-            date,
           );
 
         if (
@@ -258,6 +409,7 @@ export function IdeaAnalysisCard({
         );
 
         setNeedsRefresh(false);
+
       }
 
       /*
@@ -288,6 +440,72 @@ export function IdeaAnalysisCard({
         reason instanceof Error
           ? reason.message
           : "双人解析暂时没有生成成功",
+      );
+    } finally {
+      setGenerating(false);
+    }
+  }
+
+  async function handleUpdateAnalysis() {
+    if (
+      generating ||
+      checking
+    ) {
+      return;
+    }
+
+    const session =
+      readMemberSession();
+
+    if (!session) {
+      setError(
+        "当前设备尚未绑定成员身份",
+      );
+      return;
+    }
+
+    setGenerating(true);
+    setError("");
+
+    try {
+      const result =
+        await startAnalysisGeneration(
+          session.token,
+          true,
+        );
+
+      if (
+        result.status !== "ready" ||
+        !result.analysis
+      ) {
+        throw new Error(
+          "新版解析暂时还没有准备好",
+        );
+      }
+
+      setAnalysis(
+        result.analysis,
+      );
+
+      writeIdeaAnalysisCache(
+        date ?? "",
+        revision,
+        result.analysis,
+      );
+
+      setUpdateAvailable(false);
+      setNeedsRefresh(false);
+      setRevealed(true);
+    } catch (reason) {
+      /*
+        更新失败时不清掉 analysis。
+
+        用户仍然继续看到旧历史解析。
+      */
+      setError(
+        reason instanceof Error
+          ? reason.message
+          : "更新分析暂时没有成功",
       );
     } finally {
       setGenerating(false);
@@ -353,6 +571,37 @@ export function IdeaAnalysisCard({
             </p>
           </article>
         </div>
+
+        {historical ? (
+          <div className="idea-analysis-update">
+            {updateAvailable ? (
+              <small>
+                有新版分析能力可用
+              </small>
+            ) : null}
+
+            {error ? (
+              <p className="idea-analysis-error">
+                {error}
+              </p>
+            ) : null}
+
+            <button
+              type="button"
+              disabled={
+                generating ||
+                checking
+              }
+              onClick={() => {
+                void handleUpdateAnalysis();
+              }}
+            >
+              {generating
+                ? "正在更新分析…"
+                : "更新分析"}
+            </button>
+          </div>
+        ) : null}
       </section>
     );
   }
