@@ -31,8 +31,8 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "两颗星球",
     },
     icons: {
-      icon: "/icon-192.png",
-      apple: "/icon-192.png",
+      icon: "/icon-192.png?v=20260825-1",
+      apple: "/icon-192.png?v=20260825-1",
     },
     openGraph: {
       title: "两颗星球",
