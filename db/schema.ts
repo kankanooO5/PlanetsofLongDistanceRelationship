@@ -475,3 +475,254 @@ export const ideaInsightSignals = sqliteTable(
     ),
   ],
 );
+
+
+// =========================================================
+// Notifications · Push subscriptions
+// =========================================================
+
+export const pushSubscriptions = sqliteTable(
+  "push_subscriptions",
+  {
+    id: text("id").primaryKey(),
+
+    memberId:
+      text("member_id").notNull(),
+
+    endpoint:
+      text("endpoint").notNull(),
+
+    p256dh:
+      text("p256dh").notNull(),
+
+    auth:
+      text("auth").notNull(),
+
+    userAgent:
+      text("user_agent"),
+
+    createdAt:
+      text("created_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+
+    lastSeenAt:
+      text("last_seen_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+
+    revokedAt:
+      text("revoked_at"),
+  },
+  (table) => [
+    uniqueIndex(
+      "push_subscriptions_endpoint_unique_idx",
+    ).on(
+      table.endpoint,
+    ),
+
+    index(
+      "push_subscriptions_member_active_idx",
+    ).on(
+      table.memberId,
+      table.revokedAt,
+    ),
+  ],
+);
+
+
+// =========================================================
+// Notifications · Preferences
+// =========================================================
+
+export const notificationPreferences = sqliteTable(
+  "notification_preferences",
+  {
+    id: text("id").primaryKey(),
+
+    memberId:
+      text("member_id").notNull(),
+
+    eventType:
+      text("event_type").notNull(),
+
+    enabled:
+      integer("enabled")
+        .notNull()
+        .default(1),
+
+    previewMode:
+      text("preview_mode")
+        .notNull()
+        .default("full"),
+
+    createdAt:
+      text("created_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+
+    updatedAt:
+      text("updated_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+  },
+  (table) => [
+    uniqueIndex(
+      "notification_preferences_member_event_unique_idx",
+    ).on(
+      table.memberId,
+      table.eventType,
+    ),
+
+    index(
+      "notification_preferences_member_idx",
+    ).on(
+      table.memberId,
+      table.enabled,
+    ),
+  ],
+);
+
+
+// =========================================================
+// Notifications · Events
+// =========================================================
+
+export const notificationEvents = sqliteTable(
+  "notification_events",
+  {
+    id: text("id").primaryKey(),
+
+    relationshipId:
+      text("relationship_id"),
+
+    actorMemberId:
+      text("actor_member_id"),
+
+    targetMemberId:
+      text("target_member_id").notNull(),
+
+    eventType:
+      text("event_type").notNull(),
+
+    title:
+      text("title").notNull(),
+
+    body:
+      text("body").notNull(),
+
+    deepLink:
+      text("deep_link"),
+
+    payloadJson:
+      text("payload_json")
+        .notNull()
+        .default("{}"),
+
+    dedupeKey:
+      text("dedupe_key"),
+
+    createdAt:
+      text("created_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+
+    readAt:
+      text("read_at"),
+  },
+  (table) => [
+    uniqueIndex(
+      "notification_events_dedupe_unique_idx",
+    ).on(
+      table.dedupeKey,
+    ),
+
+    index(
+      "notification_events_target_created_idx",
+    ).on(
+      table.targetMemberId,
+      table.createdAt,
+    ),
+
+    index(
+      "notification_events_target_unread_idx",
+    ).on(
+      table.targetMemberId,
+      table.readAt,
+      table.createdAt,
+    ),
+
+    index(
+      "notification_events_relationship_idx",
+    ).on(
+      table.relationshipId,
+      table.createdAt,
+    ),
+
+    index(
+      "notification_events_type_idx",
+    ).on(
+      table.eventType,
+      table.createdAt,
+    ),
+  ],
+);
+
+
+// =========================================================
+// Notifications · Deliveries
+// =========================================================
+
+export const notificationDeliveries = sqliteTable(
+  "notification_deliveries",
+  {
+    id: text("id").primaryKey(),
+
+    eventId:
+      text("event_id").notNull(),
+
+    subscriptionId:
+      text("subscription_id").notNull(),
+
+    status:
+      text("status")
+        .notNull()
+        .default("pending"),
+
+    attemptedAt:
+      text("attempted_at"),
+
+    sentAt:
+      text("sent_at"),
+
+    errorMessage:
+      text("error_message"),
+
+    createdAt:
+      text("created_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+  },
+  (table) => [
+    uniqueIndex(
+      "notification_deliveries_event_subscription_unique_idx",
+    ).on(
+      table.eventId,
+      table.subscriptionId,
+    ),
+
+    index(
+      "notification_deliveries_status_idx",
+    ).on(
+      table.status,
+      table.createdAt,
+    ),
+
+    index(
+      "notification_deliveries_subscription_idx",
+    ).on(
+      table.subscriptionId,
+      table.createdAt,
+    ),
+  ],
+);
