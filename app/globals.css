@@ -8402,21 +8402,45 @@ body::before {
 }
 
 .idea-calendar-day-self > span {
-  background: rgba(241, 181, 204, 0.62);
+  background:
+    radial-gradient(
+      circle at 38% 32%,
+      rgba(240, 138, 110, 0.78),
+      rgba(240, 138, 110, 0.56) 58%,
+      rgba(240, 138, 110, 0.42) 100%
+    );
 }
 
 .idea-calendar-day-partner > span {
-  background: rgba(177, 205, 241, 0.66);
+  background:
+    radial-gradient(
+      circle at 62% 68%,
+      rgba(110, 99, 222, 0.76),
+      rgba(110, 99, 222, 0.54) 58%,
+      rgba(110, 99, 222, 0.4) 100%
+    );
 }
 
 .idea-calendar-day-both > span {
   background:
+    radial-gradient(
+      circle at 27% 30%,
+      rgba(240, 138, 110, 0.82) 0%,
+      rgba(240, 138, 110, 0.62) 30%,
+      rgba(240, 138, 110, 0.28) 58%,
+      transparent 78%
+    ),
+    radial-gradient(
+      circle at 73% 70%,
+      rgba(110, 99, 222, 0.8) 0%,
+      rgba(110, 99, 222, 0.6) 32%,
+      rgba(110, 99, 222, 0.3) 60%,
+      transparent 80%
+    ),
     linear-gradient(
       135deg,
-      rgba(241, 181, 204, 0.72) 0%,
-      rgba(241, 181, 204, 0.72) 48%,
-      rgba(177, 205, 241, 0.76) 52%,
-      rgba(177, 205, 241, 0.76) 100%
+      rgba(246, 188, 169, 0.42),
+      rgba(151, 140, 231, 0.46)
     );
 }
 
@@ -8436,9 +8460,20 @@ body::before {
   font-weight: 850;
 }
 
+.idea-calendar-day > span {
+  transition:
+    background 220ms ease,
+    box-shadow 260ms ease,
+    transform 220ms ease;
+}
+
 .idea-calendar-day-selected > span {
+  transform: scale(1.03);
   box-shadow:
-    0 0 0 2px rgba(94, 78, 107, 0.56);
+    0 0 0 1.5px rgba(210, 168, 81, 0.94),
+    0 0 0 4px rgba(225, 190, 117, 0.12),
+    0 0 12px 4px rgba(240, 138, 110, 0.18),
+    0 0 22px 8px rgba(110, 99, 222, 0.12);
 }
 
 .idea-calendar-legend {
@@ -8465,22 +8500,28 @@ body::before {
 }
 
 .idea-calendar-key-self {
-  background: rgba(241, 181, 204, 0.8);
+  background: rgba(240, 138, 110, 0.78);
 }
 
 .idea-calendar-key-partner {
-  background: rgba(177, 205, 241, 0.82);
+  background: rgba(110, 99, 222, 0.76);
 }
 
 .idea-calendar-key-both {
   background:
-    linear-gradient(
-      135deg,
-      rgba(241, 181, 204, 0.9) 0%,
-      rgba(241, 181, 204, 0.9) 48%,
-      rgba(177, 205, 241, 0.9) 52%,
-      rgba(177, 205, 241, 0.9) 100%
-    );
+    radial-gradient(
+      circle at 28% 30%,
+      rgba(240, 138, 110, 0.86),
+      rgba(240, 138, 110, 0.34) 58%,
+      transparent 78%
+    ),
+    radial-gradient(
+      circle at 72% 70%,
+      rgba(110, 99, 222, 0.84),
+      rgba(110, 99, 222, 0.36) 60%,
+      transparent 80%
+    ),
+    rgba(159, 137, 204, 0.46);
 }
 
 
