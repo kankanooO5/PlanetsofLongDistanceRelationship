@@ -2,6 +2,7 @@ import { env } from "cloudflare:workers";
 import { NextRequest } from "next/server";
 
 import { authenticateMember } from "../../../lib/server/member-auth";
+import { notifyMember } from "../../../lib/server/notification-service";
 
 export const runtime = "edge";
 
@@ -541,6 +542,76 @@ export async function POST(request: NextRequest) {
         takenAt,
       )
       .run();
+
+    // 照片已经成功写入后，再尝试通知另一颗星球。
+    // 通知链路的任何失败都不能影响照片本身的上传结果。
+    try {
+      const partner =
+        await database
+          .prepare(
+            `SELECT
+              id AS memberId
+            FROM relationship_members
+            WHERE relationship_id = ?
+              AND id <> ?
+            LIMIT 1`,
+          )
+          .bind(
+            member.relationshipId,
+            member.memberId,
+          )
+          .first<{
+            memberId: string;
+          }>();
+
+      if (partner) {
+        await notifyMember({
+          database,
+
+          origin:
+            request.nextUrl.origin,
+
+          targetMemberId:
+            partner.memberId,
+
+          relationshipId:
+            member.relationshipId,
+
+          actorMemberId:
+            member.memberId,
+
+          eventType:
+            "photo_uploaded",
+
+          title:
+            "另一颗星球传来了一张照片 ✦",
+
+          body:
+            "",
+
+          deepLink:
+            "/",
+
+          payload: {
+            photoId,
+          },
+
+          dedupeKey:
+            `photo_uploaded:${photoId}:${partner.memberId}`,
+
+          ttl:
+            60 * 60,
+
+          urgency:
+            "normal",
+        });
+      }
+    } catch (notificationError) {
+      console.error(
+        "Send photo notification failed",
+        notificationError,
+      );
+    }
 
     return Response.json(
       {

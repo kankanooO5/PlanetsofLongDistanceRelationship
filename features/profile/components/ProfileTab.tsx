@@ -1,6 +1,14 @@
 "use client";
 
+import {
+  useEffect,
+  useState,
+} from "react";
 import Link from "next/link";
+
+import {
+  NotificationSettings,
+} from "./NotificationSettings";
 
 import type { CoupleSettings, Role } from "../../shared/types";
 
@@ -14,6 +22,50 @@ export function ProfileTab({ settings, role, onLogout }: ProfileTabProps) {
   const currentName =
     role === "first" ? settings.firstName : settings.secondName;
 
+  const [
+    page,
+    setPage,
+  ] = useState<
+    "main" | "notifications"
+  >("main");
+
+  useEffect(() => {
+    function handlePopState() {
+      setPage("main");
+    }
+
+    window.addEventListener(
+      "popstate",
+      handlePopState,
+    );
+
+    return () => {
+      window.removeEventListener(
+        "popstate",
+        handlePopState,
+      );
+    };
+  }, []);
+
+  function openNotifications() {
+    window.history.pushState(
+      {
+        profilePage:
+          "notifications",
+      },
+      "",
+      window.location.href,
+    );
+
+    setPage(
+      "notifications",
+    );
+  }
+
+  function closeNotifications() {
+    window.history.back();
+  }
+
   function handleLogout() {
     const confirmed = window.confirm(
       "退出后，这台设备将返回关系入口页。关系和另一台设备的数据不会被删除。",
@@ -22,6 +74,18 @@ export function ProfileTab({ settings, role, onLogout }: ProfileTabProps) {
     if (!confirmed) return;
 
     onLogout();
+  }
+
+  if (
+    page === "notifications"
+  ) {
+    return (
+      <NotificationSettings
+        onBack={
+          closeNotifications
+        }
+      />
+    );
   }
 
   return (
@@ -50,6 +114,17 @@ export function ProfileTab({ settings, role, onLogout }: ProfileTabProps) {
         </div>
 
         <div className="profile-list">
+          <a
+            href="#notifications"
+            className="profile-list-item"
+            onClick={(event) => {
+              event.preventDefault();
+              openNotifications();
+            }}
+          >
+            <span>星球来信</span>
+            <strong aria-hidden="true">›</strong>
+          </a>
           <Link href="/device-code?target=self" className="profile-list-item">
             <span>绑定我的另一台设备</span>
             <strong aria-hidden="true">›</strong>

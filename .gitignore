@@ -63,3 +63,4 @@ backups/
 # Local development backups / temporary files
 *.bak-*
 .tmp-*
+.push-secrets/
