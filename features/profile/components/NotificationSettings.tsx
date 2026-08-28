@@ -14,7 +14,6 @@ import {
 import {
   enablePush,
   getPushStatus,
-  sendTestPush,
   type PushClientStatus,
 } from "../../../lib/api/push-client";
 
@@ -284,29 +283,6 @@ export function NotificationSettings({
     }
   }
 
-  async function handleTestPush() {
-    setTesting(true);
-    setMessage("");
-
-    try {
-      const result =
-        await sendTestPush();
-
-      setMessage(
-        result.sent
-          ? "测试来信已发出 ✦"
-          : "测试来信没有成功送达",
-      );
-    } catch (reason) {
-      setMessage(
-        reason instanceof Error
-          ? reason.message
-          : "测试通知发送失败",
-      );
-    } finally {
-      setTesting(false);
-    }
-  }
 
   return (
     <div className="notification-settings-view">
@@ -477,21 +453,6 @@ export function NotificationSettings({
           </p>
         ) : null}
 
-        {pushStatus ===
-        "enabled" ? (
-          <button
-            type="button"
-            className="notification-settings-test"
-            disabled={testing}
-            onClick={() => {
-              void handleTestPush();
-            }}
-          >
-            {testing
-              ? "正在发送…"
-              : "发送测试来信"}
-          </button>
-        ) : null}
       </section>
     </div>
   );

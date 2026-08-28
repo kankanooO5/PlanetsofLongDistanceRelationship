@@ -9290,24 +9290,9 @@ border: 0;
   cursor: default;
 }
 
-.profile-notification-test-button {
-  width: 100%;
-  margin-top: 12px;
-  padding: 11px 16px;
-  border: 1px solid rgba(110, 99, 222, 0.16);
-  border-radius: 15px;
-  background: rgba(110, 99, 222, 0.06);
-  color: #6257d7;
-  font: inherit;
-  font-size: 12px;
-  font-weight: 800;
-  cursor: pointer;
-}
 
-.profile-notification-test-button:disabled {
-  opacity: 0.52;
-  cursor: default;
-}
+
+
 
 /* Notification settings */
 
@@ -9547,21 +9532,9 @@ border: 0;
   color: #6257d7;
 }
 
-.notification-settings-test {
-  display: block;
-  margin: 19px auto 0;
-  padding: 7px 10px;
-  border: 0;
-  background: transparent;
-  color: rgba(98, 87, 215, 0.68);
-  font: inherit;
-  font-size: 11px;
-  cursor: pointer;
-}
 
-.notification-settings-test:disabled {
-  opacity: 0.45;
-}
+
+
 
 /* Notification settings · refinement */
 
