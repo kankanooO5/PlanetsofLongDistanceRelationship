@@ -8402,21 +8402,75 @@ body::before {
 }
 
 .idea-calendar-day-self > span {
-  background: rgba(241, 181, 204, 0.62);
+box-sizing: border-box;
+
+  background:
+    rgba(255, 255, 255, 0.78);
+
+  border:
+    1.6px solid
+    rgba(240, 138, 110, 0.58);
+
+  filter:
+    drop-shadow(
+      0 0 3px
+      rgba(240, 138, 110, 0.16)
+    );
 }
 
 .idea-calendar-day-partner > span {
-  background: rgba(177, 205, 241, 0.66);
+box-sizing: border-box;
+
+  background:
+    rgba(255, 255, 255, 0.78);
+
+  border:
+    1.6px solid
+    rgba(110, 99, 222, 0.56);
+
+  filter:
+    drop-shadow(
+      0 0 3px
+      rgba(110, 99, 222, 0.15)
+    );
 }
 
 .idea-calendar-day-both > span {
+box-sizing: border-box;
+  border: 0;
+
   background:
+    radial-gradient(
+      circle at 30% 28%,
+      rgba(240, 138, 110, 0.72) 0%,
+      rgba(240, 138, 110, 0.48) 28%,
+      rgba(240, 138, 110, 0.16) 54%,
+      transparent 74%
+    ),
+    radial-gradient(
+      circle at 70% 72%,
+      rgba(110, 99, 222, 0.70) 0%,
+      rgba(110, 99, 222, 0.46) 30%,
+      rgba(110, 99, 222, 0.16) 56%,
+      transparent 76%
+    ),
+    radial-gradient(
+      circle at 51% 49%,
+      rgba(187, 137, 203, 0.30) 0%,
+      rgba(172, 141, 218, 0.20) 38%,
+      rgba(181, 152, 211, 0.08) 66%,
+      transparent 82%
+    ),
     linear-gradient(
-      135deg,
-      rgba(241, 181, 204, 0.72) 0%,
-      rgba(241, 181, 204, 0.72) 48%,
-      rgba(177, 205, 241, 0.76) 52%,
-      rgba(177, 205, 241, 0.76) 100%
+      145deg,
+      rgba(250, 213, 202, 0.30),
+      rgba(196, 190, 241, 0.32)
+    );
+
+  filter:
+    drop-shadow(
+      0 0 3px
+      rgba(159, 128, 205, 0.10)
     );
 }
 
@@ -8437,8 +8491,17 @@ body::before {
 }
 
 .idea-calendar-day-selected > span {
+transform: scale(1.03);
+
   box-shadow:
-    0 0 0 2px rgba(94, 78, 107, 0.56);
+    0 0 0 1.5px
+      rgba(210, 168, 81, 0.94),
+    0 0 0 4px
+      rgba(225, 190, 117, 0.12),
+    0 0 12px 4px
+      rgba(240, 138, 110, 0.18),
+    0 0 22px 8px
+      rgba(110, 99, 222, 0.12);
 }
 
 .idea-calendar-legend {
@@ -8465,22 +8528,52 @@ body::before {
 }
 
 .idea-calendar-key-self {
-  background: rgba(241, 181, 204, 0.8);
+box-sizing: border-box;
+
+  background:
+    rgba(255, 255, 255, 0.78);
+
+  border:
+    1.4px solid
+    rgba(240, 138, 110, 0.62);
+
+  box-shadow:
+    0 0 3px
+    rgba(240, 138, 110, 0.14);
 }
 
 .idea-calendar-key-partner {
-  background: rgba(177, 205, 241, 0.82);
+box-sizing: border-box;
+
+  background:
+    rgba(255, 255, 255, 0.78);
+
+  border:
+    1.4px solid
+    rgba(110, 99, 222, 0.60);
+
+  box-shadow:
+    0 0 3px
+    rgba(110, 99, 222, 0.14);
 }
 
 .idea-calendar-key-both {
+border: 0;
+
   background:
-    linear-gradient(
-      135deg,
-      rgba(241, 181, 204, 0.9) 0%,
-      rgba(241, 181, 204, 0.9) 48%,
-      rgba(177, 205, 241, 0.9) 52%,
-      rgba(177, 205, 241, 0.9) 100%
-    );
+    radial-gradient(
+      circle at 28% 28%,
+      rgba(240, 138, 110, 0.68),
+      rgba(240, 138, 110, 0.18) 58%,
+      transparent 78%
+    ),
+    radial-gradient(
+      circle at 72% 72%,
+      rgba(110, 99, 222, 0.66),
+      rgba(110, 99, 222, 0.20) 60%,
+      transparent 80%
+    ),
+    rgba(196, 175, 218, 0.30);
 }
 
 
@@ -9214,4 +9307,916 @@ body::before {
 .profile-notification-test-button:disabled {
   opacity: 0.52;
   cursor: default;
+}
+
+/* Notification settings */
+
+.profile-notification-entry {
+  display: block;
+  width: 100%;
+  border: 1px solid rgba(79, 67, 92, 0.08);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.profile-notification-entry:active {
+  transform: scale(0.988);
+}
+
+.profile-notification-entry-arrow {
+  flex: 0 0 auto;
+  align-self: center;
+  margin-left: auto;
+  padding-left: 12px;
+  font-size: 25px;
+  font-weight: 300;
+  line-height: 1;
+  color: rgba(69, 63, 82, 0.35);
+}
+
+.notification-settings-topbar {
+  position: relative;
+  padding-left: 54px;
+}
+
+.notification-settings-back {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  width: 34px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: translateY(-50%);
+  color: #373242;
+  font: inherit;
+  font-size: 34px;
+  font-weight: 250;
+  line-height: 34px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.notification-settings-page {
+  padding-top: 4px;
+}
+
+.notification-settings-system-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 17px 18px;
+  border: 1px solid rgba(79, 67, 92, 0.07);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow:
+    0 10px 28px rgba(66, 48, 78, 0.04);
+}
+
+.notification-settings-system-label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 650;
+  color: #302b3b;
+}
+
+.notification-settings-system-copy {
+  margin: 5px 0 0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: rgba(68, 61, 81, 0.52);
+}
+
+.notification-settings-system-dot {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: #c8c9ce;
+  box-shadow:
+    0 0 0 5px rgba(120, 120, 128, 0.06);
+  transition:
+    background-color 240ms ease,
+    box-shadow 240ms ease;
+}
+
+.notification-settings-system-dot.is-on {
+  background: #62c879;
+  box-shadow:
+    0 0 0 5px rgba(98, 200, 121, 0.1);
+}
+
+.notification-settings-section-heading {
+  margin: 25px 4px 8px;
+}
+
+.notification-settings-section-heading p {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  color: rgba(60, 54, 71, 0.48);
+}
+
+.notification-settings-list {
+  overflow: hidden;
+  border: 1px solid rgba(79, 67, 92, 0.07);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow:
+    0 10px 28px rgba(66, 48, 78, 0.04);
+  transition: opacity 180ms ease;
+}
+
+.notification-settings-list.is-loading {
+  opacity: 0.58;
+}
+
+.notification-settings-row {
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 11px 16px 11px 18px;
+}
+
+.notification-settings-row + .notification-settings-row {
+  border-top:
+    1px solid rgba(79, 67, 92, 0.06);
+}
+
+.notification-settings-row-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.notification-settings-row-copy strong {
+  font-size: 13px;
+  font-weight: 600;
+  color: #302b3b;
+}
+
+.notification-settings-row-copy span {
+  font-size: 10.5px;
+  line-height: 1.4;
+  color: rgba(68, 61, 81, 0.48);
+}
+
+/*
+  Switch:
+  OFF = 灰色 + 左
+  ON  = 绿色 + 右
+*/
+
+.notification-switch {
+  position: relative;
+  width: 48px;
+  height: 28px;
+  flex: 0 0 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #d7d8dc;
+  box-shadow:
+    inset 0 0 0 0.5px rgba(0, 0, 0, 0.035);
+  cursor: pointer;
+  transition:
+    background-color 280ms cubic-bezier(0.22, 0.75, 0.22, 1),
+    box-shadow 280ms ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.notification-switch.is-on {
+  background: #62c879;
+  box-shadow:
+    inset 0 0 0 0.5px rgba(0, 0, 0, 0.02),
+    0 3px 10px rgba(98, 200, 121, 0.16);
+}
+
+.notification-switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 2px 5px rgba(37, 34, 45, 0.18),
+    0 0.5px 1px rgba(37, 34, 45, 0.12);
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 320ms cubic-bezier(0.22, 0.9, 0.28, 1.08),
+    box-shadow 220ms ease;
+  will-change: transform;
+}
+
+.notification-switch.is-on
+.notification-switch-thumb {
+  transform:
+    translate3d(20px, 0, 0);
+}
+
+.notification-switch:active
+.notification-switch-thumb {
+  box-shadow:
+    0 1px 3px rgba(37, 34, 45, 0.16);
+}
+
+.notification-switch.is-saving {
+  cursor: default;
+}
+
+.notification-settings-note,
+.notification-settings-message {
+  margin: 12px 4px 0;
+  font-size: 11px;
+  line-height: 1.55;
+  color: rgba(68, 61, 81, 0.56);
+}
+
+.notification-settings-message {
+  color: #6257d7;
+}
+
+.notification-settings-test {
+  display: block;
+  margin: 19px auto 0;
+  padding: 7px 10px;
+  border: 0;
+  background: transparent;
+  color: rgba(98, 87, 215, 0.68);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.notification-settings-test:disabled {
+  opacity: 0.45;
+}
+
+/* Notification settings · refinement */
+
+.profile-list-button {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.notification-settings-view {
+  min-height: 100%;
+}
+
+.notification-settings-topbar {
+  position: static;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-left: 14px;
+}
+
+.notification-settings-topbar h1 {
+  margin: 0;
+  line-height: 1;
+}
+
+.notification-settings-back {
+  position: static;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: none;
+  color: #373242;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.notification-settings-back svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+  overflow: visible;
+}
+
+.notification-settings-back path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.notification-settings-row {
+  min-height: 58px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.notification-settings-row-copy {
+  display: block;
+}
+
+.notification-settings-row-copy strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/*
+  长椭圆 Switch
+
+  OFF
+  ●────────
+  灰色
+
+  ON
+  ────────●
+  绿色
+
+  thumb 与轨道高度完全一致
+*/
+
+.notification-switch {
+  position: relative;
+  width: 54px;
+  height: 24px;
+  flex: 0 0 54px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #d8d9dd;
+  box-shadow: none;
+  cursor: pointer;
+  transition:
+    background-color
+      280ms
+      cubic-bezier(
+        0.22,
+        0.75,
+        0.22,
+        1
+      );
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.notification-switch.is-on {
+  background: #64c77b;
+  box-shadow:
+    0 3px 10px
+      rgba(
+        100,
+        199,
+        123,
+        0.14
+      );
+}
+
+.notification-switch-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 1.5px 5px
+      rgba(
+        37,
+        34,
+        45,
+        0.18
+      );
+  transform:
+    translate3d(
+      0,
+      0,
+      0
+    );
+  transition:
+    transform
+      320ms
+      cubic-bezier(
+        0.22,
+        0.9,
+        0.28,
+        1.06
+      ),
+    box-shadow
+      200ms ease;
+  will-change: transform;
+}
+
+.notification-switch.is-on
+.notification-switch-thumb {
+  transform:
+    translate3d(
+      30px,
+      0,
+      0
+    );
+}
+
+.notification-switch:active
+.notification-switch-thumb {
+  box-shadow:
+    0 1px 3px
+      rgba(
+        37,
+        34,
+        45,
+        0.16
+      );
+}
+
+/* =========================================================
+   Notification UI alignment refinements
+   ========================================================= */
+
+/*
+  星球来信虽然是 button，
+  但视觉必须与下面两个 Link 完全一致。
+*/
+.profile-list-button {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.profile-list-button span,
+.profile-list-button strong {
+  font: inherit;
+}
+
+.profile-list-button strong {
+  font-weight: inherit;
+}
+
+
+/*
+  通知页标题：
+  左箭头后立刻跟“通知”，
+  不受 topbar 原有的两端布局影响。
+*/
+.notification-settings-topbar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 5px;
+  padding-left: 14px;
+  padding-right: 18px;
+}
+
+.notification-settings-topbar h1 {
+  display: block;
+  flex: 0 0 auto;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0;
+  text-align: left !important;
+  line-height: 34px;
+}
+
+.notification-settings-back {
+  position: static;
+  display: grid;
+  place-items: center;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 34px;
+  margin: 0;
+  padding: 0;
+  transform: none;
+}
+
+.notification-settings-back svg {
+  width: 21px;
+  height: 21px;
+}
+
+
+/*
+  Switch 的实际点击区域仍然保持足够大，
+  但视觉轨道变成细长椭圆。
+
+  圆点：22px
+  轨道：12px
+
+  二者 bottom 都是 0，
+  所以最低点严格处在同一水平线上。
+*/
+.notification-switch {
+  position: relative;
+  width: 50px;
+  height: 22px;
+  flex: 0 0 50px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* 细长椭圆轨道 */
+.notification-switch::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 12px;
+  border-radius: 999px;
+  background: #d8d9dd;
+  transition:
+    background-color 280ms cubic-bezier(0.22, 0.75, 0.22, 1);
+}
+
+.notification-switch.is-on::before {
+  background: #64c77b;
+}
+
+
+/*
+  OFF：
+  圆点左侧 + 底边与轨道底边齐平
+*/
+.notification-switch-thumb {
+  position: absolute;
+  left: 0;
+  top: auto;
+  bottom: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 1.5px 5px rgba(37, 34, 45, 0.18),
+    0 0.5px 1px rgba(37, 34, 45, 0.1);
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 320ms cubic-bezier(0.22, 0.9, 0.28, 1.06),
+    box-shadow 200ms ease;
+  will-change: transform;
+}
+
+/*
+  ON：
+  圆点移动到最右端。
+  50 - 22 = 28px
+*/
+.notification-switch.is-on
+.notification-switch-thumb {
+  transform: translate3d(28px, 0, 0);
+}
+
+.notification-switch:active
+.notification-switch-thumb {
+  box-shadow:
+    0 1px 3px rgba(37, 34, 45, 0.16);
+}
+
+
+/*
+  每一行只保留一个功能名后，
+  保证文字和 Switch 的整体视觉中心一致。
+*/
+.notification-settings-row {
+  display: flex;
+  align-items: center;
+  min-height: 54px;
+}
+
+.notification-settings-row-copy {
+  display: flex;
+  align-items: center;
+  min-height: 22px;
+}
+
+.notification-settings-row-copy strong {
+  margin: 0;
+  line-height: 22px;
+}
+
+/* =========================================================
+   Notification switch · exact pill geometry
+   ========================================================= */
+
+/*
+  整个 switch 只有 18px 高：
+  轨道高度 = 白色圆圈直径 = 18px。
+
+  所以：
+  - 两端弧度与圆圈完全一致
+  - 圆圈不会高出轨道
+  - 滑到端部后完整覆盖那一截轨道
+*/
+.notification-switch {
+  position: relative;
+  width: 48px;
+  height: 18px;
+  flex: 0 0 48px;
+
+  padding: 0;
+  border: 0;
+  border-radius: 9px;
+
+  background: #d8d9dd !important;
+  box-shadow: none !important;
+
+  overflow: visible;
+  cursor: pointer;
+
+  transition:
+    background-color
+      280ms
+      cubic-bezier(
+        0.22,
+        0.75,
+        0.22,
+        1
+      );
+
+  -webkit-tap-highlight-color:
+    transparent;
+  touch-action: manipulation;
+}
+
+/*
+  清掉上一版额外绘制的细轨道。
+*/
+.notification-switch::before {
+  display: none !important;
+}
+
+.notification-switch.is-on {
+  background:
+    #64c77b !important;
+  box-shadow:
+    none !important;
+}
+
+
+/*
+  白色 thumb 与轨道完全同高。
+*/
+.notification-switch-thumb {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  bottom: auto;
+
+  width: 18px;
+  height: 18px;
+
+  border-radius: 50%;
+  background: #fff;
+
+  box-shadow:
+    0 1px 4px
+      rgba(
+        37,
+        34,
+        45,
+        0.18
+      );
+
+  transform:
+    translate3d(
+      0,
+      0,
+      0
+    );
+
+  transition:
+    transform
+      320ms
+      cubic-bezier(
+        0.22,
+        0.9,
+        0.28,
+        1.06
+      ),
+    box-shadow
+      180ms ease;
+
+  will-change: transform;
+  z-index: 1;
+}
+
+/*
+  48 - 18 = 30
+
+  开启后滑到右端，
+  圆圈正好完整盖住右侧圆弧。
+*/
+.notification-switch.is-on
+.notification-switch-thumb {
+  transform:
+    translate3d(
+      30px,
+      0,
+      0
+    );
+}
+
+.notification-switch:active
+.notification-switch-thumb {
+  box-shadow:
+    0 1px 2px
+      rgba(
+        37,
+        34,
+        45,
+        0.16
+      );
+}
+
+/*
+  第一行现在已经与另外两行使用同样的
+  profile-list-item，不再需要 button 补丁。
+*/
+.profile-list-button {
+  all: unset;
+}
+
+/* =========================================================
+   Notification switch · final inset pill
+   ========================================================= */
+
+.notification-switch {
+  position: relative !important;
+
+  width: 50px !important;
+  height: 22px !important;
+  flex: 0 0 50px !important;
+
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+
+  background: #d5d6da !important;
+  box-shadow: none !important;
+
+  overflow: hidden !important;
+  cursor: pointer;
+
+  transition:
+    background-color 260ms
+      cubic-bezier(0.22, 0.75, 0.22, 1) !important;
+
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* 清除前面版本额外画出来的轨道 */
+.notification-switch::before {
+  content: none !important;
+  display: none !important;
+}
+
+.notification-switch.is-on {
+  background: #34c759 !important;
+  box-shadow: none !important;
+}
+
+
+/*
+  白色部分不是浮在轨道上的圆。
+
+  它是：
+  - 高 18px
+  - 宽 28px
+  - 上下各留 2px
+  - 左右端也各留 2px
+  - 完整嵌在绿色胶囊内部
+*/
+.notification-switch-thumb {
+  position: absolute !important;
+
+  top: 2px !important;
+  left: 2px !important;
+  bottom: auto !important;
+
+  width: 28px !important;
+  height: 18px !important;
+
+  border-radius: 999px !important;
+
+  background: #fff !important;
+
+  box-shadow:
+    0 1px 3px
+      rgba(0, 0, 0, 0.13) !important;
+
+  transform:
+    translate3d(0, 0, 0) !important;
+
+  transition:
+    transform 300ms
+      cubic-bezier(0.22, 0.9, 0.28, 1.03),
+    box-shadow 180ms ease !important;
+
+  will-change: transform;
+}
+
+/*
+  50 - 28 - 2 - 2 = 18px
+
+  因此 ON 时：
+  白色胶囊仍然保持右侧 2px 的绿色边缘。
+*/
+.notification-switch.is-on
+.notification-switch-thumb {
+  transform:
+    translate3d(18px, 0, 0) !important;
+}
+
+.notification-switch:active
+.notification-switch-thumb {
+  box-shadow:
+    0 0.5px 2px
+      rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Notification switch · hard size reset */
+
+.notification-switch {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+
+  box-sizing: border-box !important;
+
+  width: 50px !important;
+  min-width: 50px !important;
+  max-width: 50px !important;
+
+  height: 22px !important;
+  min-height: 22px !important;
+  max-height: 22px !important;
+
+  inline-size: 50px !important;
+  min-inline-size: 50px !important;
+  max-inline-size: 50px !important;
+
+  block-size: 22px !important;
+  min-block-size: 22px !important;
+  max-block-size: 22px !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  border: 0 !important;
+  border-radius: 999px !important;
+
+  overflow: hidden !important;
+  align-self: center !important;
+}
+
+.notification-switch-thumb {
+  box-sizing: border-box !important;
+
+  width: 28px !important;
+  min-width: 28px !important;
+  max-width: 28px !important;
+
+  height: 18px !important;
+  min-height: 18px !important;
+  max-height: 18px !important;
+
+  top: 2px !important;
+  left: 2px !important;
 }
