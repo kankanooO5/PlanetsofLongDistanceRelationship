@@ -47,6 +47,22 @@
       }
     }
   },
+  "queues": {
+    "producers": [
+      {
+        "binding": "AI_JOBS",
+        "queue": "twoplanets-test-ai-jobs"
+      }
+    ],
+    "consumers": [
+      {
+        "queue": "twoplanets-test-ai-jobs",
+        "max_batch_size": 1,
+        "max_batch_timeout": 1,
+        "max_retries": 3
+      }
+    ]
+  },
   "ai": {
     "binding": "AI"
   }

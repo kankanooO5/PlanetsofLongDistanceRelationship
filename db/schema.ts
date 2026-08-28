@@ -726,3 +726,406 @@ export const notificationDeliveries = sqliteTable(
     ),
   ],
 );
+// =========================================================
+// Album Insights · Photo AI
+// =========================================================
+
+export const photoAiInsights = sqliteTable(
+  "photo_ai_insights",
+  {
+    id: text("id").primaryKey(),
+
+    photoId:
+      text("photo_id").notNull(),
+
+    status:
+      text("status")
+        .notNull()
+        .default("pending"),
+
+    caption:
+      text("caption"),
+
+    scene:
+      text("scene"),
+
+    activitiesJson:
+      text("activities_json")
+        .notNull()
+        .default("[]"),
+
+    objectsJson:
+      text("objects_json")
+        .notNull()
+        .default("[]"),
+
+    semanticTagsJson:
+      text("semantic_tags_json")
+        .notNull()
+        .default("[]"),
+
+    visualMoodJson:
+      text("visual_mood_json")
+        .notNull()
+        .default("{}"),
+
+    confidenceJson:
+      text("confidence_json")
+        .notNull()
+        .default("{}"),
+
+    sourceVersion:
+      text("source_version"),
+
+    model:
+      text("model"),
+
+    errorMessage:
+      text("error_message"),
+
+    analyzedAt:
+      text("analyzed_at"),
+
+    createdAt:
+      text("created_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+
+    updatedAt:
+      text("updated_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+  },
+  (table) => [
+    uniqueIndex(
+      "photo_ai_insights_photo_unique_idx",
+    ).on(
+      table.photoId,
+    ),
+
+    index(
+      "photo_ai_insights_status_idx",
+    ).on(
+      table.status,
+    ),
+
+    index(
+      "photo_ai_insights_analyzed_idx",
+    ).on(
+      table.analyzedAt,
+    ),
+  ],
+);
+
+
+// =========================================================
+// Album Insights · Photo Comment AI
+// =========================================================
+
+export const photoCommentInsights = sqliteTable(
+  "photo_comment_insights",
+  {
+    id: text("id").primaryKey(),
+
+    commentId:
+      text("comment_id").notNull(),
+
+    status:
+      text("status")
+        .notNull()
+        .default("pending"),
+
+    keywordsJson:
+      text("keywords_json")
+        .notNull()
+        .default("[]"),
+
+    themesJson:
+      text("themes_json")
+        .notNull()
+        .default("[]"),
+
+    interactionSignalsJson:
+      text("interaction_signals_json")
+        .notNull()
+        .default("[]"),
+
+    sentimentJson:
+      text("sentiment_json")
+        .notNull()
+        .default("{}"),
+
+    sourceVersion:
+      text("source_version"),
+
+    model:
+      text("model"),
+
+    errorMessage:
+      text("error_message"),
+
+    analyzedAt:
+      text("analyzed_at"),
+
+    createdAt:
+      text("created_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+
+    updatedAt:
+      text("updated_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+  },
+  (table) => [
+    uniqueIndex(
+      "photo_comment_insights_comment_unique_idx",
+    ).on(
+      table.commentId,
+    ),
+
+    index(
+      "photo_comment_insights_status_idx",
+    ).on(
+      table.status,
+    ),
+
+    index(
+      "photo_comment_insights_analyzed_idx",
+    ).on(
+      table.analyzedAt,
+    ),
+  ],
+);
+
+
+// =========================================================
+// Album Insights · Period Reports
+// =========================================================
+
+export const albumPeriodReports = sqliteTable(
+  "album_period_reports",
+  {
+    id: text("id").primaryKey(),
+
+    relationshipId:
+      text("relationship_id").notNull(),
+
+    periodType:
+      text("period_type").notNull(),
+
+    periodStart:
+      text("period_start").notNull(),
+
+    periodEnd:
+      text("period_end").notNull(),
+
+    cutoffAt:
+      text("cutoff_at").notNull(),
+
+    status:
+      text("status")
+        .notNull()
+        .default("pending"),
+
+    sourceVersion:
+      text("source_version").notNull(),
+
+    statsJson:
+      text("stats_json")
+        .notNull()
+        .default("{}"),
+
+    themesJson:
+      text("themes_json")
+        .notNull()
+        .default("{}"),
+
+    interactionJson:
+      text("interaction_json")
+        .notNull()
+        .default("{}"),
+
+    keywordsJson:
+      text("keywords_json")
+        .notNull()
+        .default("{}"),
+
+    narrativeJson:
+      text("narrative_json")
+        .notNull()
+        .default("{}"),
+
+    model:
+      text("model"),
+
+    errorMessage:
+      text("error_message"),
+
+    generatedAt:
+      text("generated_at"),
+
+    publishedAt:
+      text("published_at"),
+
+    createdAt:
+      text("created_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+
+    updatedAt:
+      text("updated_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+  },
+  (table) => [
+    uniqueIndex(
+      "album_period_reports_period_unique_idx",
+    ).on(
+      table.relationshipId,
+      table.periodType,
+      table.periodStart,
+      table.periodEnd,
+    ),
+
+    index(
+      "album_period_reports_relationship_idx",
+    ).on(
+      table.relationshipId,
+      table.periodType,
+      table.periodEnd.desc(),
+    ),
+
+    index(
+      "album_period_reports_publish_idx",
+    ).on(
+      table.status,
+      table.publishedAt,
+    ),
+  ],
+);
+
+
+// =========================================================
+// Album Insights · Period Report Sources
+// =========================================================
+
+export const albumPeriodReportSources = sqliteTable(
+  "album_period_report_sources",
+  {
+    id: text("id").primaryKey(),
+
+    reportId:
+      text("report_id").notNull(),
+
+    sourceType:
+      text("source_type").notNull(),
+
+    sourceId:
+      text("source_id").notNull(),
+
+    sourceVersion:
+      text("source_version"),
+
+    createdAt:
+      text("created_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+  },
+  (table) => [
+    uniqueIndex(
+      "album_period_report_sources_unique_idx",
+    ).on(
+      table.reportId,
+      table.sourceType,
+      table.sourceId,
+    ),
+
+    index(
+      "album_period_report_sources_report_idx",
+    ).on(
+      table.reportId,
+    ),
+
+    index(
+      "album_period_report_sources_source_idx",
+    ).on(
+      table.sourceType,
+      table.sourceId,
+    ),
+  ],
+);
+
+
+// =========================================================
+// Relationship Insights · General Evidence Bridge
+// =========================================================
+
+export const relationshipInsightEvidence = sqliteTable(
+  "relationship_insight_evidence",
+  {
+    id: text("id").primaryKey(),
+
+    hypothesisId:
+      text("hypothesis_id").notNull(),
+
+    relationshipId:
+      text("relationship_id").notNull(),
+
+    sourceType:
+      text("source_type").notNull(),
+
+    sourceId:
+      text("source_id").notNull(),
+
+    direction:
+      text("direction").notNull(),
+
+    strength:
+      real("strength")
+        .notNull()
+        .default(0.5),
+
+    evidenceText:
+      text("evidence_text").notNull(),
+
+    metadataJson:
+      text("metadata_json")
+        .notNull()
+        .default("{}"),
+
+    createdAt:
+      text("created_at")
+        .notNull()
+        .default("CURRENT_TIMESTAMP"),
+  },
+  (table) => [
+    uniqueIndex(
+      "relationship_insight_evidence_source_unique_idx",
+    ).on(
+      table.hypothesisId,
+      table.sourceType,
+      table.sourceId,
+    ),
+
+    index(
+      "relationship_insight_evidence_hypothesis_idx",
+    ).on(
+      table.hypothesisId,
+    ),
+
+    index(
+      "relationship_insight_evidence_relationship_idx",
+    ).on(
+      table.relationshipId,
+      table.createdAt.desc(),
+    ),
+
+    index(
+      "relationship_insight_evidence_source_idx",
+    ).on(
+      table.sourceType,
+      table.sourceId,
+    ),
+  ],
+);

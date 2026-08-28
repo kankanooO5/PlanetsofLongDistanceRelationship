@@ -3,6 +3,9 @@ import { NextRequest } from "next/server";
 
 import { authenticateMember } from "../../../lib/server/member-auth";
 import { notifyMember } from "../../../lib/server/notification-service";
+import type {
+  PhotoVisionJob,
+} from "../../../lib/server/ai-jobs";
 
 export const runtime = "edge";
 
@@ -610,6 +613,36 @@ export async function POST(request: NextRequest) {
       console.error(
         "Send photo notification failed",
         notificationError,
+      );
+    }
+
+    try {
+      const aiJobs =
+        (
+          env as unknown as {
+            AI_JOBS?:
+              Queue<
+                PhotoVisionJob
+              >;
+          }
+        ).AI_JOBS;
+
+      if (!aiJobs) {
+        throw new Error(
+          "AI_JOBS binding missing",
+        );
+      }
+
+      await aiJobs.send({
+        type:
+          "photo_vision",
+
+        photoId,
+      });
+    } catch (queueError) {
+      console.error(
+        "Queue photo vision job failed",
+        queueError,
       );
     }
 

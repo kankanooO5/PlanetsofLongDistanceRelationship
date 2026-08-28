@@ -132,15 +132,6 @@ function photoMetaForDisplay(photo: AlbumPhoto) {
     record.uploaded_at ??
     record.date;
 
-  console.log("PHOTO TIME DEBUG", {
-    createdAt: record.createdAt,
-    created_at: record.created_at,
-    uploadedAt: record.uploadedAt,
-    uploaded_at: record.uploaded_at,
-    date: record.date,
-    rawTime,
-  });
-
   let timeText = "刚刚";
 
   if (typeof rawTime === "string" || typeof rawTime === "number") {

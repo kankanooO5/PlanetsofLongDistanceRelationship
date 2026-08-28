@@ -2,10 +2,15 @@
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
 
+import type { AiJob } from "../lib/server/ai-jobs";
+import { analyzeAndStorePhotoVision } from "../lib/server/photo-vision-insight-service";
+
 interface Env {
   ASSETS: Fetcher;
   DB: D1Database;
   PHOTOS: R2Bucket;
+  AI: Ai;
+  AI_JOBS: Queue<AiJob>;
   IMAGES: {
     input(stream: ReadableStream): {
       transform(options: Record<string, unknown>): {
@@ -42,6 +47,121 @@ const worker = {
     }
 
     return handler.fetch(request, env, ctx);
+  },
+
+  async queue(
+    batch: MessageBatch<AiJob>,
+    env: Env,
+    _ctx: ExecutionContext,
+  ): Promise<void> {
+    for (const message of batch.messages) {
+      const job = message.body;
+
+      if (
+        !job ||
+        job.type !== "photo_vision"
+      ) {
+        console.error(
+          "Unknown AI job",
+          job,
+        );
+
+        message.ack();
+        continue;
+      }
+
+      const photo =
+        await env.DB
+          .prepare(
+            `SELECT
+              id,
+              object_key AS objectKey,
+              thumbnail_object_key AS thumbnailObjectKey,
+              mime_type AS mimeType,
+              caption
+             FROM photos
+             WHERE id = ?
+             LIMIT 1`,
+          )
+          .bind(
+            job.photoId,
+          )
+          .first<{
+            id: string;
+            objectKey: string;
+            thumbnailObjectKey:
+              | string
+              | null;
+            mimeType: string;
+            caption:
+              | string
+              | null;
+          }>();
+
+      if (!photo) {
+        console.warn(
+          "Photo vision job skipped: photo missing",
+          job.photoId,
+        );
+
+        message.ack();
+        continue;
+      }
+
+      try {
+        const result =
+          await analyzeAndStorePhotoVision(
+            env.DB,
+            env.PHOTOS,
+            env.AI,
+            {
+              photoId:
+                photo.id,
+
+              objectKey:
+                photo.objectKey,
+
+              thumbnailObjectKey:
+                photo.thumbnailObjectKey,
+
+              mimeType:
+                photo.mimeType,
+
+              caption:
+                photo.caption,
+            },
+          );
+
+        if (
+          result.status ===
+          "failed"
+        ) {
+          console.error(
+            "Photo vision queue job failed",
+            job.photoId,
+          );
+
+          message.retry();
+          continue;
+        }
+
+        console.log(
+          "Photo vision queue job complete",
+          job.photoId,
+          result.status,
+        );
+
+        message.ack();
+      } catch (reason) {
+        console.error(
+          "Photo vision queue consumer error",
+          job.photoId,
+          reason,
+        );
+
+        message.retry();
+      }
+    }
   },
 };
 

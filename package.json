@@ -22,6 +22,7 @@
   "dependencies": {
     "@block65/webcrypto-web-push": "1.0.2",
     "drizzle-orm": "0.45.2",
+    "lunar-javascript": "^1.7.7",
     "next": "16.2.6",
     "react": "19.2.6",
     "react-dom": "19.2.6"

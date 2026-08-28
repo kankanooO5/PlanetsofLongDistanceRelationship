@@ -1,8 +1,11 @@
-import { env } from "cloudflare:workers";
+import { env, waitUntil } from "cloudflare:workers";
 import { NextRequest } from "next/server";
 
 import { authenticateMember } from "../../../../../lib/server/member-auth";
 import { notifyMember } from "../../../../../lib/server/notification-service";
+import {
+  analyzeAndStorePhotoComment,
+} from "../../../../../lib/server/photo-comment-insight-service";
 
 export const runtime = "edge";
 
@@ -36,17 +39,27 @@ async function findAccessiblePhoto(
 ) {
   return database
     .prepare(
-      `SELECT id
+      `SELECT
+        photos.id,
+        photos.uploaded_by_member_id AS ownerMemberId,
+        relationship_members.display_name AS ownerDisplayName
        FROM photos
-       WHERE id = ?
-         AND relationship_id = ?
+       INNER JOIN relationship_members
+         ON relationship_members.id =
+            photos.uploaded_by_member_id
+       WHERE photos.id = ?
+         AND photos.relationship_id = ?
        LIMIT 1`,
     )
     .bind(
       photoId,
       relationshipId,
     )
-    .first<{ id: string }>();
+    .first<{
+      id: string;
+      ownerMemberId: string;
+      ownerDisplayName: string;
+    }>();
 }
 
 export async function GET(
@@ -303,6 +316,32 @@ export async function POST(
         notificationError,
       );
     }
+
+    const apiKey =
+      (
+        env as unknown as {
+          DEEPSEEK_API_KEY?: string;
+        }
+      )
+        .DEEPSEEK_API_KEY
+        ?.trim() ?? "";
+
+    waitUntil(
+      analyzeAndStorePhotoComment(
+        database,
+        apiKey,
+        {
+          commentId,
+          body,
+
+          authorDisplayName:
+            member.displayName,
+
+          photoOwnerDisplayName:
+            photo.ownerDisplayName,
+        },
+      ),
+    );
 
     return Response.json(
       {
