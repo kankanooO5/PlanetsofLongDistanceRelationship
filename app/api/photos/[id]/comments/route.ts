@@ -2,6 +2,7 @@ import { env } from "cloudflare:workers";
 import { NextRequest } from "next/server";
 
 import { authenticateMember } from "../../../../../lib/server/member-auth";
+import { notifyMember } from "../../../../../lib/server/notification-service";
 
 export const runtime = "edge";
 
@@ -231,6 +232,77 @@ export async function POST(
         body,
       )
       .run();
+
+    // 留言已经成功写入后，再尝试通知另一颗星球。
+    // 通知失败不能影响留言本身。
+    try {
+      const partner =
+        await database
+          .prepare(
+            `SELECT
+              id AS memberId
+            FROM relationship_members
+            WHERE relationship_id = ?
+              AND id <> ?
+            LIMIT 1`,
+          )
+          .bind(
+            member.relationshipId,
+            member.memberId,
+          )
+          .first<{
+            memberId: string;
+          }>();
+
+      if (partner) {
+        await notifyMember({
+          database,
+
+          origin:
+            request.nextUrl.origin,
+
+          targetMemberId:
+            partner.memberId,
+
+          relationshipId:
+            member.relationshipId,
+
+          actorMemberId:
+            member.memberId,
+
+          eventType:
+            "photo_comment_added",
+
+          title:
+            "另一颗星球给照片留了言 ✦",
+
+          body:
+            "",
+
+          deepLink:
+            "/",
+
+          payload: {
+            photoId,
+            commentId,
+          },
+
+          dedupeKey:
+            `photo_comment_added:${commentId}:${partner.memberId}`,
+
+          ttl:
+            60 * 60,
+
+          urgency:
+            "normal",
+        });
+      }
+    } catch (notificationError) {
+      console.error(
+        "Send photo comment notification failed",
+        notificationError,
+      );
+    }
 
     return Response.json(
       {

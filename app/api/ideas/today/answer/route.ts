@@ -2,6 +2,7 @@ import { env } from "cloudflare:workers";
 import { NextRequest } from "next/server";
 
 import { authenticateMember } from "../../../../../lib/server/member-auth";
+import { notifyMember } from "../../../../../lib/server/notification-service";
 import {
   dateKeyInTimezone,
   normalizeRelationshipTimezone,
@@ -244,6 +245,13 @@ export async function POST(
       );
     }
 
+    const existingAnswer =
+      await findAnswer(
+        database,
+        context.dailyQuestion.id,
+        member.memberId,
+      );
+
     const answerId =
       crypto.randomUUID();
 
@@ -284,6 +292,85 @@ export async function POST(
         "暂时无法保存回答",
         500,
       );
+    }
+
+    // 只有第一次提交这道妙想时，才通知另一颗星球。
+    // 后续修改已有回答不会重复 Push。
+    if (!existingAnswer) {
+      try {
+        const partner =
+          await database
+            .prepare(
+              `SELECT
+                id AS memberId
+              FROM relationship_members
+              WHERE relationship_id = ?
+                AND id <> ?
+              LIMIT 1`,
+            )
+            .bind(
+              member.relationshipId,
+              member.memberId,
+            )
+            .first<{
+              memberId: string;
+            }>();
+
+        if (partner) {
+          await notifyMember({
+            database,
+
+            origin:
+              request.nextUrl.origin,
+
+            targetMemberId:
+              partner.memberId,
+
+            relationshipId:
+              member.relationshipId,
+
+            actorMemberId:
+              member.memberId,
+
+            eventType:
+              "idea_answer_submitted",
+
+            title:
+              "另一颗星球回答了今天的妙想 ✦",
+
+            body:
+              "",
+
+            deepLink:
+              "/",
+
+            payload: {
+              dailyQuestionId:
+                context.dailyQuestion.id,
+
+              localDate:
+                context.localDate,
+
+              answerId:
+                answer.id,
+            },
+
+            dedupeKey:
+              `idea_answer_submitted:${context.dailyQuestion.id}:${member.memberId}:${partner.memberId}`,
+
+            ttl:
+              60 * 60,
+
+            urgency:
+              "normal",
+          });
+        }
+      } catch (notificationError) {
+        console.error(
+          "Send idea answer notification failed",
+          notificationError,
+        );
+      }
     }
 
     return Response.json({

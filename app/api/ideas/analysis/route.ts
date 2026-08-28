@@ -11,6 +11,7 @@ import {
   type IdeaAnalysisContent,
 } from "../../../../lib/server/idea-analysis";
 import { authenticateMember } from "../../../../lib/server/member-auth";
+import { notifyMember } from "../../../../lib/server/notification-service";
 import {
   dateKeyInTimezone,
   normalizeRelationshipTimezone,
@@ -1068,6 +1069,7 @@ export async function POST(
 
   let dailyQuestionId = "";
   let sourceVersion = "";
+  let analysisNotificationGenerationKey = "";
 
   try {
     const context =
@@ -1106,6 +1108,25 @@ export async function POST(
         database,
         dailyQuestionId,
       );
+
+    /*
+      用当前 sourceVersion + 上一版生成时间
+      标识这一轮解析生成。
+
+      首次生成：
+      sourceVersion + first
+
+      主动更新：
+      sourceVersion + 上一版 generatedAt
+
+      这样同一轮并发生成不会重复通知，
+      下一次真正更新仍然可以再次通知。
+    */
+    analysisNotificationGenerationKey = [
+      dailyQuestionId,
+      sourceVersion,
+      cached?.generatedAt ?? "first",
+    ].join(":");
 
     /*
       历史解析默认永远保留。
@@ -3094,6 +3115,102 @@ ${entityList}
       if (!saved) {
         throw new Error(
           "解析已生成但无法读取缓存",
+        );
+      }
+
+      /*
+        双人解析已经真正 ready。
+
+        Push 属于 best-effort 副作用：
+        任一成员通知失败，都不能影响已经生成好的解析。
+      */
+      try {
+        const members =
+          await database
+            .prepare(
+              `SELECT
+                id AS memberId
+              FROM relationship_members
+              WHERE relationship_id = ?`,
+            )
+            .bind(
+              context.member.relationshipId,
+            )
+            .all<{
+              memberId: string;
+            }>();
+
+        for (
+          const target
+          of members.results
+        ) {
+          try {
+            await notifyMember({
+              database,
+
+              origin:
+                request.nextUrl.origin,
+
+              targetMemberId:
+                target.memberId,
+
+              relationshipId:
+                context.member.relationshipId,
+
+              actorMemberId:
+                null,
+
+              eventType:
+                "idea_analysis_ready",
+
+              title:
+                forceUpdate
+                  ? "双人解析已经更新 ✦"
+                  : "双人解析已经完成 ✦",
+
+              body:
+                "",
+
+              deepLink:
+                "/",
+
+              payload: {
+                dailyQuestionId,
+                localDate:
+                  context.localDate,
+                forceUpdate,
+                historicalRequest,
+              },
+
+              dedupeKey:
+                `idea_analysis_ready:${analysisNotificationGenerationKey}:${target.memberId}`,
+
+              ttl:
+                60 * 60 * 2,
+
+              urgency:
+                "normal",
+            });
+          } catch (
+            notificationError
+          ) {
+            console.error(
+              "Send idea analysis notification failed",
+              {
+                targetMemberId:
+                  target.memberId,
+                error:
+                  notificationError,
+              },
+            );
+          }
+        }
+      } catch (
+        notificationSetupError
+      ) {
+        console.error(
+          "Prepare idea analysis notifications failed",
+          notificationSetupError,
         );
       }
 
