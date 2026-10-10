@@ -1,3 +1,4 @@
+import { ideaRequestHeaders } from "./idea-request-context";
 export type IdeaCalendarDay = {
   localDate: string;
   dailyQuestionId: string;
@@ -45,9 +46,10 @@ export async function fetchIdeaCalendar(
   const response = await fetch(
     `/api/ideas/calendar${search}`,
     {
-      headers: {
-        "x-member-token": memberToken,
-      },
+      headers:
+        ideaRequestHeaders(
+          memberToken,
+        ),
       cache: "no-store",
     },
   );

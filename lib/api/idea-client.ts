@@ -1,3 +1,4 @@
+import { ideaRequestHeaders } from "./idea-request-context";
 export type TodayIdea = {
   timezone: string;
   dailyQuestion: {
@@ -62,9 +63,10 @@ export async function fetchTodayIdea(
   const response = await fetch(
     "/api/ideas/today",
     {
-      headers: {
-        "x-member-token": memberToken,
-      },
+      headers:
+        ideaRequestHeaders(
+          memberToken,
+        ),
       cache: "no-store",
     },
   );
@@ -84,9 +86,10 @@ export async function fetchMyTodayIdeaAnswer(
   const response = await fetch(
     "/api/ideas/today/answer",
     {
-      headers: {
-        "x-member-token": memberToken,
-      },
+      headers:
+        ideaRequestHeaders(
+          memberToken,
+        ),
       cache: "no-store",
     },
   );
@@ -113,12 +116,14 @@ export async function saveMyTodayIdeaAnswer(
     "/api/ideas/today/answer",
     {
       method: "POST",
-      headers: {
-        "content-type":
-          "application/json",
-        "x-member-token":
+      headers:
+        ideaRequestHeaders(
           memberToken,
-      },
+          {
+            "content-type":
+              "application/json",
+          },
+        ),
       body: JSON.stringify({
         body,
       }),
@@ -145,10 +150,10 @@ export async function fetchTodayIdeaExchange(
   const response = await fetch(
     "/api/ideas/today/exchange",
     {
-      headers: {
-        "x-member-token":
+      headers:
+        ideaRequestHeaders(
           memberToken,
-      },
+        ),
       cache: "no-store",
     },
   );
