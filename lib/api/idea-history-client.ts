@@ -1,3 +1,4 @@
+import { ideaRequestHeaders } from "./idea-request-context";
 import type { IdeaAnswer } from "./idea-client";
 
 export type IdeaHistoryDay = {
@@ -52,9 +53,10 @@ export async function fetchIdeaHistoryDay(
   const response = await fetch(
     `/api/ideas/${encodeURIComponent(date)}`,
     {
-      headers: {
-        "x-member-token": memberToken,
-      },
+      headers:
+        ideaRequestHeaders(
+          memberToken,
+        ),
       cache: "no-store",
     },
   );

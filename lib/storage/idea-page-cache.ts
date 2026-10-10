@@ -1,3 +1,4 @@
+import { deviceLocalDateKey } from "../date/device-local-date";
 import type {
   IdeaAnswer,
   TodayIdea,
@@ -109,54 +110,7 @@ function analysisKey(
     : "";
 }
 
-function currentDateInTimezone(
-  timezone: string,
-) {
-  try {
-    const parts =
-      new Intl.DateTimeFormat(
-        "en-US",
-        {
-          timeZone: timezone,
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-        },
-      ).formatToParts(
-        new Date(),
-      );
 
-    const year =
-      parts.find(
-        (part) =>
-          part.type === "year",
-      )?.value;
-
-    const month =
-      parts.find(
-        (part) =>
-          part.type === "month",
-      )?.value;
-
-    const day =
-      parts.find(
-        (part) =>
-          part.type === "day",
-      )?.value;
-
-    if (
-      !year ||
-      !month ||
-      !day
-    ) {
-      return null;
-    }
-
-    return `${year}-${month}-${day}`;
-  } catch {
-    return null;
-  }
-}
 
 
 /* =========================================================
@@ -189,19 +143,16 @@ export function readIdeaTodayCache() {
       JSON.parse(raw) as TodayCache;
 
     const currentDate =
-      currentDateInTimezone(
-        cache.todayIdea.timezone,
-      );
+      deviceLocalDateKey();
 
     /*
       当天缓存不设分钟级 TTL。
 
-      只要还是关系时区里的同一天，
+      只要还是当前设备本地的同一天，
       就先瞬间显示旧缓存，
       随后后台请求再修正状态。
     */
     if (
-      !currentDate ||
       currentDate !==
         cache.todayIdea
           .dailyQuestion

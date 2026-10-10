@@ -14,8 +14,11 @@ import { authenticateMember } from "../../../../lib/server/member-auth";
 import { notifyMember } from "../../../../lib/server/notification-service";
 import {
   dateKeyInTimezone,
-  normalizeRelationshipTimezone,
 } from "../../../../lib/server/relationship-date";
+
+import {
+  resolveIdeaRequestTimezone,
+} from "../../../../lib/server/idea-request-timezone";
 
 export const runtime = "edge";
 
@@ -174,9 +177,10 @@ async function loadContext(
   }
 
   const timezone =
-    normalizeRelationshipTimezone(
-      relationship.timezone,
-    );
+    resolveIdeaRequestTimezone(
+        request,
+        relationship.timezone,
+      );
 
   const currentDate =
     dateKeyInTimezone(

@@ -1,3 +1,4 @@
+import { ideaRequestHeaders } from "./idea-request-context";
 export type IdeaAnalysisContent = {
   commonGround: string;
   differentViews: string;
@@ -108,10 +109,10 @@ export async function fetchIdeaAnalysis(
       },
     ),
     {
-      headers: {
-        "x-member-token":
+      headers:
+        ideaRequestHeaders(
           memberToken,
-      },
+        ),
       cache: "no-store",
     },
   );
@@ -140,10 +141,10 @@ export async function generateIdeaAnalysis(
     ),
     {
       method: "POST",
-      headers: {
-        "x-member-token":
+      headers:
+        ideaRequestHeaders(
           memberToken,
-      },
+        ),
     },
   );
 
@@ -171,10 +172,10 @@ export async function generateIdeaInsights(
       ),
       {
         method: "POST",
-        headers: {
-          "x-member-token":
-            memberToken,
-        },
+        headers:
+        ideaRequestHeaders(
+          memberToken,
+        ),
       },
     );
 

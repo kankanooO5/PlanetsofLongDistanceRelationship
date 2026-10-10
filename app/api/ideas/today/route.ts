@@ -7,8 +7,11 @@ import {
   addCalendarDays,
   calendarDayOrdinal,
   dateKeyInTimezone,
-  normalizeRelationshipTimezone,
 } from "../../../../lib/server/relationship-date";
+
+import {
+  resolveIdeaRequestTimezone,
+} from "../../../../lib/server/idea-request-timezone";
 
 export const runtime = "edge";
 
@@ -169,7 +172,8 @@ export async function GET(
     }
 
     const timezone =
-      normalizeRelationshipTimezone(
+      resolveIdeaRequestTimezone(
+        request,
         relationship.timezone,
       );
 

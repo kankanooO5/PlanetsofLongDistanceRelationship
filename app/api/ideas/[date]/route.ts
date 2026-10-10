@@ -5,8 +5,11 @@ import { canRevealPartnerIdeaAnswer } from "../../../../lib/server/idea-answer-a
 import { authenticateMember } from "../../../../lib/server/member-auth";
 import {
   dateKeyInTimezone,
-  normalizeRelationshipTimezone,
 } from "../../../../lib/server/relationship-date";
+
+import {
+  resolveIdeaRequestTimezone,
+} from "../../../../lib/server/idea-request-timezone";
 
 export const runtime = "edge";
 
@@ -176,7 +179,8 @@ export async function GET(
     }
 
     const timezone =
-      normalizeRelationshipTimezone(
+      resolveIdeaRequestTimezone(
+        request,
         relationship.timezone,
       );
 

@@ -5,8 +5,11 @@ import { authenticateMember } from "../../../../../lib/server/member-auth";
 import { notifyMember } from "../../../../../lib/server/notification-service";
 import {
   dateKeyInTimezone,
-  normalizeRelationshipTimezone,
 } from "../../../../../lib/server/relationship-date";
+
+import {
+  resolveIdeaRequestTimezone,
+} from "../../../../../lib/server/idea-request-timezone";
 
 export const runtime = "edge";
 
@@ -42,6 +45,7 @@ function jsonError(
 async function getTodayContext(
   database: D1Database,
   relationshipId: string,
+  request: NextRequest,
 ) {
   const relationship = await database
     .prepare(
@@ -58,9 +62,10 @@ async function getTodayContext(
   }
 
   const timezone =
-    normalizeRelationshipTimezone(
-      relationship.timezone,
-    );
+    resolveIdeaRequestTimezone(
+        request,
+        relationship.timezone,
+      );
 
   const localDate =
     dateKeyInTimezone(
@@ -141,6 +146,7 @@ export async function GET(
     const context = await getTodayContext(
       database,
       member.relationshipId,
+      request,
     );
 
     if (!context) {
@@ -229,6 +235,7 @@ export async function POST(
     const context = await getTodayContext(
       database,
       member.relationshipId,
+      request,
     );
 
     if (!context) {
